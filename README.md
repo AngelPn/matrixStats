@@ -26,25 +26,25 @@ Google Summer of Code is an initiative to support students to learn about and co
     - Written a package test that asserts that `matrixStats.useNames = NA` works and `matrixStats.useNames = TRUE` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R)
 
     - The package passes `R CMD check` with all OKs
-        ```sh
-        ── R CMD check results ──────────────────────────── matrixStats 0.58.0-9000 ────
-        Duration: 3m 16.3s
+    ```sh
+    ── R CMD check results ──────────────────────────── matrixStats 0.58.0-9000 ────
+    Duration: 3m 16.3s
 
-        ❯ checking installed package size ... NOTE
-            installed size is 10.7Mb
-            sub-directories of 1Mb or more:
-            libs   9.9Mb
+    ❯ checking installed package size ... NOTE
+        installed size is 10.7Mb
+        sub-directories of 1Mb or more:
+        libs   9.9Mb
 
-        ❯ checking top-level files ... NOTE
-        Non-standard file/directory found at top level:
-            ‘CONTRIBUTING.md’
+    ❯ checking top-level files ... NOTE
+    Non-standard file/directory found at top level:
+        ‘CONTRIBUTING.md’
 
-        0 errors ✔ | 0 warnings ✔ | 2 notes ✖
-        ```
-- [] 4. Medium: _Simple support for name attributes_
-- [] 5. Medium: _A related, slightly different case_
-- [] 5. Medium/Hard: _Implement in C code_
-- [] 6. Hard: _Begin to work on the project._
+    0 errors ✔ | 0 warnings ✔ | 2 notes ✖
+    ``` 
+- [ ] 4. Medium: _Simple support for name attributes_
+- [ ] 5. Medium: _A related, slightly different case_
+- [ ] 5. Medium/Hard: _Implement in C code_
+- [ ] 6. Hard: _Begin to work on the project._
 
 ---
 
