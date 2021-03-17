@@ -7,7 +7,8 @@
 \usage{
 rowMedians(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x), ...)
 
-colMedians(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x), ...)
+colMedians(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x),
+  useNames = NA, ...)
 }
 \arguments{
 \item{x}{A \code{\link[base]{numeric}} NxK \code{\link[base]{matrix}}.}
@@ -24,6 +25,9 @@ length two specifying the dimension of \code{x}, also when not a
 \code{\link[base]{matrix}}.}
 
 \item{...}{Not used.}
+
+\item{useNames}{If not \code{\link[base]{NA}}, an informative error message
+is given.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of

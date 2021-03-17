@@ -8,6 +8,21 @@ colMedians_R <- function(x, na.rm = FALSE, ...) {
   apply(x, MARGIN = 2L, FUN = median, na.rm = na.rm)
 }
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Checking value of useNames in colMedians
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cat("Checking value of useNames in colMedians:\n")
+for (mode in c("integer", "double")) {
+  x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
+  storage.mode(x) <- mode
+
+  testthat::expect_error(colMedians(x, na.rm = FALSE, useNames = TRUE), "Error: A non-NA value is passed as useNames argument")
+
+  y0 <- colMedians_R(x, na.rm = FALSE)
+  y1 <- colMedians(x, na.rm = FALSE, useNames = NA)
+  stopifnot(all.equal(y1, y0))
+}
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Special case: Non-ties

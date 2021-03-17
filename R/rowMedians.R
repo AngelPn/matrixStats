@@ -23,6 +23,9 @@
 #' @param dim. An \code{\link[base]{integer}} \code{\link[base]{vector}} of
 #' length two specifying the dimension of \code{x}, also when not a
 #' \code{\link[base]{matrix}}.
+#' 
+#' @param useNames If not \code{\link[base]{NA}}, an informative error message
+#' is given.
 #'
 #' @param ... Not used.
 #'
@@ -49,9 +52,13 @@ rowMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @rdname rowMedians
 #' @export
 colMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                       dim. = dim(x), ...) {
+                       dim. = dim(x), useNames = NA, ...) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
   has_nas <- TRUE  # Add as an argument? /2007-08-24
+
+  if (!is.na(useNames))
+    stop("Error: A non-NA value is passed as useNames argument")
+
   .Call(C_rowMedians, x, dim., rows, cols, na.rm, has_nas, FALSE)
 }
