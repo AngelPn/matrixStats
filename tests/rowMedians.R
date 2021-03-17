@@ -19,7 +19,7 @@ for (mode in c("integer", "double")) {
   testthat::expect_error(colMedians(x, na.rm = FALSE, useNames = TRUE), "Error: A non-NA value is passed as useNames argument")
 
   y0 <- colMedians_R(x, na.rm = FALSE)
-  y1 <- colMedians(x, na.rm = FALSE, useNames = NA)
+  y1 <- colMedians(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
 }
 

@@ -12,17 +12,43 @@
 
 # matrixStats: Functions that Apply to Rows and Columns of Matrices (and to Vectors)
 
-## Skills Test
+## Google Summer of Code (GSoC) 2021 - Skill Tests
 
-Task 1, 2, 3 completed
+Google Summer of Code is an initiative to support students to learn about and contribute to open-source software projects, while getting payed. The R community proposed a project on the matrixStats package and, as a student, I am interested in working on this project. I am going to complete all the tasks proposed on [Skill Tests](https://github.com/rstats-gsoc/gsoc2021/wiki/matrixStats#skill-tests).
 
-## Google Summer of Code (GSoC) 2021
+## Skill Tests progress
 
-If you are a student and interested in working on this project, please consider applying to work on it via GSoC 2021.  Google Summer of Code is an initiative to support students to learn about and contribute to open-source software projects, while getting payed.  The R community has been mentoring many GSoC projects over the years.  For more details, please see the GSoC 2021 proposal ['matrixStats: Consistent Support for Name Attributes'](https://github.com/rstats-gsoc/gsoc2021/wiki/matrixStats%3A-Consistent-Support-for-Name-Attributes).  **The deadline for student applications is on [April 13, 2021](https://github.com/rstats-gsoc/gsoc2021/wiki) with a soft deadline the week before.**
+- [x] 1. Easy: _Installing R packages with C code_
+- [x] 2. Easy: _Git and R package testing_
+- [x] 3. Easy: _Prototyping in R_
+    - Added argument `useNames = NA` to [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R). If a non-`NA` value is passed, an informative error message shows up.
+
+    - Written a package test that asserts that `matrixStats.useNames = NA` works and `matrixStats.useNames = TRUE` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R)
+
+    - The package passes `R CMD check` with all OKs
+        ```sh
+        ── R CMD check results ──────────────────────────── matrixStats 0.58.0-9000 ────
+        Duration: 3m 16.3s
+
+        ❯ checking installed package size ... NOTE
+            installed size is 10.7Mb
+            sub-directories of 1Mb or more:
+            libs   9.9Mb
+
+        ❯ checking top-level files ... NOTE
+        Non-standard file/directory found at top level:
+            ‘CONTRIBUTING.md’
+
+        0 errors ✔ | 0 warnings ✔ | 2 notes ✖
+        ```
+- [] 4. Medium: _Simple support for name attributes_
+- [] 5. Medium: _A related, slightly different case_
+- [] 5. Medium/Hard: _Implement in C code_
+- [] 6. Hard: _Begin to work on the project._
 
 ---
 
-## Introduction
+## About matrixStats
 
 The matrixStats package provides highly optimized functions for
 computing common summaries over rows and columns of matrices,
@@ -59,8 +85,6 @@ is much faster and more memory efficient than
 ```r
 > mu <- apply(x[33:158, 1001:3000], MARGIN = 2, FUN = median)
 ```
-
-
 
 ## Benchmarks
 For formal benchmarking of matrixStats functions relative to
