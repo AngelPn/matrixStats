@@ -12,6 +12,9 @@
 
 # matrixStats: Functions that Apply to Rows and Columns of Matrices (and to Vectors)
 
+## Skills Test
+
+Task 1, 2, 3 completed
 
 ## Google Summer of Code (GSoC) 2021
 
