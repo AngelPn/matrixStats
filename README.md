@@ -1,15 +1,4 @@
 
-
-<div id="badges"><!-- pkgdown markup -->
-<a href="https://CRAN.R-project.org/web/checks/check_results_matrixStats.html"><img border="0" src="https://www.r-pkg.org/badges/version/matrixStats" alt="CRAN check status"></a></a>
-<a href="https://github.com///github.com/AngelPn/matrixStats/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com///github.com/AngelPn/matrixStats/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a></a>
-<a href="https://travis-ci.org///github.com/AngelPn/matrixStats"><img border="0" src="https://travis-ci.org///github.com/AngelPn/matrixStats.svg" alt="Build status"></a></a>
-<a href="https://ci.appveyor.com/project///github.com/AngelPn/matrixStats"><img border="0" src="https://ci.appveyor.com/api/projects/status/github///github.com/AngelPn/matrixStats?svg=true" alt="Build status"></a></a>
-<a href="https://codecov.io/gh///github.com/AngelPn/matrixStats"><img border="0" src="https://codecov.io/gh///github.com/AngelPn/matrixStats/branch/develop/graph/badge.svg" alt="Coverage Status"></a></a>
-
-</div>
-
-
 # matrixStats: Functions that Apply to Rows and Columns of Matrices (and to Vectors)
 
 ## Google Summer of Code (GSoC) 2021 - Skill Tests
