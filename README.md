@@ -42,7 +42,7 @@ Google Summer of Code is an initiative to support students to learn about and co
         0 errors ✔ | 0 warnings ✔ | 2 notes ✖
         ``` 
 - [x] 4. Medium: _Simple support for name attributes_
-    - Added handling of `matrixStats.useNames` to [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L61-L62). My concept: If option is set, get the option in useNames argument.
+    - Added handling of `matrixStats.useNames` to [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L61-L62). My concept: Option is in high priority.
 
     - Written a package test that asserts that `matrixStats.useNames = NA` works and `matrixStats.useNames = TRUE` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L238-L252). I tried not to undo test 3.
 
@@ -157,3 +157,12 @@ This will install the package from source.  Because of this and because this pac
 ## Contributing
 
 To contribute to this package, please see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Software status
+
+| Resource      | CRAN        | GitHub Actions      | Travis CI       | AppVeyor CI      |
+| ------------- | ------------------- | ------------------- | --------------- | ---------------- |
+| _Platforms:_  | _Multiple_          | _Multiple_          | _Linux & macOS_ | _Windows_        |
+| R CMD check   | <a href="https://cran.r-project.org/web/checks/check_results_matrixStats.html"><img border="0" src="http://www.r-pkg.org/badges/version/matrixStats" alt="CRAN version"></a> | <a href="https://github.com/HenrikBengtsson/matrixStats/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/HenrikBengtsson/matrixStats/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a>       | <a href="https://travis-ci.org/HenrikBengtsson/matrixStats"><img src="https://travis-ci.org/HenrikBengtsson/matrixStats.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/matrixstats"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/matrixStats?svg=true" alt="Build status"></a> |
+| Test coverage |                     |                     | <a href="https://codecov.io/gh/HenrikBengtsson/matrixStats"><img src="https://codecov.io/gh/HenrikBengtsson/matrixStats/branch/develop/graph/badge.svg" alt="Coverage Status"/></a>     |                  |
+
