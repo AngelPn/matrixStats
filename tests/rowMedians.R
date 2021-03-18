@@ -9,41 +9,6 @@ colMedians_R <- function(x, na.rm = FALSE, ...) {
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Checking value of useNames in colMedians
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cat("Checking value of useNames in colMedians:\n")
-for (mode in c("integer", "double")) {
-  x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
-  storage.mode(x) <- mode
-
-  testthat::expect_error(colMedians(x, na.rm = FALSE, useNames = TRUE), "Error: A non-NA value in useNames")
-
-  y0 <- colMedians_R(x, na.rm = FALSE)
-  y1 <- colMedians(x, na.rm = FALSE)
-  stopifnot(all.equal(y1, y0))
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Checking handling of matrixStats.useNames in colMedians
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cat("Checking handling of matrixStats.useNames in colMedians:\n")
-for (mode in c("integer", "double")) {
-  x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
-  storage.mode(x) <- mode
-
-  # option TRUE is set, expect an error
-  options(matrixStats.useNames = TRUE)
-  testthat::expect_error(colMedians(x, na.rm = FALSE), "Error: A non-NA value in useNames")
-
-  # option NA is set, expect working
-  options(matrixStats.useNames = NA)
-  y0 <- colMedians_R(x, na.rm = FALSE)
-  y1 <- colMedians(x, na.rm = FALSE)
-  stopifnot(all.equal(y1, y0))
-}
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Special case: Non-ties
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cat("Special case: Non-ties:\n")
@@ -255,3 +220,33 @@ for (kk in seq_len(n_sims)) {
   y2 <- rowMedians(t(x), na.rm = na.rm)
   stopifnot(all.equal(y2, y0))
 } # for (kk ...)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Checking value of useNames in colMedians
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cat("Checking value of useNames in colMedians:\n")
+x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
+
+testthat::expect_error(colMedians(x, na.rm = FALSE, useNames = TRUE), "Error: A non-NA value in useNames")
+
+y0 <- colMedians_R(x, na.rm = FALSE)
+y1 <- colMedians(x, na.rm = FALSE)
+stopifnot(all.equal(y1, y0))
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Checking handling of matrixStats.useNames in colMedians
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cat("Checking handling of matrixStats.useNames in colMedians:\n")
+x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
+
+# option TRUE is set, expect an error
+options(matrixStats.useNames = TRUE)
+testthat::expect_error(colMedians(x, na.rm = FALSE), "Error: A non-NA value in useNames")
+
+# option NA is set, expect working
+options(matrixStats.useNames = NA)
+y0 <- colMedians_R(x, na.rm = FALSE)
+y1 <- colMedians(x, na.rm = FALSE)
+stopifnot(all.equal(y1, y0))

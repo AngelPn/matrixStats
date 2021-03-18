@@ -167,6 +167,20 @@ stopifnot(length(y) == nrow(lx))
 stopifnot(all(y == 5))
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Checking handling of useNames in colLogSumExps
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cat("Checking handling of useNames in colLogSumExps:\n")
+lx <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
+y <- colLogSumExps(lx)
+
+options(matrixStats.useNames = TRUE)
+y <- colLogSumExps(lx)
+
+options(matrixStats.useNames = FALSE)
+y <- colLogSumExps(lx)
+
+
 ## Bug report #104 (https://github.com/HenrikBengtsson/matrixStats/issues/104)
 ## (This would core dump on Windows)
 x <- matrix(0.0, nrow = 2L, ncol = 32762L)

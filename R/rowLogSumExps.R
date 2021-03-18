@@ -18,6 +18,9 @@
 #' @param dim. An \code{\link[base]{integer}} \code{\link[base]{vector}} of
 #' length two specifying the dimension of \code{x}, also when not a
 #' \code{\link[base]{matrix}}.
+#' 
+#' @param useNames If not \code{\link[base]{NA}}, an informative error message
+#' is given.
 #'
 #' @param ... Not used.
 #'
@@ -59,9 +62,15 @@ rowLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @rdname rowLogSumExps
 #' @export
 colLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
-                          dim. = dim(lx), ...) {
+                          dim. = dim(lx), useNames = NA, ...) {
   dim. <- as.integer(dim.)
   has_na <- TRUE
+
+  ## Option is already set?
+  if (!is.null(getOption("matrixStats.useNames", NULL)))
+    useNames <- as.logical(getOption("matrixStats.useNames"))
+  else useNames <- as.logical(useNames)
+  
   res <- .Call(C_rowLogSumExps,
                as.numeric(lx),
                dim., rows, cols, as.logical(na.rm), has_na, FALSE)
