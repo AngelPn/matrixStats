@@ -10,9 +10,9 @@
 #include "000.types.h"
 #include "rowLogSumExp_lowlevel.h"
 
-SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow) {
+SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames) {
   SEXP ans;
-  int narm, hasna, byrow;
+  int narm, hasna, byrow, useNames;
   R_xlen_t nrow, ncol;
 
   /* Argument 'lx' and 'dim': */
@@ -41,6 +41,27 @@ SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasN
   } else {
     ans = PROTECT(allocVector(REALSXP, ncols));
     rowLogSumExps_double[colsType](REAL(lx), nrow, ncol, crows, nrows, rowsType, ccols, ncols, colsType, narm, hasna, 0, REAL(ans));
+  }
+
+  /* Argument 'useNames': */
+  useNames = asLogical(useNames);
+
+  if (useNames){
+    SEXP matrixDimnames = getAttrib(x, R_DimNamesSymbol);
+    /* We check whether the result has a natural naming by the dimnames of the
+    * input and set the names of the result to these names if it is
+    */
+    if(matrixDimnames != R_NilValue){
+
+      SEXP possibleNameVector = VECTOR_ELT(matrixDimnames, 1);
+      /* We may risk that even though the dimnames attribute is defined,
+      * the names for our requested dimension is not available
+      */
+      if (possibleNameVector != R_NilValue){
+        // The naming vector is available, so we can set the names of the result
+        setNames(ans, possibleNameVector, nrows, crows, rowsType);
+      }
+    }
   }
 
   UNPROTECT(1); /* ans = PROTECT(...) */

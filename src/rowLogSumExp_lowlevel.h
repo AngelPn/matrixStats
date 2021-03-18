@@ -13,6 +13,6 @@ void rowLogSumExps_double_didxs(double *x, R_xlen_t nrow, R_xlen_t ncol, void *r
 #define METHOD rowLogSumExp
 #define METHOD_NAME rowLogSumExps_double
 #define RETURN_TYPE void
-#define ARGUMENTS_LIST double *x, R_xlen_t nrow, R_xlen_t ncol, void *rows, R_xlen_t nrows, int rowsType, void *cols, R_xlen_t ncols, int colsType, int narm, int hasna, R_xlen_t byrow, double *ans
+#define ARGUMENTS_LIST double *x, R_xlen_t nrow, R_xlen_t ncol, void *rows, R_xlen_t nrows, int rowsType, void *cols, R_xlen_t ncols, int colsType, int narm, int hasna, R_xlen_t byrow, double *ans, int useNames
 
 #include "000.templates-gen-vector.h"

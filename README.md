@@ -66,7 +66,7 @@ Google Summer of Code is an initiative to support students to learn about and co
         ```
 
 - [x] 5. Medium: _A related, slightly different case_
-    - Added support naming to [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L69-L72): `useNames` can be `NA`, `TRUE` or `FALSE`. If option is set, get the option.
+    - Added naming support to [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L69-L72): `useNames` can be `NA`, `TRUE` or `FALSE`. If option is set, get the option.
 
     - Written a package test to check support naming in [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R)
 
