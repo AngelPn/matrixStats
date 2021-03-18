@@ -73,7 +73,7 @@ colLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
   
   res <- .Call(C_rowLogSumExps,
                as.numeric(lx),
-               dim., rows, cols, as.logical(na.rm), has_na, FALSE)
+               dim., rows, cols, as.logical(na.rm), has_na, FALSE, useNames)
 
   # Preserve names
   names <- colnames(lx)

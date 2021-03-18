@@ -44,9 +44,7 @@ Google Summer of Code is an initiative to support students to learn about and co
 - [x] 4. Medium: _Simple support for name attributes_
     - Added handling of `matrixStats.useNames` to [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L61-L62). My concept: If option is set, get the option in useNames argument.
 
-    - Written a package test that asserts that `matrixStats.useNames = NA` works and `matrixStats.useNames = TRUE` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L238-L252).
-    ###### NOTE
-    I tried not to undo test 3.
+    - Written a package test that asserts that `matrixStats.useNames = NA` works and `matrixStats.useNames = TRUE` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L238-L252). I tried not to undo test 3.
 
     - The package passes `R CMD check` with all OKs
         ```sh
@@ -66,9 +64,9 @@ Google Summer of Code is an initiative to support students to learn about and co
         ```
 
 - [x] 5. Medium: _A related, slightly different case_
-    - Added naming support to [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L69-L72): `useNames` can be `NA`, `TRUE` or `FALSE`. If option is set, get the option.
+    - Added naming support to [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L69-L72): `useNames` can be `NA`, `TRUE` or `FALSE`. Option is in high priority.
 
-    - Written a package test to check support naming in [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R)
+    - Written a package test to check support naming in [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L170-L181)
 
     - The package passes `R CMD check` with all OKs
         ```sh
@@ -87,6 +85,10 @@ Google Summer of Code is an initiative to support students to learn about and co
         0 errors ✔ | 0 warnings ✔ | 2 notes ✖
         ```
 - [ ] 6. Medium/Hard: _Implement in C code_
+    - Implemented naming support for [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L46-L65) in C code, according to [template](https://github.com/HenrikBengtsson/matrixStats/pull/197)
+
+    - Have not validate correctness yet.
+
 - [ ] 7. Hard: _Begin to work on the project._
 
 ---
