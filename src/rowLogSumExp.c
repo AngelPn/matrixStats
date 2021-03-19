@@ -12,7 +12,7 @@
 
 SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames) {
   SEXP ans;
-  int narm, hasna, byrow, useNames;
+  int narm, hasna, byrow, usenames;
   R_xlen_t nrow, ncol;
 
   /* Argument 'lx' and 'dim': */
@@ -35,19 +35,19 @@ SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasN
   /* Argument 'byRow': */
   byrow = asLogical(byRow);
 
+  /* Argument 'useNames': */
+  usenames = asLogical(useNames);  
+
   if (byrow) {
     ans = PROTECT(allocVector(REALSXP, nrows));
-    rowLogSumExps_double[rowsType](REAL(lx), nrow, ncol, crows, nrows, rowsType, ccols, ncols, colsType, narm, hasna, 1, REAL(ans));
+    rowLogSumExps_double[rowsType](REAL(lx), nrow, ncol, crows, nrows, rowsType, ccols, ncols, colsType, narm, hasna, 1, REAL(ans), usenames);
   } else {
     ans = PROTECT(allocVector(REALSXP, ncols));
-    rowLogSumExps_double[colsType](REAL(lx), nrow, ncol, crows, nrows, rowsType, ccols, ncols, colsType, narm, hasna, 0, REAL(ans));
+    rowLogSumExps_double[colsType](REAL(lx), nrow, ncol, crows, nrows, rowsType, ccols, ncols, colsType, narm, hasna, 0, REAL(ans), usenames);
   }
 
-  /* Argument 'useNames': */
-  useNames = asLogical(useNames);
-
-  if (useNames){
-    SEXP matrixDimnames = getAttrib(x, R_DimNamesSymbol);
+  if (usenames){
+    SEXP matrixDimnames = getAttrib(lx, R_DimNamesSymbol);
     /* We check whether the result has a natural naming by the dimnames of the
     * input and set the names of the result to these names if it is
     */
@@ -59,7 +59,8 @@ SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasN
       */
       if (possibleNameVector != R_NilValue){
         // The naming vector is available, so we can set the names of the result
-        setNames(ans, possibleNameVector, nrows, crows, rowsType);
+        setAttrib(ans, R_DimNamesSymbol, possibleNameVector);
+        //setNames(ans, possibleNameVector, nrows, crows, rowsType);
       }
     }
   }

@@ -70,19 +70,23 @@ colLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
   if (!is.null(getOption("matrixStats.useNames", NULL)))
     useNames <- as.logical(getOption("matrixStats.useNames"))
   else useNames <- as.logical(useNames)
-  
-  res <- .Call(C_rowLogSumExps,
+
+  .Call(C_rowLogSumExps,
                as.numeric(lx),
                dim., rows, cols, as.logical(na.rm), has_na, FALSE, useNames)
+  
+  # res <- .Call(C_rowLogSumExps,
+  #              as.numeric(lx),
+  #              dim., rows, cols, as.logical(na.rm), has_na, FALSE, useNames)
 
-  # Preserve names
-  names <- colnames(lx)
-  if (!is.null(names)) {
-    if (!is.null(cols)) {
-      names <- names[cols]
-    }
-    names(res) <- names
-  }
+  # # Preserve names
+  # names <- colnames(lx)
+  # if (!is.null(names)) {
+  #   if (!is.null(cols)) {
+  #     names <- names[cols]
+  #   }
+  #   names(res) <- names
+  # }
 
-  res
+  # res
 }
