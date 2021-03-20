@@ -75,8 +75,8 @@ Google Summer of Code is an initiative to support students to learn about and co
         ```
 - [ ] 6. Medium/Hard: _Implement in C code_
     - Implemented naming support for [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L51-L74) in C code, according to [template](https://github.com/HenrikBengtsson/matrixStats/pull/197). I found two ways of doing it:
-        1. `namesgets` or `setAttrib` from [Writing R Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Attributes)
-        2. `setNames` from [yaccos template](https://github.com/yaccos/matrixStats/blob/develop/src/naming.c)
+        1. `namesgets` or `setAttrib` from [Writing R Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Attributes).
+        2. `setNames` from [yaccos template](https://github.com/yaccos/matrixStats/blob/develop/src/naming.c).  
     But nothing seems to work and I haven't found the reason.
 
     - Written a package test to check support naming in [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L183-L191) that gives an error.
