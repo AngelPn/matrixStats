@@ -44,7 +44,7 @@ rowLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
   has_na <- TRUE
   res <- .Call(C_rowLogSumExps,
                as.numeric(lx),
-               dim., rows, cols, as.logical(na.rm), has_na, TRUE)
+               dim., rows, cols, as.logical(na.rm), has_na, TRUE, NA)
 
   # Preserve names
   names <- rownames(lx)
