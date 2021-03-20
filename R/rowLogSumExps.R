@@ -71,9 +71,7 @@ colLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
     useNames <- as.logical(getOption("matrixStats.useNames"))
   else useNames <- as.logical(useNames)
 
-  .Call(C_rowLogSumExps,
-               as.numeric(lx),
-               dim., rows, cols, as.logical(na.rm), has_na, FALSE, useNames)
+  .Call(C_rowLogSumExps, as.numeric(lx), dim., rows, cols, as.logical(na.rm), has_na, FALSE, useNames)
   
   # res <- .Call(C_rowLogSumExps,
   #              as.numeric(lx),

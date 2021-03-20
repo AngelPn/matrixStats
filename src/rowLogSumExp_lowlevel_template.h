@@ -3,7 +3,7 @@
   double rowLogSumExp_double[idxsType](ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  double *x, R_xlen_t nrow, R_xlen_t ncol, void *rows, R_xlen_t nrows, int rowsType, void *cols, R_xlen_t ncols, int colsType, int narm, int hasna, R_xlen_t byrow, double *ans, int usenames
+  double *x, R_xlen_t nrow, R_xlen_t ncol, void *rows, R_xlen_t nrows, int rowsType, void *cols, R_xlen_t ncols, int colsType, int narm, int hasna, R_xlen_t byrow, double *ans
  ***********************************************************************/
 #include "000.types.h"
 
@@ -11,13 +11,13 @@
 
 
 /* extern 1-D function 'logSumExp' */
-extern double (*logSumExp_double[3])(double *x, void *idxs, R_xlen_t nidxs, int narm, int hasna, R_xlen_t by, double *xx, int usenames);
+extern double (*logSumExp_double[3])(double *x, void *idxs, R_xlen_t nidxs, int narm, int hasna, R_xlen_t by, double *xx);
 
 
 RETURN_TYPE METHOD_NAME_IDXS(ARGUMENTS_LIST) {
   R_xlen_t ii, idx;
   double navalue;
-  double (*logsumexp)(double *x, void *idxs, R_xlen_t nidxs, int narm, int hasna, R_xlen_t by, double *xx, int usenames);
+  double (*logsumexp)(double *x, void *idxs, R_xlen_t nidxs, int narm, int hasna, R_xlen_t by, double *xx);
 
 #ifdef IDXS_TYPE
   IDXS_C_TYPE *crows = (IDXS_C_TYPE*) rows;
@@ -37,7 +37,7 @@ RETURN_TYPE METHOD_NAME_IDXS(ARGUMENTS_LIST) {
       if (idx == NA_R_XLEN_T) {
         ans[ii] = navalue;
       } else {
-        ans[ii] = logsumexp(x+idx, cols, ncols, narm, hasna, nrow, xx, usenames);
+        ans[ii] = logsumexp(x+idx, cols, ncols, narm, hasna, nrow, xx);
       }
     }
   } else {
@@ -49,7 +49,7 @@ RETURN_TYPE METHOD_NAME_IDXS(ARGUMENTS_LIST) {
       if (idx == NA_R_XLEN_T) {
         ans[ii] = navalue;
       } else {
-        ans[ii] = logsumexp(x+idx, rows, nrows, narm, hasna, 0, NULL, usenames);
+        ans[ii] = logsumexp(x+idx, rows, nrows, narm, hasna, 0, NULL);
       }
     }
   } /* if (byrow) */

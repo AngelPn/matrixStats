@@ -188,7 +188,7 @@ refColnames <- LETTERS[1:3]
 lx <- matrix(-4:4, nrow = 3, ncol = 3, dimnames = list(NULL, refColnames))
 # Option matrixStats.useNames is set TRUE
 y <- colLogSumExps(lx)
-stopifnot(identical(names(y), names(lx)))
+stopifnot(identical(names(y), colnames(lx)))
 
 
 ## Bug report #104 (https://github.com/HenrikBengtsson/matrixStats/issues/104)
