@@ -55,11 +55,11 @@ for (mode in c("integer", "double")) {
 
   # Testing names
   rownames(lx_neg) <- seq_len(nrow(x))
-  # colnames(lx_neg) <- seq_len(ncol(x))
+  colnames(lx_neg) <- seq_len(ncol(x))
   y2 <- rowLogSumExps(lx_neg)
   stopifnot(identical(names(y2), rownames(lx_neg)))
-  # y3 <- colLogSumExps(t(lx_neg))
-  # stopifnot(identical(names(y3), rownames(lx_neg)))
+  y3 <- colLogSumExps(t(lx_neg))
+  stopifnot(identical(names(y3), rownames(lx_neg)))
 } # for (mode ...)
 
 
@@ -180,16 +180,17 @@ y <- colLogSumExps(lx)
 options(matrixStats.useNames = TRUE)
 y <- colLogSumExps(lx)
 
+options(matrixStats.useNames = NULL)
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Special case: Only columns are named
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cat("Special case: Only columns are named:\n")
-refColnames <- LETTERS[1:3]
-lx <- matrix(-4:4, nrow = 3, ncol = 3, dimnames = list(NULL, refColnames))
-# Option matrixStats.useNames is set TRUE
+options(matrixStats.useNames = TRUE)
+lx <- matrix(-4:4, nrow = 3, ncol = 3, dimnames = list(NULL, LETTERS[1:3]))
 y <- colLogSumExps(lx)
 stopifnot(identical(names(y), colnames(lx)))
-
+options(matrixStats.useNames = NA)
 
 ## Bug report #104 (https://github.com/HenrikBengtsson/matrixStats/issues/104)
 ## (This would core dump on Windows)

@@ -43,7 +43,7 @@ rowLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
   dim. <- as.integer(dim.)
   has_na <- TRUE
   res <- .Call(C_rowLogSumExps,
-               as.numeric(lx),
+               as.numeric(lx), lx,
                dim., rows, cols, as.logical(na.rm), has_na, TRUE, NA)
 
   # Preserve names
@@ -69,22 +69,37 @@ colLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
   ## Option is already set?
   if (!is.null(getOption("matrixStats.useNames", NULL)))
     useNames <- as.logical(getOption("matrixStats.useNames"))
-  else useNames <- as.logical(useNames)
-
-  .Call(C_rowLogSumExps, as.numeric(lx), dim., rows, cols, as.logical(na.rm), has_na, FALSE, useNames)
   
-  # res <- .Call(C_rowLogSumExps,
-  #              as.numeric(lx),
-  #              dim., rows, cols, as.logical(na.rm), has_na, FALSE, useNames)
+  res <- .Call(C_rowLogSumExps,
+               as.numeric(lx), lx,
+               dim., rows, cols, as.logical(na.rm), has_na, FALSE, useNames)
 
-  # # Preserve names
-  # names <- colnames(lx)
-  # if (!is.null(names)) {
-  #   if (!is.null(cols)) {
-  #     names <- names[cols]
-  #   }
-  #   names(res) <- names
-  # }
+  # Perserve names
+  names <- colnames(lx)
+  if (!is.null(names)){
+    if (!is.null(cols))
+      names <- names[cols]
+  }
 
-  # res
+  # If useNames is NA, leave the default behavior as-is
+  if (is.na(useNames)){
+    names(res) <- names
+    return(res)
+  }
+
+  # Else, check that the names are handled correctly according to the option
+
+  # If useNames is TRUE, make sure that names have the value we expect
+  if (useNames){
+    if (!identical(names(res),names)){
+      message("not the expected values in names")
+    }
+  }
+  # If useNames is FALSE, make sure the names of resulting y are missing
+  else{
+    if (!is.null(names(res)))
+      names(res) <- NULL
+  }
+
+  return(res)
 }

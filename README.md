@@ -12,12 +12,12 @@ Google Summer of Code is an initiative to support students to learn about and co
 - [x] 3. Easy: _Prototyping in R_
     - Added argument `useNames = NA` to [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L64-L65). If a non-`NA` value is passed, an informative error message shows up.
 
-    - Written a package test that asserts that `colMedians(x, useNames = NA)` works and `colMedians(x, useNames = TRUE)` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L225-L235)
+    - Written a package test that asserts that `colMedians(x, useNames = NA)` works and `colMedians(x, useNames = TRUE)` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L225-L238) using `tryCatch` method.
 
     - The package passes `R CMD check` with all OKs
         ```sh
         ── R CMD check results ──────────────────────────── matrixStats 0.58.0-9000 ────
-        Duration: 3m 16.3s
+        Duration: 3m 29.3s
 
         ❯ checking installed package size ... NOTE
             installed size is 10.7Mb
@@ -33,7 +33,7 @@ Google Summer of Code is an initiative to support students to learn about and co
 - [x] 4. Medium: _Simple support for name attributes_
     - Added handling of `matrixStats.useNames` to [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L61-L62). My concept: Option is in high priority.
 
-    - Written a package test that asserts that `matrixStats.useNames = NA` works and `matrixStats.useNames = TRUE` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L238-L252). I tried not to undo test 3.
+    - Written a package test that asserts that `matrixStats.useNames = NA` works and `matrixStats.useNames = TRUE` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L241-L256) using `tryCatch` method. I tried not to undo test 3.
 
     - The package passes `R CMD check` with all OKs
         ```sh

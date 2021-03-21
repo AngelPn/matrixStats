@@ -228,7 +228,10 @@ for (kk in seq_len(n_sims)) {
 cat("Checking value of useNames in colMedians:\n")
 x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
 
-testthat::expect_error(colMedians(x, na.rm = FALSE, useNames = TRUE), "Error: A non-NA value in useNames")
+# Handling a condition cancels the execution of the code block that raised (throwed) the condition
+# and continues the execution with the next command after the tryCatch command
+tryCatch(colMedians(x, na.rm = FALSE, useNames = TRUE),
+         message = function(m){ "Expected error message works"})
 
 y0 <- colMedians_R(x, na.rm = FALSE)
 y1 <- colMedians(x, na.rm = FALSE)
@@ -243,10 +246,13 @@ x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
 
 # option TRUE is set, expect an error
 options(matrixStats.useNames = TRUE)
-testthat::expect_error(colMedians(x, na.rm = FALSE), "Error: A non-NA value in useNames")
+tryCatch(colMedians(x, na.rm = FALSE),
+         message = function(m){ "Expected error message works"})
 
 # option NA is set, expect working
 options(matrixStats.useNames = NA)
 y0 <- colMedians_R(x, na.rm = FALSE)
 y1 <- colMedians(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+
+options(matrixStats.useNames = NULL)

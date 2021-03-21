@@ -7,19 +7,15 @@
  Copyright Henrik Bengtsson, 2013-2014
  **************************************************************************/
 #include <Rdefines.h>
-#include <R.h>
-#include <Rinternals.h>
-#include <stdio.h>
 #include "000.types.h"
 #include "rowLogSumExp_lowlevel.h"
+#include "naming.h"
 
-void setNames(SEXP vec/* Answer vector*/,SEXP namesVec,R_xlen_t length,void *subscripts,int idxType);
-
-SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames) {
+SEXP rowLogSumExps(SEXP lx, SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames) {
   SEXP ans;
   int narm, hasna, byrow, usenames;
   R_xlen_t nrow, ncol;
-
+  
   /* Argument 'lx' and 'dim': */
   assertArgMatrix(lx, dim, (R_TYPE_REAL), "lx");
   nrow = asR_xlen_t(dim, 0);
@@ -51,10 +47,10 @@ SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasN
   /* Argument 'useNames': */
   usenames = asLogical(useNames);  
 
-  if (usenames){
+  if (!R_IsNA(usenames) && usenames){
 
     if (!byrow){
-      SEXP matrixDimnames = getAttrib(lx, R_DimNamesSymbol);
+      SEXP matrixDimnames = getAttrib(x, R_DimNamesSymbol);
       /* We check whether the result has a natural naming by the dimnames of the
       * input and set the names of the result to these names if it is
       */
@@ -65,10 +61,7 @@ SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasN
         */
         if (namesVector != R_NilValue){
           /* The naming vector is available, so we can set the names of the result */
-
-          //namesgets(ans, getAttrib(namesVector, R_NamesSymbol));
-          setAttrib(ans, R_NamesSymbol, getAttrib(namesVector, R_NamesSymbol));
-          //setNames(ans, namesVector, ncols, ccols, colsType);
+          setNames(ans, namesVector, ncols, ccols, colsType);
         }
       }      
     }
@@ -79,67 +72,6 @@ SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasN
 
   return(ans);
 } /* rowLogSumExps() */
-
-
-
-void setNames(SEXP vec/* Answer vector*/,SEXP namesVec, R_xlen_t length, void *subscripts, int idxType){
-
-  if(length == 0){
-    /* If the targets has length zero, we skip the entire process
-    * which also is the behavior of base::rowSums
-    */
-    return;
-  }
-
-  SEXP ansNames;                                                                    
-  ansNames = PROTECT(allocVector(STRSXP, length));
-
-  if(idxType == SUBSETTED_ALL){                                                   
-    ansNames = namesVec;                                                  
-  }                                                                                 
-  else if(idxType == SUBSETTED_INTEGER){
-    Rprintf("Using integer mapping with %d indecies",length);
-
-    int *typedIdx = subscripts;                                                          
-    R_xlen_t thisIdx;           
-
-    for(R_xlen_t i = 0; i < length; i++){
-      thisIdx = (typedIdx[i] == NA_INTEGER) ? NA_R_XLEN_T : (R_xlen_t)typedIdx[i]-1;
-      Rprintf("i=%d,Idx=%d",i,thisIdx);
-      if(thisIdx == NA_R_XLEN_T){                                                   
-        SET_STRING_ELT(ansNames, i, NA_STRING);                                       
-      }                                                                             
-      else{                                                                         
-        SEXP eltElement = STRING_ELT(namesVec, thisIdx);                  
-        SET_STRING_ELT(ansNames, i, eltElement);                                      
-      }                                                                             
-    }                                                                               
-  }                                                                                 
-  else if(idxType == SUBSETTED_REAL){
-    Rprintf("Using floating point mapping");
-
-    double *typedIdx = subscripts;                                                       
-    R_xlen_t thisIdx;                      
-
-    for(R_xlen_t i = 0; i < length; i++){
-      Rprintf("index=%f",typedIdx);
-      thisIdx = ISNAN(typedIdx[i]) ? NA_R_XLEN_T : (R_xlen_t)typedIdx[i]-1;
-      Rprintf("i=%d,Idx=%d",i,thisIdx);
-      if(thisIdx == NA_R_XLEN_T){                                                   
-        SET_STRING_ELT(ansNames,i,NA_STRING);                                       
-      }                                                                             
-      else{                                                                         
-        SEXP eltElement = STRING_ELT(namesVec, thisIdx);                  
-        SET_STRING_ELT(ansNames,i,eltElement);                                      
-      }                                                                             
-    }                                                                               
-  }                                                                                 
-  else{                                                                             
-    error("Invalid index type");                                                    
-  }                                                                                 
-  namesgets(vec, ansNames);                                                          
-  UNPROTECT(1);
-}
 
 
 /***************************************************************************
