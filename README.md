@@ -10,7 +10,7 @@ Google Summer of Code is an initiative to support students to learn about and co
 - [x] 1. Easy: _Installing R packages with C code_
 - [x] 2. Easy: _Git and R package testing_
 - [x] 3. Easy: _Prototyping in R_
-    - Added argument `useNames = NA` to [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L64-L65). If a non-`NA` value is passed, an informative error message shows up.
+    - Added argument `useNames = NA` to [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L64-L66). If a non-`NA` value is passed, an informative error message shows up.
 
     - Written a package test that asserts that `colMedians(x, useNames = NA)` works and `colMedians(x, useNames = TRUE)` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L225-L238) using `tryCatch` method.
 
@@ -31,7 +31,7 @@ Google Summer of Code is an initiative to support students to learn about and co
         0 errors ✔ | 0 warnings ✔ | 2 notes ✖
         ``` 
 - [x] 4. Medium: _Simple support for name attributes_
-    - Added handling of `matrixStats.useNames` to [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L61-L62). My concept: Option is in high priority.
+    - Added handling of `matrixStats.useNames` to [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L61-L62).
 
     - Written a package test that asserts that `matrixStats.useNames = NA` works and `matrixStats.useNames = TRUE` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L241-L256) using `tryCatch` method. I tried not to undo test 3.
 
