@@ -13,7 +13,7 @@
 
 SEXP rowLogSumExps(SEXP lx, SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames) {
   SEXP ans;
-  int narm, hasna, byrow, usenames;
+  int narm, hasna, byrow;
   R_xlen_t nrow, ncol;
   
   /* Argument 'lx' and 'dim': */
@@ -45,9 +45,7 @@ SEXP rowLogSumExps(SEXP lx, SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, S
   }
 
   /* Argument 'useNames': */
-  usenames = asLogical(useNames);  
-
-  if (!R_IsNA(usenames) && usenames){
+  if (!R_IsNA(asReal(useNames)) && asLogical(useNames)){
 
     if (!byrow){
       SEXP matrixDimnames = getAttrib(x, R_DimNamesSymbol);

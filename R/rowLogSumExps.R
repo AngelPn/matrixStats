@@ -19,8 +19,9 @@
 #' length two specifying the dimension of \code{x}, also when not a
 #' \code{\link[base]{matrix}}.
 #' 
-#' @param useNames If not \code{\link[base]{NA}}, an informative error message
-#' is given.
+#' @param useNames If \code{\link[base]{NA}}, leave the default behavior of func.
+#' If \code{\link[base:logical]{TRUE}}, set names of result.
+#' If \code{\link[base:logical]{FALSE}}, dismiss names of result.
 #'
 #' @param ... Not used.
 #'

@@ -255,4 +255,4 @@ y0 <- colMedians_R(x, na.rm = FALSE)
 y1 <- colMedians(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
 
-options(matrixStats.useNames = NULL)
+options(matrixStats.useNames = NA)

@@ -53,7 +53,7 @@ Google Summer of Code is an initiative to support students to learn about and co
         ```
 
 - [x] 5. Medium: _A related, slightly different case_
-    - Added naming support to [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L69-L72): `useNames` can be `NA`, `TRUE` or `FALSE`. Option is in high priority.
+    - Added naming support to [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L70-L105): `useNames` can be `NA`, `TRUE` or `FALSE`.
 
     - Written a package test to check support naming in [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L170-L181)
 
@@ -73,13 +73,27 @@ Google Summer of Code is an initiative to support students to learn about and co
 
         0 errors ✔ | 0 warnings ✔ | 2 notes ✖
         ```
-- [ ] 6. Medium/Hard: _Implement in C code_
-    - Implemented naming support for [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L51-L74) in C code, according to [template](https://github.com/HenrikBengtsson/matrixStats/pull/197). I found two ways of doing it:
-        1. `namesgets` or `setAttrib` from [Writing R Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Attributes).
-        2. `setNames` from [yaccos template](https://github.com/yaccos/matrixStats/blob/develop/src/naming.c).  
-    But nothing seems to work and I haven't found the reason.
+- [x] 6. Medium/Hard: _Implement in C code_
+    - Implemented naming support for [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L47-L67) in C code, according to [template](https://github.com/HenrikBengtsson/matrixStats/pull/197). I found and added the [`setNames`](https://github.com/yaccos/matrixStats/blob/develop/src/naming.c) function for this purpose. In order to get the dimnames attribute in C, I added the argument [`lx`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L74-L76) because `as.numeric(lx)` lost the information.
 
-    - Written a package test to check support naming in [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L183-L191) that gives an error.
+    - Written a package test to check support naming in [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L185-L202) that gives an error.
+
+    - The package passes `R CMD check` with all OKs
+        ```sh
+        ── R CMD check results ──────────────────────────── matrixStats 0.58.0-9000 ────
+        Duration: 3m 20.8s
+
+        ❯ checking installed package size ... NOTE
+            installed size is 10.7Mb
+            sub-directories of 1Mb or more:
+            libs   9.9Mb
+
+        ❯ checking top-level files ... NOTE
+        Non-standard file/directory found at top level:
+            ‘CONTRIBUTING.md’
+
+        0 errors ✔ | 0 warnings ✔ | 2 notes ✖
+        ```
 
 - [ ] 7. Hard: _Begin to work on the project._
 

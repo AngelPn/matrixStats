@@ -28,8 +28,9 @@ length two specifying the dimension of \code{x}, also when not a
 
 \item{...}{Not used.}
 
-\item{useNames}{If not \code{\link[base]{NA}}, an informative error message
-is given.}
+\item{useNames}{If \code{\link[base]{NA}}, leave the default behavior of func.
+If \code{\link[base:logical]{TRUE}}, set names of result.
+If \code{\link[base:logical]{FALSE}}, dismiss names of result.}
 }
 \value{
 A \code{\link[base]{numeric}} \code{\link[base]{vector}} of length N

@@ -180,16 +180,25 @@ y <- colLogSumExps(lx)
 options(matrixStats.useNames = TRUE)
 y <- colLogSumExps(lx)
 
-options(matrixStats.useNames = NULL)
+options(matrixStats.useNames = NA)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Special case: Only columns are named
+# Special case: Only columns are named and matrixStats.useNames = TRUE
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cat("Special case: Only columns are named:\n")
+cat("Special case: Only columns are named and matrixStats.useNames = TRUE:\n")
 options(matrixStats.useNames = TRUE)
 lx <- matrix(-4:4, nrow = 3, ncol = 3, dimnames = list(NULL, LETTERS[1:3]))
 y <- colLogSumExps(lx)
 stopifnot(identical(names(y), colnames(lx)))
+options(matrixStats.useNames = NA)
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Special case: Only columns are named and matrixStats.useNames = FALSE
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cat("Special case: Only columns are named and matrixStats.useNames = FALSE:\n")
+options(matrixStats.useNames = FALSE)
+y <- colLogSumExps(lx)
+stopifnot(names(y) == NULL)
 options(matrixStats.useNames = NA)
 
 ## Bug report #104 (https://github.com/HenrikBengtsson/matrixStats/issues/104)
