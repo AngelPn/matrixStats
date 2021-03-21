@@ -74,7 +74,7 @@ Google Summer of Code is an initiative to support students to learn about and co
         0 errors ✔ | 0 warnings ✔ | 2 notes ✖
         ```
 - [x] 6. Medium/Hard: _Implement in C code_
-    - Implemented naming support for [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L47-L67) in C code, according to [template](https://github.com/HenrikBengtsson/matrixStats/pull/197). I found and added the [`setNames`](https://github.com/yaccos/matrixStats/blob/develop/src/naming.c) function for this purpose. In order to get the dimnames attribute in C, I added the argument [`lx`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L74-L76) because `as.numeric(lx)` lost the information.
+    - Implemented naming support for [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L47-L67) in C code, according to [template](https://github.com/HenrikBengtsson/matrixStats/pull/197). I found and added the [`setNames`](https://github.com/yaccos/matrixStats/blob/develop/src/naming.c) function for this purpose. In order to get the dimnames attribute in C, I added the argument [`lx`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L74-L76) because `as.numeric(lx)` lost the information.
 
     - Written a package test to check support naming in [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L185-L202) that gives an error.
 
