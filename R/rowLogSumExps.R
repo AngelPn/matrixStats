@@ -44,7 +44,7 @@ rowLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
   dim. <- as.integer(dim.)
   has_na <- TRUE
   res <- .Call(C_rowLogSumExps,
-               as.numeric(lx), lx,
+               lx,
                dim., rows, cols, as.logical(na.rm), has_na, TRUE, NA)
 
   # Preserve names
@@ -68,11 +68,10 @@ colLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
   has_na <- TRUE
 
   ## Option is already set?
-  if (!is.null(getOption("matrixStats.useNames", NULL)))
-    useNames <- as.logical(getOption("matrixStats.useNames"))
+  useNames <- getOption("matrixStats.useNames", default = NA)
   
   res <- .Call(C_rowLogSumExps,
-               as.numeric(lx), lx,
+               lx,
                dim., rows, cols, as.logical(na.rm), has_na, FALSE, useNames)
 
   # Perserve names

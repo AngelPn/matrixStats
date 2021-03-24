@@ -74,14 +74,14 @@ Google Summer of Code is an initiative to support students to learn about and co
         0 errors ✔ | 0 warnings ✔ | 2 notes ✖
         ```
 - [x] 6. Medium/Hard: _Implement in C code_
-    - Implemented naming support for [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L47-L67) in C code, according to [template](https://github.com/HenrikBengtsson/matrixStats/pull/197). I found and added the [`setNames`](https://github.com/yaccos/matrixStats/blob/develop/src/naming.c) function for this purpose. In order to get the dimnames attribute in C, I added the argument [`lx`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L74-L76) because `as.numeric(lx)` lost the information.
+    - Implemented naming support for [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L49-L67) in C code, according to [template](https://github.com/HenrikBengtsson/matrixStats/pull/197). I found and added the [`setNames`](https://github.com/yaccos/matrixStats/blob/develop/src/naming.c) function for this purpose. In order to get the dimnames attribute in C, I passed [`lx`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L74-L76) as argument in function and used [`coerceVector`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L19) to coerce object (`as.numeric(lx)` removed the attribut dimnaes).
 
-    - Written a package test to check support naming in [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L185-L202). Have not checked every corner case yet.
+    - Written a package test to check support naming in [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L185-L212). Have not checked every corner case yet.
 
     - The package passes `R CMD check` with all OKs
         ```sh
         ── R CMD check results ──────────────────────────── matrixStats 0.58.0-9000 ────
-        Duration: 3m 20.8s
+        Duration: 3m 25.8s
 
         ❯ checking installed package size ... NOTE
             installed size is 10.7Mb

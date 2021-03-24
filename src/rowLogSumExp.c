@@ -11,10 +11,12 @@
 #include "rowLogSumExp_lowlevel.h"
 #include "naming.h"
 
-SEXP rowLogSumExps(SEXP lx, SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames) {
+SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames) {
   SEXP ans;
   int narm, hasna, byrow;
   R_xlen_t nrow, ncol;
+
+  PROTECT(lx = coerceVector(lx, REALSXP));
   
   /* Argument 'lx' and 'dim': */
   assertArgMatrix(lx, dim, (R_TYPE_REAL), "lx");
@@ -45,10 +47,11 @@ SEXP rowLogSumExps(SEXP lx, SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, S
   }
 
   /* Argument 'useNames': */
-  if (!R_IsNA(asReal(useNames)) && asLogical(useNames)){
+  PROTECT(useNames = coerceVector(useNames, LGLSXP));
+  if (asLogical(useNames)){
 
     if (!byrow){
-      SEXP matrixDimnames = getAttrib(x, R_DimNamesSymbol);
+      SEXP matrixDimnames = getAttrib(lx, R_DimNamesSymbol);
       /* We check whether the result has a natural naming by the dimnames of the
       * input and set the names of the result to these names if it is
       */
@@ -66,7 +69,7 @@ SEXP rowLogSumExps(SEXP lx, SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, S
 
   }
 
-  UNPROTECT(1); /* ans = PROTECT(...) */
+  UNPROTECT(3); /* ans = PROTECT(...), PROTECT(... = coerceVector(...)) */
 
   return(ans);
 } /* rowLogSumExps() */
