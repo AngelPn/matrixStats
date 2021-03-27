@@ -13,7 +13,7 @@
 
 SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames) {
   SEXP ans;
-  int narm, hasna, byrow;
+  int narm, hasna, byrow, usenames;
   R_xlen_t nrow, ncol;
 
   PROTECT(lx = coerceVector(lx, REALSXP));
@@ -47,8 +47,9 @@ SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasN
   }
 
   /* Argument 'useNames': */
-  PROTECT(useNames = coerceVector(useNames, LGLSXP));
-  if (asLogical(useNames)){
+  usenames = asLogical(useNames);
+
+  if (usenames != NA_LOGICAL && usenames){
 
     if (!byrow){
       SEXP matrixDimnames = getAttrib(lx, R_DimNamesSymbol);
@@ -69,7 +70,7 @@ SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasN
 
   }
 
-  UNPROTECT(3); /* ans = PROTECT(...), PROTECT(... = coerceVector(...)) */
+  UNPROTECT(2); /* ans = PROTECT(...), PROTECT(... = coerceVector(...)) */
 
   return(ans);
 } /* rowLogSumExps() */
