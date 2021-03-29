@@ -230,8 +230,8 @@ x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
 
 # Handling a condition cancels the execution of the code block that raised (throwed) the condition
 # and continues the execution with the next command after the tryCatch command
-tryCatch(colMedians(x, na.rm = FALSE, useNames = TRUE),
-         message = function(m){ "Expected error message works"})
+tryCatch(colMedians(x, na.rm = FALSE, useNames = TRUE), 
+          error = function(m){ "Expected error message works"})
 
 y0 <- colMedians_R(x, na.rm = FALSE)
 y1 <- colMedians(x, na.rm = FALSE)
@@ -247,7 +247,7 @@ x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
 # option TRUE is set, expect an error
 options(matrixStats.useNames = TRUE)
 tryCatch(colMedians(x, na.rm = FALSE),
-         message = function(m){ "Expected error message works"})
+         error = function(m){ "Expected error message works"})
 
 # option NA is set, expect working
 options(matrixStats.useNames = NA)

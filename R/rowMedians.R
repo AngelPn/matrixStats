@@ -63,7 +63,7 @@ colMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
 
   # If a non-NA value is passed, give an informative error message           
   if (!is.na(useNames))
-    message("Error: A non-NA value in useNames")
+    stop("Error: A non-NA value in useNames")
 
   .Call(C_rowMedians, x, dim., rows, cols, na.rm, has_nas, FALSE)
 }
