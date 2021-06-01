@@ -157,12 +157,14 @@ remotes::install_github("//github.com/AngelPn/matrixStats", ref="develop")
 This will install the package from source.  Because of this and because this package also compiles native code, Windows users need to have [Rtools](https://cran.r-project.org/bin/windows/Rtools/) installed and macOS users need to have [Xcode](https://developer.apple.com/xcode/) installed.
 
 
+<!-- pkgdown-drop-below -->
 
 <!-- pkgdown-drop-below -->
 
 ## Contributing
 
 To contribute to this package, please see [CONTRIBUTING.md](CONTRIBUTING.md).
+ 
 
 ## Software status
 

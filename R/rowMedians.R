@@ -11,7 +11,8 @@
 #' require three times the memory of \code{rowMedians(x)}
 #' (\code{colMedians(x)}), but all this is avoided.
 #'
-#' @param x A \code{\link[base]{numeric}} NxK \code{\link[base]{matrix}}.
+#' @inheritParams rowAlls
+#' @inheritParams rowDiffs
 #'
 #' @param rows,cols A \code{\link[base]{vector}} indicating subset of rows
 #' (and/or columns) to operate over. If \code{\link[base]{NULL}}, no subsetting

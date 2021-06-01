@@ -4,6 +4,8 @@
 #' Accurately computes the logarithm of the sum of exponentials across rows or
 #' columns.
 #'
+#' @inheritParams rowAlls
+#' @inheritParams logSumExp
 #'
 #' @param lx A \code{\link[base]{numeric}} NxK \code{\link[base]{matrix}}.
 #' Typically \code{lx} are \eqn{log(x)} values.
