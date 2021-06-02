@@ -25,8 +25,10 @@
 #' length two specifying the dimension of \code{x}, also when not a
 #' \code{\link[base]{matrix}}.
 #' 
-#' @param useNames If not \code{\link[base]{NA}}, an informative error message
-#' is given.
+#' @param useNames If \code{\link[base]{NA}}, the default behavior of the 
+#' function about naming support is remained. If \code{\link[base:logical]{FALSE}}, 
+#' no naming support is done. Else if \code{\link[base:logical]{TRUE}}, support 
+#' for names attributes is done.
 #'
 #' @param ... Not used.
 #'
@@ -43,10 +45,12 @@
 #' @keywords array iteration robust univar
 #' @export
 rowMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                       dim. = dim(x), ...) {
+                       dim. = dim(x), useNames = NA, ...) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
+  useNames <- as.logical(useNames)
   has_nas <- TRUE  # Add as an argument? /2007-08-24
+  
   .Call(C_rowMedians, x, dim., rows, cols, na.rm, has_nas, TRUE)
 }
 
@@ -56,15 +60,8 @@ colMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
                        dim. = dim(x), useNames = NA, ...) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
+  useNames <- as.logical(useNames)
   has_nas <- TRUE  # Add as an argument? /2007-08-24
-
-  ## Option is already set?
-  if (!is.null(getOption("matrixStats.useNames", NULL)))
-    useNames = getOption("matrixStats.useNames")
-
-  # If a non-NA value is passed, give an informative error message           
-  if (!is.na(useNames))
-    stop("Error: A non-NA value in useNames")
-
+  
   .Call(C_rowMedians, x, dim., rows, cols, na.rm, has_nas, FALSE)
 }

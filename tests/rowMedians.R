@@ -221,38 +221,24 @@ for (kk in seq_len(n_sims)) {
   stopifnot(all.equal(y2, y0))
 } # for (kk ...)
 
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Checking value of useNames in colMedians
+# Checking useNames argument
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cat("Checking value of useNames in colMedians:\n")
-x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
-
-# Handling a condition cancels the execution of the code block that raised (throwed) the condition
-# and continues the execution with the next command after the tryCatch command
-tryCatch(colMedians(x, na.rm = FALSE, useNames = TRUE), 
-          error = function(m){ "Expected error message works"})
-
-y0 <- colMedians_R(x, na.rm = FALSE)
-y1 <- colMedians(x, na.rm = FALSE)
-stopifnot(all.equal(y1, y0))
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Checking handling of matrixStats.useNames in colMedians
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cat("Checking handling of matrixStats.useNames in colMedians:\n")
-x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
-
-# option TRUE is set, expect an error
-options(matrixStats.useNames = TRUE)
-tryCatch(colMedians(x, na.rm = FALSE),
-         error = function(m){ "Expected error message works"})
-
-# option NA is set, expect working
-options(matrixStats.useNames = NA)
-y0 <- colMedians_R(x, na.rm = FALSE)
-y1 <- colMedians(x, na.rm = FALSE)
-stopifnot(all.equal(y1, y0))
-
-options(matrixStats.useNames = NA)
+cat("Checking useNames argument:\n")
+for (useNames in c(NA, FALSE, TRUE)) {
+  x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3, dimnames = list(letters[1:3], LETTERS[1:3]))
+  
+  # rowMedians():
+  y0 <- rowMedians_R(x)
+  y1 <- rowMedians(x, useNames = useNames)
+  tryCatch(all.equal(y1,y0), error = function(m){ "names for current but not for target"})
+  y2 <- colMedians(t(x), useNames = useNames)
+  tryCatch(all.equal(y1,y0), error = function(m){ "names for current but not for target"})
+  
+  # colMedians():
+  y0 <- colMedians_R(x)
+  y1 <- colMedians(x, useNames = useNames)
+  tryCatch(all.equal(y1,y0), error = function(m){ "names for current but not for target"})
+  y2 <- rowMedians(t(x), useNames = useNames)
+  tryCatch(all.equal(y1,y0), error = function(m){ "names for current but not for target"})
+}

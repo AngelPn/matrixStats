@@ -1,101 +1,30 @@
 
 # matrixStats: Functions that Apply to Rows and Columns of Matrices (and to Vectors)
 
-## Google Summer of Code (GSoC) 2021 - Skill Tests
+## Google Summer of Code (GSoC) 2021
 
-Google Summer of Code is an initiative to support students to learn about and contribute to open-source software projects, while getting payed. The R community proposed a project on the matrixStats package and, as a student, I am interested in working on this project. I am going to complete all the tasks proposed on [Skill Tests](https://github.com/rstats-gsoc/gsoc2021/wiki/matrixStats#skill-tests).
+Google Summer of Code is an initiative to support students to learn about and contribute to open-source software projects, while getting payed. The R community proposed a project on the matrixStats package and, as a student, I am interested in working on this project.
 
-## Skill Tests progress
+### Skill Tests
+I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gsoc/gsoc2021/wiki/matrixStats#skill-tests).
 
 - [x] 1. Easy: _Installing R packages with C code_
 - [x] 2. Easy: _Git and R package testing_
 - [x] 3. Easy: _Prototyping in R_
-    - Added argument `useNames = NA` to [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L64-L66). If a non-`NA` value is passed, an informative error message shows up.
-
-    - Written a package test that asserts that `colMedians(x, useNames = NA)` works and `colMedians(x, useNames = TRUE)` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L225-L238) using `tryCatch` method.
-
-    - The package passes `R CMD check` with all OKs
-        ```sh
-        ── R CMD check results ──────────────────────────── matrixStats 0.58.0-9000 ────
-        Duration: 3m 29.3s
-
-        ❯ checking installed package size ... NOTE
-            installed size is 10.7Mb
-            sub-directories of 1Mb or more:
-            libs   9.9Mb
-
-        ❯ checking top-level files ... NOTE
-        Non-standard file/directory found at top level:
-            ‘CONTRIBUTING.md’
-
-        0 errors ✔ | 0 warnings ✔ | 2 notes ✖
-        ``` 
 - [x] 4. Medium: _Simple support for name attributes_
-    - Added handling of `matrixStats.useNames` to [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L61-L62).
-
-    - Written a package test that asserts that `matrixStats.useNames = NA` works and `matrixStats.useNames = TRUE` (or `FALSE`) gives the expected error in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L241-L256) using `tryCatch` method. I tried not to undo test 3.
-
-    - The package passes `R CMD check` with all OKs
-        ```sh
-        ── R CMD check results ──────────────────────────── matrixStats 0.58.0-9000 ────
-        Duration: 3m 22.6s
-
-        ❯ checking installed package size ... NOTE
-            installed size is 10.7Mb
-            sub-directories of 1Mb or more:
-            libs   9.9Mb
-
-        ❯ checking top-level files ... NOTE
-        Non-standard file/directory found at top level:
-            ‘CONTRIBUTING.md’
-
-        0 errors ✔ | 0 warnings ✔ | 2 notes ✖
-        ```
-
 - [x] 5. Medium: _A related, slightly different case_
-    - Added naming support to [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L70-L105): `useNames` can be `NA`, `TRUE` or `FALSE`.
-
-    - Written a package test to check support naming in [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L170-L181)
-
-    - The package passes `R CMD check` with all OKs
-        ```sh
-        ── R CMD check results ──────────────────────────── matrixStats 0.58.0-9000 ────
-        Duration: 3m 19.4s
-
-        ❯ checking installed package size ... NOTE
-            installed size is 10.7Mb
-            sub-directories of 1Mb or more:
-            libs   9.9Mb
-
-        ❯ checking top-level files ... NOTE
-        Non-standard file/directory found at top level:
-            ‘CONTRIBUTING.md’
-
-        0 errors ✔ | 0 warnings ✔ | 2 notes ✖
-        ```
 - [x] 6. Medium/Hard: _Implement in C code_
-    - Implemented naming support for [`colLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L49-L67) in C code, according to [template](https://github.com/HenrikBengtsson/matrixStats/pull/197). I found and added the [`setNames`](https://github.com/yaccos/matrixStats/blob/develop/src/naming.c) function for this purpose. In order to get the dimnames attribute in C, I passed [`lx`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L74-L76) as argument in function and used [`coerceVector`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L19) to coerce object (`as.numeric(lx)` removed the attribut dimnaes).
+- [x] 7. Hard: _Begin to work on the project._
 
-    - Written a package test to check support naming in [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L185-L212). Have not checked every corner case yet.
+### Work on the project
 
-    - The package passes `R CMD check` with all OKs
-        ```sh
-        ── R CMD check results ──────────────────────────── matrixStats 0.58.0-9000 ────
-        Duration: 3m 25.8s
+- Added `@param useNames` to Roxygen2 comments in [`rowMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R).
 
-        ❯ checking installed package size ... NOTE
-            installed size is 10.7Mb
-            sub-directories of 1Mb or more:
-            libs   9.9Mb
+- Added argument `useNames = NA` to [`rowMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L48) and  [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L60). Also, added [`useNames = as.logical(useNames)`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L51) to convert useNames to logical value.
 
-        ❯ checking top-level files ... NOTE
-        Non-standard file/directory found at top level:
-            ‘CONTRIBUTING.md’
+- Written a package test that asserts that the added argument does not affect the behavior of the function in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L227-L244).
 
-        0 errors ✔ | 0 warnings ✔ | 2 notes ✖
-        ```
-
-- [ ] 7. Hard: _Begin to work on the project._
+- The package passes `R CMD check` with all OKs
 
 ---
 
