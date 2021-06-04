@@ -9,17 +9,23 @@
 \alias{colMaxs}
 \title{Gets the range of values in each row (column) of a matrix}
 \usage{
-rowRanges(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x), ...)
+rowRanges(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x),
+  useNames = NA, ...)
 
-rowMins(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x), ...)
+rowMins(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x),
+  useNames = NA, ...)
 
-rowMaxs(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x), ...)
+rowMaxs(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x),
+  useNames = NA, ...)
 
-colRanges(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x), ...)
+colRanges(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x),
+  useNames = NA, ...)
 
-colMins(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x), ...)
+colMins(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x),
+  useNames = NA, ...)
 
-colMaxs(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x), ...)
+colMaxs(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x),
+  useNames = NA, ...)
 }
 \arguments{
 \item{x}{An NxK \code{\link[base]{matrix}} or, if \code{dim.} is specified,
@@ -39,6 +45,11 @@ length two specifying the dimension of \code{x}, also when not a
 \code{\link[base]{matrix}}.  \emph{Comment:} The reason for this argument
 being named with a period at the end is purely technical (we get a run-time
 error if we try to name it \code{dim}).}
+
+\item{useNames}{If \code{\link[base]{NA}}, the default behavior of the 
+function about naming support is remained. If \code{\link[base:logical]{FALSE}}, 
+no naming support is done. Else if \code{\link[base:logical]{TRUE}}, support 
+for names attributes is done.}
 
 \item{...}{Not used.}
 }

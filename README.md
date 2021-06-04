@@ -18,13 +18,13 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
-- Added `@param useNames` to Roxygen2 comments in [`rowMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R).
+- Added `@param useNames` to Roxygen2 comments in [`rowAlls()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L35-L38) and used `@inheritParams` to avoid duplicate this entry in other functions.
 
-- Added argument `useNames = NA` to [`rowMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L48) and  [`colMedians()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L60). Also, added [`useNames = as.logical(useNames)`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowMedians.R#L51) to convert useNames to logical value.
+- Added argument `useNames = NA` to every function that makes sense to support naming. This value keeps the default behavior of the function so no code was added at the inside of the functions. Improvements of the default behavior could be done when moving to the implementation of naming support in C code where possible.
 
-- Written a package test that asserts that the added argument does not affect the behavior of the function in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowMedians.R#L227-L244).
+- Commented the skill test implementation of naming support for `colLogSumExps()` in C code in [`src/rowLogSumExp.c`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExps.c#L49-L71) for future use but kept the use of `coerceVector()` to preserve object attributes (instead of `as.numeric()` that removed all attributes of the object).
 
-- The package passes `R CMD check` with all OKs
+- The package passes `R CMD check` with all OKs.
 
 ---
 

@@ -166,52 +166,6 @@ print(y)
 stopifnot(length(y) == nrow(lx))
 stopifnot(all(y == 5))
 
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Checking handling of useNames in colLogSumExps
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cat("Checking handling of useNames in colLogSumExps:\n")
-lx <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
-y <- colLogSumExps(lx)
-
-options(matrixStats.useNames = FALSE)
-y <- colLogSumExps(lx)
-
-options(matrixStats.useNames = TRUE)
-y <- colLogSumExps(lx)
-
-options(matrixStats.useNames = NA)
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Special case: Only columns are named
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-# and matrixStats.useNames = TRUE
-cat("Special case: Only columns are named and matrixStats.useNames = TRUE:\n")
-options(matrixStats.useNames = TRUE)
-lx <- matrix(-4:4, nrow = 3, ncol = 3, dimnames = list(NULL, LETTERS[1:3]))
-y <- colLogSumExps(lx)
-stopifnot(identical(names(y), colnames(lx)))
-
-# and matrixStats.useNames = FALSE
-cat("Special case: Only columns are named and matrixStats.useNames = FALSE:\n")
-options(matrixStats.useNames = FALSE)
-y <- colLogSumExps(lx)
-stopifnot(names(y) == NULL)
-
-# and matrixStats.useNames = NULL
-cat("Special case: Only columns are named and matrixStats.useNames = NULL:\n")
-options(matrixStats.useNames = NULL)
-y <- colLogSumExps(lx)
-stopifnot(identical(names(y), colnames(lx)))
-
-# and matrixStats.useNames = NA
-cat("Special case: Only columns are named and matrixStats.useNames = NA:\n")
-options(matrixStats.useNames = NA)
-y <- colLogSumExps(lx)
-stopifnot(identical(names(y), colnames(lx)))
-
-
 ## Bug report #104 (https://github.com/HenrikBengtsson/matrixStats/issues/104)
 ## (This would core dump on Windows)
 x <- matrix(0.0, nrow = 2L, ncol = 32762L)

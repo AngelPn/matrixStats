@@ -6,11 +6,12 @@
 \title{Gets the rank of the elements in each row (column) of a matrix}
 \usage{
 rowRanks(x, rows = NULL, cols = NULL, ties.method = c("max", "average",
-  "first", "last", "random", "max", "min", "dense"), dim. = dim(x), ...)
+  "first", "last", "random", "max", "min", "dense"), dim. = dim(x),
+  useNames = NA, ...)
 
 colRanks(x, rows = NULL, cols = NULL, ties.method = c("max", "average",
   "first", "last", "random", "max", "min", "dense"), dim. = dim(x),
-  preserveShape = FALSE, ...)
+  preserveShape = FALSE, useNames = NA, ...)
 }
 \arguments{
 \item{x}{An NxK \code{\link[base]{matrix}} or, if \code{dim.} is specified,
@@ -30,6 +31,11 @@ length two specifying the dimension of \code{x}, also when not a
 \code{\link[base]{matrix}}.  \emph{Comment:} The reason for this argument
 being named with a period at the end is purely technical (we get a run-time
 error if we try to name it \code{dim}).}
+
+\item{useNames}{If \code{\link[base]{NA}}, the default behavior of the 
+function about naming support is remained. If \code{\link[base:logical]{FALSE}}, 
+no naming support is done. Else if \code{\link[base:logical]{TRUE}}, support 
+for names attributes is done.}
 
 \item{...}{Not used.}
 

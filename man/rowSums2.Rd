@@ -5,9 +5,11 @@
 \alias{colSums2}
 \title{Calculates the sum for each row (column) in a matrix}
 \usage{
-rowSums2(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x), ...)
+rowSums2(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x),
+  useNames = NA, ...)
 
-colSums2(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x), ...)
+colSums2(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x),
+  useNames = NA, ...)
 }
 \arguments{
 \item{x}{An NxK \code{\link[base]{matrix}} or, if \code{dim.} is specified,
@@ -27,6 +29,11 @@ length two specifying the dimension of \code{x}, also when not a
 \code{\link[base]{matrix}}.  \emph{Comment:} The reason for this argument
 being named with a period at the end is purely technical (we get a run-time
 error if we try to name it \code{dim}).}
+
+\item{useNames}{If \code{\link[base]{NA}}, the default behavior of the 
+function about naming support is remained. If \code{\link[base:logical]{FALSE}}, 
+no naming support is done. Else if \code{\link[base:logical]{TRUE}}, support 
+for names attributes is done.}
 
 \item{...}{Not used.}
 }

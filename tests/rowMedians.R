@@ -233,12 +233,12 @@ for (useNames in c(NA, FALSE, TRUE)) {
   y1 <- rowMedians(x, useNames = useNames)
   tryCatch(all.equal(y1,y0), error = function(m){ "names for current but not for target"})
   y2 <- colMedians(t(x), useNames = useNames)
-  tryCatch(all.equal(y1,y0), error = function(m){ "names for current but not for target"})
+  tryCatch(all.equal(y2,y0), error = function(m){ "names for current but not for target"})
   
   # colMedians():
   y0 <- colMedians_R(x)
   y1 <- colMedians(x, useNames = useNames)
   tryCatch(all.equal(y1,y0), error = function(m){ "names for current but not for target"})
   y2 <- rowMedians(t(x), useNames = useNames)
-  tryCatch(all.equal(y1,y0), error = function(m){ "names for current but not for target"})
+  tryCatch(all.equal(y2,y0), error = function(m){ "names for current but not for target"})
 }

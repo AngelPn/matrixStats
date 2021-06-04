@@ -42,7 +42,7 @@
 #' @keywords array
 #' @export
 rowLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
-                          dim. = dim(lx), ...) {
+                          dim. = dim(lx), useNames = NA, ...) {
   dim. <- as.integer(dim.)
   has_na <- TRUE
   res <- .Call(C_rowLogSumExps,
@@ -68,9 +68,6 @@ colLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
                           dim. = dim(lx), useNames = NA, ...) {
   dim. <- as.integer(dim.)
   has_na <- TRUE
-
-  ## Option is already set?
-  useNames <- getOption("matrixStats.useNames", default = NA)
   
   res <- .Call(C_rowLogSumExps,
                lx,
@@ -79,29 +76,11 @@ colLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
   # Perserve names
   names <- colnames(lx)
   if (!is.null(names)){
-    if (!is.null(cols))
+    if (!is.null(cols)){
       names <- names[cols]
-  }
-
-  # If useNames is NA, leave the default behavior as-is
-  if (is.na(useNames)){
-    names(res) <- names
-    return(res)
-  }
-
-  # Else, check that the names are handled correctly according to the option
-
-  # If useNames is TRUE, make sure that names have the value we expect
-  if (useNames){
-    if (!identical(names(res),names)){
-      message("not the expected values in names")
     }
-  }
-  # If useNames is FALSE, make sure the names of resulting y are missing
-  else{
-    if (!is.null(names(res)))
-      names(res) <- NULL
+    names(res) <- names
   }
 
-  return(res)
+  res
 }

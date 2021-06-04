@@ -5,9 +5,11 @@
 \alias{colWeightedMedians}
 \title{Calculates the weighted medians for each row (column) in a matrix}
 \usage{
-rowWeightedMedians(x, w = NULL, rows = NULL, cols = NULL, na.rm = FALSE, ...)
+rowWeightedMedians(x, w = NULL, rows = NULL, cols = NULL,
+  na.rm = FALSE, useNames = NA, ...)
 
-colWeightedMedians(x, w = NULL, rows = NULL, cols = NULL, na.rm = FALSE, ...)
+colWeightedMedians(x, w = NULL, rows = NULL, cols = NULL,
+  na.rm = FALSE, useNames = NA, ...)
 }
 \arguments{
 \item{x}{An NxK \code{\link[base]{matrix}} or, if \code{dim.} is specified,
@@ -24,6 +26,11 @@ operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
 
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, missing values are
 excluded.}
+
+\item{useNames}{If \code{\link[base]{NA}}, the default behavior of the 
+function about naming support is remained. If \code{\link[base:logical]{FALSE}}, 
+no naming support is done. Else if \code{\link[base:logical]{TRUE}}, support 
+for names attributes is done.}
 
 \item{...}{Additional arguments passed to \code{\link{weightedMedian}}().}
 }
