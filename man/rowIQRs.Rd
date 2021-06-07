@@ -6,9 +6,9 @@
 \alias{iqr}
 \title{Estimates of the interquartile range for each row (column) in a matrix}
 \usage{
-rowIQRs(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA, ...)
+rowIQRs(x, rows = NULL, cols = NULL, na.rm = FALSE, ..., useNames = NA)
 
-colIQRs(x, rows = NULL, cols = NULL, na.rm = FALSE, useNames = NA, ...)
+colIQRs(x, rows = NULL, cols = NULL, na.rm = FALSE, ..., useNames = NA)
 
 iqr(x, idxs = NULL, na.rm = FALSE, ...)
 }
@@ -25,13 +25,13 @@ operate over. If \code{\link[base]{NULL}}, no subsetting is done.}
 \item{na.rm}{If \code{\link[base:logical]{TRUE}}, missing values are
 excluded.}
 
+\item{...}{Additional arguments passed to \code{\link{rowQuantiles}}()
+(\code{colQuantiles()}).}
+
 \item{useNames}{If \code{\link[base]{NA}}, the default behavior of the 
 function about naming support is remained. If \code{\link[base:logical]{FALSE}}, 
 no naming support is done. Else if \code{\link[base:logical]{TRUE}}, support 
 for names attributes is done.}
-
-\item{...}{Additional arguments passed to \code{\link{rowQuantiles}}()
-(\code{colQuantiles()}).}
 
 \item{idxs}{A \code{\link[base]{vector}} indicating subset of elements to
 operate over. If \code{\link[base]{NULL}}, no subsetting is done.}

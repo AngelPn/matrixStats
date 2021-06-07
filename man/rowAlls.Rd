@@ -10,10 +10,10 @@
 \title{Checks if a value exists / does not exist in each row (column) of a matrix}
 \usage{
 rowAlls(x, rows = NULL, cols = NULL, value = TRUE, na.rm = FALSE,
-  dim. = dim(x), useNames = NA, ...)
+  dim. = dim(x), ..., useNames = NA)
 
 colAlls(x, rows = NULL, cols = NULL, value = TRUE, na.rm = FALSE,
-  dim. = dim(x), useNames = NA, ...)
+  dim. = dim(x), ..., useNames = NA)
 
 allValue(x, idxs = NULL, value = TRUE, na.rm = FALSE, ...)
 
@@ -46,12 +46,12 @@ length two specifying the dimension of \code{x}, also when not a
 being named with a period at the end is purely technical (we get a run-time
 error if we try to name it \code{dim}).}
 
+\item{...}{Not used.}
+
 \item{useNames}{If \code{\link[base]{NA}}, the default behavior of the 
 function about naming support is remained. If \code{\link[base:logical]{FALSE}}, 
 no naming support is done. Else if \code{\link[base:logical]{TRUE}}, support 
 for names attributes is done.}
-
-\item{...}{Not used.}
 
 \item{idxs}{A \code{\link[base]{vector}} indicating subset of elements to
 operate over. If \code{\link[base]{NULL}}, no subsetting is done.}

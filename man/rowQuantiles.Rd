@@ -6,11 +6,11 @@
 \title{Estimates quantiles for each row (column) in a matrix}
 \usage{
 rowQuantiles(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1,
-  by = 0.25), na.rm = FALSE, type = 7L, useNames = NA, ...,
+  by = 0.25), na.rm = FALSE, type = 7L, ..., useNames = NA,
   drop = TRUE)
 
 colQuantiles(x, rows = NULL, cols = NULL, probs = seq(from = 0, to = 1,
-  by = 0.25), na.rm = FALSE, type = 7L, useNames = NA, ...,
+  by = 0.25), na.rm = FALSE, type = 7L, ..., useNames = NA,
   drop = TRUE)
 }
 \arguments{
@@ -32,12 +32,12 @@ excluded.}
 \item{type}{An \code{\link[base]{integer}} specify the type of estimator.
 See \code{\link[stats]{quantile}} for more details.}
 
+\item{...}{Additional arguments passed to \code{\link[stats]{quantile}}.}
+
 \item{useNames}{If \code{\link[base]{NA}}, the default behavior of the 
 function about naming support is remained. If \code{\link[base:logical]{FALSE}}, 
 no naming support is done. Else if \code{\link[base:logical]{TRUE}}, support 
 for names attributes is done.}
-
-\item{...}{Additional arguments passed to \code{\link[stats]{quantile}}.}
 
 \item{drop}{If TRUE, singleton dimensions in the result are dropped,
 otherwise not.}

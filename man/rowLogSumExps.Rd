@@ -7,10 +7,10 @@
 columns}
 \usage{
 rowLogSumExps(lx, rows = NULL, cols = NULL, na.rm = FALSE,
-  dim. = dim(lx), useNames = NA, ...)
+  dim. = dim(lx), ..., useNames = NA)
 
 colLogSumExps(lx, rows = NULL, cols = NULL, na.rm = FALSE,
-  dim. = dim(lx), useNames = NA, ...)
+  dim. = dim(lx), ..., useNames = NA)
 }
 \arguments{
 \item{lx}{A \code{\link[base]{numeric}} NxK \code{\link[base]{matrix}}.
@@ -27,11 +27,11 @@ ignored, otherwise not.}
 length two specifying the dimension of \code{x}, also when not a
 \code{\link[base]{matrix}}.}
 
+\item{...}{Not used.}
+
 \item{useNames}{If \code{\link[base]{NA}}, leave the default behavior of func.
 If \code{\link[base:logical]{TRUE}}, set names of result.
 If \code{\link[base:logical]{FALSE}}, dismiss names of result.}
-
-\item{...}{Not used.}
 }
 \value{
 A \code{\link[base]{numeric}} \code{\link[base]{vector}} of length N

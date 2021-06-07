@@ -6,10 +6,10 @@
 \title{Calculates the median for each row (column) in a matrix}
 \usage{
 rowMedians(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x),
-  useNames = NA, ...)
+  ..., useNames = NA)
 
 colMedians(x, rows = NULL, cols = NULL, na.rm = FALSE, dim. = dim(x),
-  useNames = NA, ...)
+  ..., useNames = NA)
 }
 \arguments{
 \item{x}{An NxK \code{\link[base]{matrix}} or, if \code{dim.} is specified,
@@ -26,12 +26,12 @@ are excluded first, otherwise not.}
 length two specifying the dimension of \code{x}, also when not a
 \code{\link[base]{matrix}}.}
 
+\item{...}{Not used.}
+
 \item{useNames}{If \code{\link[base]{NA}}, the default behavior of the 
 function about naming support is remained. If \code{\link[base:logical]{FALSE}}, 
 no naming support is done. Else if \code{\link[base:logical]{TRUE}}, support 
 for names attributes is done.}
-
-\item{...}{Not used.}
 }
 \value{
 Returns a \code{\link[base]{numeric}} \code{\link[base]{vector}} of
