@@ -56,9 +56,9 @@ for (mode in c("integer", "double")) {
   # Testing names
   rownames(lx_neg) <- seq_len(nrow(x))
   colnames(lx_neg) <- seq_len(ncol(x))
-  y2 <- rowLogSumExps(lx_neg)
+  y2 <- rowLogSumExps(lx_neg, useNames = NA)
   stopifnot(identical(names(y2), rownames(lx_neg)))
-  y3 <- colLogSumExps(t(lx_neg))
+  y3 <- colLogSumExps(t(lx_neg), useNames = NA)
   stopifnot(identical(names(y3), rownames(lx_neg)))
 } # for (mode ...)
 

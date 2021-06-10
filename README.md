@@ -18,13 +18,47 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
-- Added `@param useNames` to Roxygen2 comments in [`rowAlls()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L35-L38) and used `@inheritParams` to avoid duplicate this entry in other functions.
+- Changed the default value of `useNames` to `FALSE` to run `R CMD check` and to identify reverse dependency packages that rely on `useNames = FALSE`.
 
-- Added argument `useNames = NA` to every function that makes sense to support naming. This value keeps the default behavior of the function so no code was added at the inside of the functions. Improvements of the default behavior could be done when moving to the implementation of naming support in C code where possible.
+- Written code to functions that the default behavior is not to support naming (e.g. [`rowSums2()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowSums2.R#L25-L31)):
+```
+  # Update names attributes?
+  if (!is.na(useNames)) {
+    if (useNames) {
+      stop("useNames = TRUE is not currently implemented")
+    } else {
+      names(res) <- NULL
+    }
+  }
+```
 
-- Written `useNames` argument after the `dots` argument in order to break existing API.
+- Written code to functions that the default behavior is to preserve names attributes (e.g. [`rowLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L76-L87)):
+```
+  # Preserve names attributes?
+  if (is.na(useNames) || useNames) {
+    names <- colnames(lx)
+    if (!is.null(names)){
+      if (!is.null(cols)){
+        names <- names[cols]
+      }
+      names(res) <- names
+    }
+  } else {
+    names(res) <- NULL
+  }
+```
 
-- Commented the skill test implementation of naming support for `colLogSumExps()` in C code in [`src/rowLogSumExp.c`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L49-L71) for future use but kept the use of `coerceVector()` to preserve object attributes (instead of `as.numeric()` that removed all attributes of the object).
+- Written code to functions that the default behavior is to support naming (e.g. [`rowVarDiffs()`](https://github.com/AngelPn/matrixStats/blob/develop/R/varDiff.R#L250-L253), [`rowWeightedMeans()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowWeightedMeans.R#L120-L123)):
+```
+  # Preserve names attributes?
+  if (!(is.na(useNames) || useNames)) {
+      rownames(x) <- NULL
+  }
+```
+
+- Called the functions that already preserved names with `useNames = NA` when needed on tests, e.g. [`tests/rowLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L56-L62).
+
+- [`rowIQRs()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowIQRs.R#L30): Removed `colnames` of `Q` to solve [Issue#3](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/3#issuecomment-857839472).
 
 - The package passes `R CMD check` with all OKs.
 

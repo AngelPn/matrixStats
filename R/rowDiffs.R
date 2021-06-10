@@ -16,17 +16,39 @@
 #' @keywords array iteration robust univar
 #' @export
 rowDiffs <- function(x, rows = NULL, cols = NULL,
-                     lag = 1L, differences = 1L, dim. = dim(x), ..., useNames = NA) {
+                     lag = 1L, differences = 1L, dim. = dim(x), ..., useNames = FALSE) {
   dim. <- as.integer(dim.)
-  .Call(C_rowDiffs, x, dim., rows, cols,
+  res <- .Call(C_rowDiffs, x, dim., rows, cols,
         as.integer(lag), as.integer(differences), TRUE)
+  
+  # Update names attributes?
+  if (!is.na(useNames)) {
+    if (useNames) {
+      stop("useNames = TRUE is not currently implemented")
+    } else {
+      names(res) <- NULL
+    }
+  }
+  
+  res
 }
 
 #' @rdname rowDiffs
 #' @export
 colDiffs <- function(x, rows = NULL, cols = NULL,
-                     lag = 1L, differences = 1L, dim. = dim(x), ..., useNames = NA) {
+                     lag = 1L, differences = 1L, dim. = dim(x), ..., useNames = FALSE) {
   dim. <- as.integer(dim.)
-  .Call(C_rowDiffs, x, dim., rows, cols,
+  res <- .Call(C_rowDiffs, x, dim., rows, cols,
         as.integer(lag), as.integer(differences), FALSE)
+  
+  # Update names attributes?
+  if (!is.na(useNames)) {
+    if (useNames) {
+      stop("useNames = TRUE is not currently implemented")
+    } else {
+      names(res) <- NULL
+    }
+  }
+  
+  res
 }
