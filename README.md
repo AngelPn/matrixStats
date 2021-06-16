@@ -18,6 +18,20 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
+- Revdep check the packages: `DelayedMatrixStats`, `matrixTests`, `abcrf`, one per time to avoid [Issue#5](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/5#issue-921332458).
+
+- Not able to revdep check `sparseMatrixStats` because it failed downloading the package:
+```
+> revdep_check()
+── INSTALL ─────────────────────────────────────────────── 2 versions ──
+Installing CRAN version of matrixStats
+Installing DEV version of matrixStats
+── CHECK ───────────────────────────────────────────────── 1 packages ──
+[0/1] 00:00:41 | ETA:  ?s | (1) sparseMatrixStats [D]Error: Failed downloading package sparseMatrixStats
+```
+
+- Revdep [README](https://github.com/AngelPn/matrixStats/blob/develop/revdep/README.md#failed-to-check-3) failed to check the three packages but no clues were given at [failures](https://github.com/AngelPn/matrixStats/blob/develop/revdep/failures.md). Also, the version is missing.
+
 - Changed the default value of `useNames` to `FALSE` to run `R CMD check` and to identify reverse dependency packages that rely on `useNames = FALSE`.
 
 - Written code to functions that the default behavior is not to support naming (e.g. [`rowSums2()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowSums2.R#L25-L31)):
