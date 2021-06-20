@@ -224,21 +224,27 @@ for (kk in seq_len(n_sims)) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Checking useNames argument
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cat("Checking useNames argument:\n")
-for (useNames in c(NA, FALSE, TRUE)) {
-  x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3, dimnames = list(letters[1:3], LETTERS[1:3]))
-  
-  # rowMedians():
-  y0 <- rowMedians_R(x)
-  y1 <- rowMedians(x, useNames = useNames)
-  tryCatch(all.equal(y1,y0), error = function(m){ "names for current but not for target"})
-  y2 <- colMedians(t(x), useNames = useNames)
-  tryCatch(all.equal(y2,y0), error = function(m){ "names for current but not for target"})
-  
-  # colMedians():
-  y0 <- colMedians_R(x)
-  y1 <- colMedians(x, useNames = useNames)
-  tryCatch(all.equal(y1,y0), error = function(m){ "names for current but not for target"})
-  y2 <- rowMedians(t(x), useNames = useNames)
-  tryCatch(all.equal(y2,y0), error = function(m){ "names for current but not for target"})
-}
+# cat("Checking useNames argument:\n")
+# x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3, dimnames = list(letters[1:3], LETTERS[1:3]))
+# 
+# # rowMedians():
+# y0 <- rowMedians_R(x)
+# y1 <- rowMedians(x, useNames = TRUE)
+# if (!identical(names(y1), names(y0))) {
+#   stop("The 'names' attibutes differ between 'y1' and 'y0'")
+# }
+# y2 <- colMedians(t(x), useNames = TRUE)
+# if (!identical(names(y2), names(y0))) {
+#   stop("The 'names' attibutes differ between 'y2' and 'y0'")
+# }
+# 
+# # colMedians():
+# y0 <- colMedians_R(x)
+# y1 <- colMedians(x, useNames = TRUE)
+# if (!identical(names(y1), names(y0))) {
+#   stop("The 'names' attibutes differ between 'y1' and 'y0'")
+# }
+# y2 <- colMedians(t(x), useNames = TRUE)
+# if (!identical(names(y2), names(y0))) {
+#   stop("The 'names' attibutes differ between 'y2' and 'y0'")
+# }

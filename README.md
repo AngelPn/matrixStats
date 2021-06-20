@@ -30,6 +30,8 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 - Added validation of useNames: Give error for non supported value of 'useNames' to every function that make sense to support naming.
 
+- Prototype `useNames = TRUE` test in [`tests/rowMedians.R`](https://github.com/AngelPn/matrixStats/blob/useNames-NA/tests/rowMedians.R#L224-L250). Put it in comments because `useNames = TRUE` is not supported.
+
 - The package passes `R CMD check` with all OKs.
 
 ---
