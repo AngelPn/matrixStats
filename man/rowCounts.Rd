@@ -7,12 +7,12 @@
 \title{Counts the number of occurrences of a specific value}
 \usage{
 rowCounts(x, rows = NULL, cols = NULL, value = TRUE, na.rm = FALSE,
-  dim. = dim(x), ..., useNames = FALSE)
+  dim. = dim(x), ..., useNames = TRUE)
 
 colCounts(x, rows = NULL, cols = NULL, value = TRUE, na.rm = FALSE,
-  dim. = dim(x), ..., useNames = FALSE)
+  dim. = dim(x), ..., useNames = TRUE)
 
-count(x, idxs = NULL, value = TRUE, na.rm = FALSE, ..., useNames = FALSE)
+count(x, idxs = NULL, value = TRUE, na.rm = FALSE, ...)
 }
 \arguments{
 \item{x}{An NxK \code{\link[base]{matrix}} or, if \code{dim.} is specified,

@@ -10,7 +10,11 @@ rowCounts_R <- function(x, value = TRUE, na.rm = FALSE, ...) {
       sum(x == value, na.rm = na.rm)
     )
   }
-  as.integer(counts)
+  # Preserve names attributes
+  names <- names(counts)  
+  counts <- as.integer(counts)
+  if (!is.null(names)) names(counts) <- names
+  counts
 }
 
 
@@ -21,6 +25,8 @@ for (mode in c("integer", "double")) {
   x <- matrix(runif(20 * 5, min = -3, max = 3), nrow = 20, ncol = 5)
   x[sample.int(length(x), size = 7)] <- 0
   storage.mode(x) <- mode
+  
+  dimnames = list(letters[1:20], LETTERS[1:5])
 
   for (na.rm in c(FALSE, TRUE)) {
     # Count zeros
@@ -29,6 +35,14 @@ for (mode in c("integer", "double")) {
     r2 <- colCounts(t(x), value = 0, na.rm = na.rm)
     stopifnot(identical(r1, r0))
     stopifnot(identical(r2, r0))
+    # Check names attributes
+    dimnames(x) <- dimnames
+    r0 <- rowCounts_R(x, value = 0, na.rm = na.rm)
+    r1 <- rowCounts(x, value = 0, na.rm = na.rm, useNames = TRUE)
+    r2 <- colCounts(t(x), value = 0, na.rm = na.rm, useNames = TRUE)
+    stopifnot(identical(names(r1), names(r0)))
+    stopifnot(identical(names(r2), names(r0)))
+    dimnames(x) <- NULL
 
     # Count NAs
     r0 <- rowCounts_R(x, value = NA, na.rm = na.rm)
@@ -36,11 +50,29 @@ for (mode in c("integer", "double")) {
     r2 <- colCounts(t(x), value = NA, na.rm = na.rm)
     stopifnot(identical(r1, r0))
     stopifnot(identical(r2, r0))
+    # Check names attributes
+    dimnames(x) <- dimnames
+    r0 <- rowCounts_R(x, value = 0, na.rm = na.rm)
+    r1 <- rowCounts(x, value = 0, na.rm = na.rm, useNames = TRUE)
+    r2 <- colCounts(t(x), value = 0, na.rm = na.rm, useNames = TRUE)
+    stopifnot(identical(names(r1), names(r0)))
+    stopifnot(identical(names(r2), names(r0)))
+    dimnames(x) <- NULL
 
     if (mode == "integer") {
       ux <- unique(as.vector(x))
       r0 <- r1 <- r2 <- integer(nrow(x))
+      r3 <- r4 <- r5 <- integer(nrow(x))
       for (value in ux) {
+        # Check names attributes
+        dimnames(x) <- dimnames
+        r3 <- r3 + rowCounts_R(x, value = value, na.rm = na.rm)
+        r4 <- r4 + rowCounts(x, value = value, na.rm = na.rm, useNames = TRUE)
+        r5 <- r5 + colCounts(t(x), value = value, na.rm = na.rm, useNames = TRUE)
+        stopifnot(identical(names(r4), names(r3)))
+        stopifnot(identical(names(r5), names(r3)))
+        dimnames(x) <- NULL
+        
         r0 <- r0 + rowCounts_R(x, value = value, na.rm = na.rm)
         r1 <- r1 + rowCounts(x, value = value, na.rm = na.rm)
         r2 <- r2 + colCounts(t(x), value = value, na.rm = na.rm)
@@ -62,8 +94,25 @@ for (na_value in na_list) {
     r2 <- colCounts(t(x), na.rm = na.rm)
     stopifnot(identical(r1, r0))
     stopifnot(identical(r2, r0))
+    # Check names attributes
+    dimnames(x) <- dimnames
+    r0 <- rowCounts_R(x, na.rm = na.rm)
+    r1 <- rowCounts(x, na.rm = na.rm, useNames = TRUE)
+    r2 <- colCounts(t(x), na.rm = na.rm, useNames = TRUE)
+    stopifnot(identical(names(r1), names(r0)))
+    stopifnot(identical(names(r2), names(r0)))
+    dimnames(x) <- NULL
 
     # Count NAs
+    # Check names attributes
+    dimnames(x) <- dimnames
+    r0 <- rowCounts_R(x, value = NA, na.rm = na.rm)
+    r1 <- rowCounts(x, value = NA, na.rm = na.rm)
+    r2 <- colCounts(t(x), value = NA, na.rm = na.rm)
+    stopifnot(identical(names(r1), names(r0)))
+    stopifnot(identical(names(r2), names(r0)))
+    dimnames(x) <- NULL
+    
     r0 <- rowCounts_R(x, value = NA, na.rm = na.rm)
     r1 <- rowCounts(x, value = NA, na.rm = na.rm)
     r2 <- colCounts(t(x), value = NA, na.rm = na.rm)
@@ -91,6 +140,14 @@ for (na.rm in c(FALSE, TRUE)) {
   r2 <- colCounts(t(x), na.rm = na.rm)
   stopifnot(identical(r1, r0))
   stopifnot(identical(r2, r0))
+  # Check names attributes
+  dimnames(x) <- dimnames
+  r0 <- rowCounts_R(x, na.rm = na.rm)
+  r1 <- rowCounts(x, na.rm = na.rm, useNames = TRUE)
+  r2 <- colCounts(t(x), na.rm = na.rm, useNames = TRUE)
+  stopifnot(identical(names(r1), names(r0)))
+  stopifnot(identical(names(r2), names(r0)))  
+  dimnames(x) <- NULL
 
   r_true <- rowCounts(x, value = TRUE, na.rm = na.rm)
   r_false <- rowCounts(x, value = FALSE, na.rm = na.rm)
@@ -106,6 +163,14 @@ for (na.rm in c(FALSE, TRUE)) {
   r2 <- colCounts(t(x), value = NA, na.rm = na.rm)
   stopifnot(identical(r1, r0))
   stopifnot(identical(r2, r0))
+  # Check names attributes
+  dimnames(x) <- dimnames
+  r0 <- rowCounts_R(x, value = NA, na.rm = na.rm)
+  r1 <- rowCounts(x, value = NA, na.rm = na.rm, useNames = TRUE)
+  r2 <- colCounts(t(x), value = NA, na.rm = na.rm, useNames = TRUE)
+  stopifnot(identical(names(r1), names(r0)))
+  stopifnot(identical(names(r2), names(r0)))
+  dimnames(x) <- NULL
 }
 
 
@@ -138,3 +203,9 @@ x[1, ] <- NA_integer_
 r0 <- rowCounts(x, value = 0)
 r1 <- rowCounts_R(x, value = 0)
 stopifnot(identical(r0, r1))
+# Check names attributes
+dimnames(x) <- list(letters[1:2], LETTERS[1:2])
+r0 <- rowCounts(x, value = 0, useNames = TRUE)
+r1 <- rowCounts_R(x, value = 0)
+stopifnot(identical(names(r0), names(r1)))
+

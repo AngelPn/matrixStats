@@ -20,16 +20,22 @@
 #'
 #' @keywords array iteration univar
 #' @export
-rowCumsums <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = FALSE) {
+rowCumsums <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCumsums, x, dim., rows, cols, TRUE)
   
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      if (!is.null(dimnames(x))) {
+        rownames <- rownames(x)
+        if (!is.null(rows)) rownames <- rownames[rows]
+        colnames <- colnames(x)
+        if (!is.null(cols)) colnames <- colnames[cols]
+        dimnames(res) <- list(rownames, colnames)
+      }
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -39,16 +45,22 @@ rowCumsums <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
 
 #' @rdname rowCumsums
 #' @export
-colCumsums <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = FALSE) {
+colCumsums <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCumsums, x, dim., rows, cols, FALSE)
   
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      if (!is.null(dimnames(x))) {
+        rownames <- rownames(x)
+        if (!is.null(rows)) rownames <- rownames[rows]
+        colnames <- colnames(x)
+        if (!is.null(cols)) colnames <- colnames[cols]
+        dimnames(res) <- list(rownames, colnames)
+      }
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -58,16 +70,22 @@ colCumsums <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
 
 #' @rdname rowCumsums
 #' @export
-rowCumprods <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = FALSE) {
+rowCumprods <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCumprods, x, dim., rows, cols, TRUE)
   
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      if (!is.null(dimnames(x))) {
+        rownames <- rownames(x)
+        if (!is.null(rows)) rownames <- rownames[rows]
+        colnames <- colnames(x)
+        if (!is.null(cols)) colnames <- colnames[cols]
+        dimnames(res) <- list(rownames, colnames)
+      }
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -77,16 +95,22 @@ rowCumprods <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useName
 
 #' @rdname rowCumsums
 #' @export
-colCumprods <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = FALSE) {
+colCumprods <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCumprods, x, dim., rows, cols, FALSE)
   
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      if (!is.null(dimnames(x))) {
+        rownames <- rownames(x)
+        if (!is.null(rows)) rownames <- rownames[rows]
+        colnames <- colnames(x)
+        if (!is.null(cols)) colnames <- colnames[cols]
+        dimnames(res) <- list(rownames, colnames)
+      }
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -96,16 +120,22 @@ colCumprods <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useName
 
 #' @rdname rowCumsums
 #' @export
-rowCummins <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = FALSE) {
+rowCummins <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCummins, x, dim., rows, cols, TRUE)
   
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      if (!is.null(dimnames(x))) {
+        rownames <- rownames(x)
+        if (!is.null(rows)) rownames <- rownames[rows]
+        colnames <- colnames(x)
+        if (!is.null(cols)) colnames <- colnames[cols]
+        dimnames(res) <- list(rownames, colnames)
+      }
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -115,16 +145,22 @@ rowCummins <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
 
 #' @rdname rowCumsums
 #' @export
-colCummins <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = FALSE) {
+colCummins <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCummins, x, dim., rows, cols, FALSE)
   
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      if (!is.null(dimnames(x))) {
+        rownames <- rownames(x)
+        if (!is.null(rows)) rownames <- rownames[rows]
+        colnames <- colnames(x)
+        if (!is.null(cols)) colnames <- colnames[cols]
+        dimnames(res) <- list(rownames, colnames)
+      }
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -134,16 +170,22 @@ colCummins <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
 
 #' @rdname rowCumsums
 #' @export
-rowCummaxs <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = FALSE) {
+rowCummaxs <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCummaxs, x, dim., rows, cols, TRUE)
   
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      if (!is.null(dimnames(x))) {
+        rownames <- rownames(x)
+        if (!is.null(rows)) rownames <- rownames[rows]
+        colnames <- colnames(x)
+        if (!is.null(cols)) colnames <- colnames[cols]
+        dimnames(res) <- list(rownames, colnames)
+      }
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -153,16 +195,22 @@ rowCummaxs <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
 
 #' @rdname rowCumsums
 #' @export
-colCummaxs <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = FALSE) {
+colCummaxs <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCummaxs, x, dim., rows, cols, FALSE)
   
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      if (!is.null(dimnames(x))) {
+        rownames <- rownames(x)
+        if (!is.null(rows)) rownames <- rownames[rows]
+        colnames <- colnames(x)
+        if (!is.null(cols)) colnames <- colnames[cols]
+        dimnames(res) <- list(rownames, colnames)
+      }
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   

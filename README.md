@@ -18,61 +18,12 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
-- Revdep check the packages: `DelayedMatrixStats`, `matrixTests`, `abcrf`, one per time to avoid [Issue#5](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/5#issue-921332458).
-
-- Not able to revdep check `sparseMatrixStats` because it failed downloading the package:
-```
-> revdep_check()
-── INSTALL ─────────────────────────────────────────────── 2 versions ──
-Installing CRAN version of matrixStats
-Installing DEV version of matrixStats
-── CHECK ───────────────────────────────────────────────── 1 packages ──
-[0/1] 00:00:41 | ETA:  ?s | (1) sparseMatrixStats [D]Error: Failed downloading package sparseMatrixStats
-```
-
-- Revdep [README](https://github.com/AngelPn/matrixStats/blob/develop/revdep/README.md#failed-to-check-3) failed to check the three packages but no clues were given at [failures](https://github.com/AngelPn/matrixStats/blob/develop/revdep/failures.md). Also, the version is missing.
-
-- Changed the default value of `useNames` to `FALSE` to run `R CMD check` and to identify reverse dependency packages that rely on `useNames = FALSE`.
-
-- Written code to functions that the default behavior is not to support naming (e.g. [`rowSums2()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowSums2.R#L25-L31)):
-```
-  # Update names attributes?
-  if (!is.na(useNames)) {
-    if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
-    } else {
-      names(res) <- NULL
-    }
-  }
-```
-
-- Written code to functions that the default behavior is to preserve names attributes (e.g. [`rowLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L76-L87)):
-```
-  # Preserve names attributes?
-  if (is.na(useNames) || useNames) {
-    names <- colnames(lx)
-    if (!is.null(names)){
-      if (!is.null(cols)){
-        names <- names[cols]
-      }
-      names(res) <- names
-    }
-  } else {
-    names(res) <- NULL
-  }
-```
-
-- Written code to functions that the default behavior is to support naming (e.g. [`rowVarDiffs()`](https://github.com/AngelPn/matrixStats/blob/develop/R/varDiff.R#L250-L253), [`rowWeightedMeans()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowWeightedMeans.R#L120-L123)):
-```
-  # Preserve names attributes?
-  if (!(is.na(useNames) || useNames)) {
-      rownames(x) <- NULL
-  }
-```
-
-- Called the functions that already preserved names with `useNames = NA` when needed on tests, e.g. [`tests/rowLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L56-L62).
-
-- [`rowIQRs()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowIQRs.R#L30): Removed `colnames` of `Q` to solve [Issue#3](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/3#issuecomment-857839472).
+- Added naming support to functions in the following 5 files:
+  * [`rowAlls.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R) - [`tests/rowAllAnys.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowAllAnys.R)
+  * [`rowCollapse.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowCollapse.R) - [`tests/rowCollapse.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowCollapse.R)
+  * [`rowCounts.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowCounts.R) - [`tests/rowCounts.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowCounts.R)
+  * [`rowCumsums.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowCumsums.R) - [`tests/rowCumsums.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowCumsums.R)
+  * [`rowDiffs.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowDiffs.R) - [`tests/rowDiffs.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowDiffs.R)
 
 - The package passes `R CMD check` with all OKs.
 

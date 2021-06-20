@@ -16,7 +16,7 @@
 #' @keywords array iteration robust univar
 #' @export
 rowDiffs <- function(x, rows = NULL, cols = NULL,
-                     lag = 1L, differences = 1L, dim. = dim(x), ..., useNames = FALSE) {
+                     lag = 1L, differences = 1L, dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   res <- .Call(C_rowDiffs, x, dim., rows, cols,
         as.integer(lag), as.integer(differences), TRUE)
@@ -24,9 +24,23 @@ rowDiffs <- function(x, rows = NULL, cols = NULL,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      if (!is.null(dimnames(x))) {
+        
+        rownames <- rownames(x)
+        if (!is.null(rownames)) {
+          if (!is.null(rows)) rownames <- rownames[rows]
+        }
+        
+        colnames <- colnames(x)
+        if (!is.null(colnames)) {
+          if (!is.null(cols)) colnames <- colnames[cols]
+          if (ncol(res) != ncol(x)) colnames <- tail(colnames, ncol(res))          
+        }
+
+        dimnames(res) <- list(rownames, colnames)
+      }
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -36,7 +50,7 @@ rowDiffs <- function(x, rows = NULL, cols = NULL,
 #' @rdname rowDiffs
 #' @export
 colDiffs <- function(x, rows = NULL, cols = NULL,
-                     lag = 1L, differences = 1L, dim. = dim(x), ..., useNames = FALSE) {
+                     lag = 1L, differences = 1L, dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   res <- .Call(C_rowDiffs, x, dim., rows, cols,
         as.integer(lag), as.integer(differences), FALSE)
@@ -44,9 +58,23 @@ colDiffs <- function(x, rows = NULL, cols = NULL,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      if (!is.null(dimnames(x))) {
+        
+        colnames <- colnames(x)
+        if (!is.null(colnames)) {
+          if (!is.null(cols)) colnames <- colnames[cols]
+        }
+        
+        rownames <- rownames(x)
+        if (!is.null(rownames)) {
+          if (!is.null(rows)) rownames <- rownames[rows]
+          if (nrow(res) != nrow(x)) rownames <- tail(rownames, nrow(res))          
+        }
+        
+        dimnames(res) <- list(rownames, colnames)
+      }
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   

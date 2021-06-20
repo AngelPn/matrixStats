@@ -56,7 +56,7 @@
 #' @keywords array logic iteration univar
 #' @export
 rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
-                    na.rm = FALSE, dim. = dim(x), ..., useNames = FALSE) {
+                    na.rm = FALSE, dim. = dim(x), ..., useNames = TRUE) {
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
@@ -66,7 +66,11 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
       # Update names attributes?
       if (!is.na(useNames)) {
         if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
+          names <- rownames(x)
+          if (!is.null(names)) {
+            if (!is.null(rows)) names <- names[rows]
+            names(counts) <- names
+          }
         } else {
           names(counts) <- NULL
         }
@@ -74,11 +78,15 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
       (counts == 0L)
     } else {
       counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas)
-      
+
       # Update names attributes?
       if (!is.na(useNames)) {
         if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
+          names <- rownames(x)
+          if (!is.null(names)) {
+            if (!is.null(rows)) names <- names[rows]
+            names(counts) <- names
+          }
         } else {
           names(counts) <- NULL
         }
@@ -89,16 +97,21 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 0L, na.rm, has_nas)
-    
+    counts <- as.logical(counts)
+
     # Update names attributes?
     if (!is.na(useNames)) {
       if (useNames) {
-        stop("useNames = TRUE is not currently implemented")
+        names <- rownames(x)
+        if (!is.null(names)) {
+          if (!is.null(rows)) names <- names[rows]
+          names(counts) <- names
+        }
       } else {
         names(counts) <- NULL
       }
     }
-    as.logical(counts)
+    counts
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
@@ -121,7 +134,7 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
 #' @rdname rowAlls
 #' @export
 colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
-                    na.rm = FALSE, dim. = dim(x), ..., useNames = FALSE) {
+                    na.rm = FALSE, dim. = dim(x), ..., useNames = TRUE) {
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
@@ -131,7 +144,11 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
       # Update names attributes?
       if (!is.na(useNames)) {
         if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
+          names <- colnames(x)
+          if (!is.null(names)) {
+            if (!is.null(cols)) names <- names[cols]
+            names(counts) <- names
+          }
         } else {
           names(counts) <- NULL
         }
@@ -143,7 +160,11 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
       # Update names attributes?
       if (!is.na(useNames)) {
         if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
+          names <- colnames(x)
+          if (!is.null(names)) {
+            if (!is.null(cols)) names <- names[cols]
+            names(counts) <- names
+          }
         } else {
           names(counts) <- NULL
         }
@@ -154,16 +175,21 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_colCounts, x, dim., rows, cols, value, 0L, na.rm, has_nas)
+    counts <- as.logical(counts)
     
     # Update names attributes?
     if (!is.na(useNames)) {
       if (useNames) {
-        stop("useNames = TRUE is not currently implemented")
+        names <- colnames(x)
+        if (!is.null(names)) {
+          if (!is.null(cols)) names <- names[cols]
+          names(counts) <- names
+        }
       } else {
         names(counts) <- NULL
       }
     }
-    as.logical(counts)
+    counts
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
@@ -217,7 +243,7 @@ allValue <- function(x, idxs = NULL, value = TRUE, na.rm = FALSE, ...) {
 #' @rdname rowAlls
 #' @export
 rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
-                    na.rm = FALSE, dim. = dim(x), ..., useNames = FALSE) {
+                    na.rm = FALSE, dim. = dim(x), ..., useNames = TRUE) {
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
@@ -227,7 +253,11 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
       # Update names attributes?
       if (!is.na(useNames)) {
         if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
+          names <- rownames(x)
+          if (!is.null(names)) {
+            if (!is.null(rows)) names <- names[rows]
+            names(counts) <- names
+          }
         } else {
           names(counts) <- NULL
         }
@@ -239,7 +269,11 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
       # Update names attributes?
       if (!is.na(useNames)) {
         if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
+          names <- rownames(x)
+          if (!is.null(names)) {
+            if (!is.null(rows)) names <- names[rows]
+            names(counts) <- names
+          }
         } else {
           names(counts) <- NULL
         }
@@ -250,16 +284,21 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas)
+    counts <- as.logical(counts)
     
     # Update names attributes?
     if (!is.na(useNames)) {
       if (useNames) {
-        stop("useNames = TRUE is not currently implemented")
+        names <- rownames(x)
+        if (!is.null(names)) {
+          if (!is.null(rows)) names <- names[rows]
+          names(counts) <- names
+        }
       } else {
         names(counts) <- NULL
       }
     }
-    as.logical(counts)
+    counts
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
@@ -282,7 +321,7 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
 #' @rdname rowAlls
 #' @export
 colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
-                    na.rm = FALSE, dim. = dim(x), ..., useNames = FALSE) {
+                    na.rm = FALSE, dim. = dim(x), ..., useNames = TRUE) {
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
@@ -292,7 +331,11 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
       # Update names attributes?
       if (!is.na(useNames)) {
         if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
+          names <- colnames(x)
+          if (!is.null(names)) {
+            if (!is.null(cols)) names <- names[cols]
+            names(counts) <- names
+          }
         } else {
           names(counts) <- NULL
         }
@@ -304,7 +347,11 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
       # Update names attributes?
       if (!is.na(useNames)) {
         if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
+          names <- colnames(x)
+          if (!is.null(names)) {
+            if (!is.null(cols)) names <- names[cols]
+            names(counts) <- names
+          }
         } else {
           names(counts) <- NULL
         }
@@ -315,16 +362,21 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_colCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas)
+    counts <- as.logical(counts)
     
     # Update names attributes?
     if (!is.na(useNames)) {
       if (useNames) {
-        stop("useNames = TRUE is not currently implemented")
+        names <- colnames(x)
+        if (!is.null(names)) {
+          if (!is.null(cols)) names <- names[cols]
+          names(counts) <- names
+        }
       } else {
         names(counts) <- NULL
       }
     }
-    as.logical(counts)
+    counts
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)

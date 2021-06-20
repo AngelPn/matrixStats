@@ -18,7 +18,7 @@
 #' cf. \code{\link[base]{[}}().
 #' @keywords utilities
 #' @export
-rowCollapse <- function(x, idxs, rows = NULL, dim. = dim(x), ..., useNames = FALSE) {
+rowCollapse <- function(x, idxs, rows = NULL, dim. = dim(x), ..., useNames = TRUE) {
   # Argument 'x':
   if (!is.matrix(x) && !is.vector(x)) defunctShouldBeMatrixOrVector(x)
 
@@ -47,7 +47,11 @@ rowCollapse <- function(x, idxs, rows = NULL, dim. = dim(x), ..., useNames = FAL
   res <- x[idxs]
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- rownames(x)
+      if (!is.null(names)) {
+        if (!is.null(rows)) names <- names[rows]
+        names(res) <- names
+      }
     } else {
       names(res) <- NULL
     }
@@ -58,7 +62,7 @@ rowCollapse <- function(x, idxs, rows = NULL, dim. = dim(x), ..., useNames = FAL
 
 #' @rdname rowCollapse
 #' @export
-colCollapse <- function(x, idxs, cols = NULL, dim. = dim(x), ..., useNames = FALSE) {
+colCollapse <- function(x, idxs, cols = NULL, dim. = dim(x), ..., useNames = TRUE) {
   # Argument 'x':
   if (!is.matrix(x) && !is.vector(x)) defunctShouldBeMatrixOrVector(x)
 
@@ -87,7 +91,11 @@ colCollapse <- function(x, idxs, cols = NULL, dim. = dim(x), ..., useNames = FAL
   res <- x[idxs]
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- colnames(x)
+      if (!is.null(names)) {
+        if (!is.null(cols)) names <- names[cols]
+        names(res) <- names
+      }
     } else {
       names(res) <- NULL
     }
