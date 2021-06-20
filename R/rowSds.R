@@ -23,6 +23,10 @@
 #' @export
 rowSds <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
                     dim. = dim(x), ..., useNames = NA) {
+  if (!is.na(useNames)) {
+    stop(sprintf("Non-supported value of argument 'useNames': %s", useNames))
+  }
+  
   x <- rowVars(x, rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., useNames = useNames, ...)
   sqrt(x)
 }
@@ -32,6 +36,10 @@ rowSds <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
 #' @export
 colSds <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
                     dim. = dim(x), ..., useNames = NA) {
+  if (!is.na(useNames)) {
+    stop(sprintf("Non-supported value of argument 'useNames': %s", useNames))
+  }
+  
   x <- colVars(x, rows = rows, cols = cols, na.rm = na.rm, center = center, dim. = dim., useNames = useNames, ...)
   sqrt(x)
 }

@@ -18,13 +18,17 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
-- Added `@param useNames` to Roxygen2 comments in [`rowAlls()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L35-L38) and used `@inheritParams` to avoid duplicate this entry in other functions.
+- Added `@param useNames` to Roxygen2 comments in [`rowAlls()`](https://github.com/AngelPn/matrixStats/blob/useNames-NA/R/rowAlls.R#L35-L38) and used `@inheritParams` to avoid duplicate this entry in other functions.
 
 - Added argument `useNames = NA` to every function that makes sense to support naming. This value keeps the default behavior of the function so no code was added at the inside of the functions. Improvements of the default behavior could be done when moving to the implementation of naming support in C code where possible.
 
 - Written `useNames` argument after the `dots` argument in order to break existing API.
 
-- Commented the skill test implementation of naming support for `colLogSumExps()` in C code in [`src/rowLogSumExp.c`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowLogSumExp.c#L49-L71) for future use but kept the use of `coerceVector()` to preserve object attributes (instead of `as.numeric()` that removed all attributes of the object).
+- Commented the skill test implementation of naming support for `colLogSumExps()` in C code in [`src/rowLogSumExp.c`](https://github.com/AngelPn/matrixStats/blob/useNames-NA/src/rowLogSumExp.c#L49-L71) for future use but kept the use of `coerceVector()` to preserve object attributes (instead of `as.numeric()` that removed all attributes of the object).
+
+- Re-enabled test on [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/useNames-NA/tests/rowLogSumExps.R#L180-L181).
+
+- Added validation of useNames: Give error for non supported value of 'useNames' to every function that make sense to support naming.
 
 - The package passes `R CMD check` with all OKs.
 
