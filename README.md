@@ -20,6 +20,8 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 - Fixed errors from tests.
 
+- - Re-enabled test on [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/useNames-FALSE/tests/rowLogSumExps.R#L180-L181), but added `useNames = NA` argument because `useNames = FALSE` is the default.
+
 - Revdep check the packages: `DelayedMatrixStats`, `matrixTests`, `abcrf`, one at a time to avoid [Issue#5](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/5#issue-921332458).
 
 - Not able to revdep check `sparseMatrixStats` because it failed downloading the package:
@@ -36,7 +38,7 @@ Installing DEV version of matrixStats
 
 - Changed the default value of `useNames` to `FALSE` to run `R CMD check` and to identify reverse dependency packages that rely on `useNames = FALSE`.
 
-- Written code to functions that the default behavior is not to support naming (e.g. [`rowSums2()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowSums2.R#L25-L31)):
+- Written code to functions that the default behavior is not to support naming (e.g. [`rowSums2()`](https://github.com/AngelPn/matrixStats/blob/useNames-FALSE/R/rowSums2.R#L25-L31)):
 ```
   # Update names attributes?
   if (!is.na(useNames)) {
@@ -48,7 +50,7 @@ Installing DEV version of matrixStats
   }
 ```
 
-- Written code to functions that the default behavior is to preserve names attributes (e.g. [`rowLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowLogSumExps.R#L76-L87)):
+- Written code to functions that the default behavior is to preserve names attributes (e.g. [`rowLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/useNames-FALSE/R/rowLogSumExps.R#L76-L87)):
 ```
   # Preserve names attributes?
   if (is.na(useNames) || useNames) {
@@ -64,7 +66,7 @@ Installing DEV version of matrixStats
   }
 ```
 
-- Written code to functions that the default behavior is to support naming (e.g. [`rowVarDiffs()`](https://github.com/AngelPn/matrixStats/blob/develop/R/varDiff.R#L250-L253), [`rowWeightedMeans()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowWeightedMeans.R#L120-L123)):
+- Written code to functions that the default behavior is to support naming (e.g. [`rowVarDiffs()`](https://github.com/AngelPn/matrixStats/blob/useNames-FALSE/R/varDiff.R#L250-L253), [`rowWeightedMeans()`](https://github.com/AngelPn/matrixStats/blob/useNames-FALSE/R/rowWeightedMeans.R#L120-L123)):
 ```
   # Preserve names attributes?
   if (!(is.na(useNames) || useNames)) {
@@ -72,9 +74,9 @@ Installing DEV version of matrixStats
   }
 ```
 
-- Called the functions that already preserved names with `useNames = NA` when needed on tests, e.g. [`tests/rowLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowLogSumExps.R#L56-L62).
+- Called the functions that already preserved names with `useNames = NA` when needed on tests, e.g. [`tests/rowLogSumExps()`](https://github.com/AngelPn/matrixStats/blob/useNames-FALSE/tests/rowLogSumExps.R#L56-L62).
 
-- [`rowIQRs()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowIQRs.R#L30): Removed `colnames` of `Q` to solve [Issue#3](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/3#issuecomment-857839472).
+- [`rowIQRs()`](https://github.com/AngelPn/matrixStats/blob/useNames-FALSE/R/rowIQRs.R#L30): Removed `colnames` of `Q` to solve [Issue#3](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/3#issuecomment-857839472).
 
 - The package passes `R CMD check` with all OKs.
 
