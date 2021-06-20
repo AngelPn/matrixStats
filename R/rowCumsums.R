@@ -29,7 +29,7 @@ rowCumsums <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
     if (useNames) {
       stop("useNames = TRUE is not currently implemented")
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -48,7 +48,7 @@ colCumsums <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
     if (useNames) {
       stop("useNames = TRUE is not currently implemented")
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -67,7 +67,7 @@ rowCumprods <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useName
     if (useNames) {
       stop("useNames = TRUE is not currently implemented")
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -86,7 +86,7 @@ colCumprods <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useName
     if (useNames) {
       stop("useNames = TRUE is not currently implemented")
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -105,7 +105,7 @@ rowCummins <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
     if (useNames) {
       stop("useNames = TRUE is not currently implemented")
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -124,7 +124,7 @@ colCummins <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
     if (useNames) {
       stop("useNames = TRUE is not currently implemented")
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -143,7 +143,7 @@ rowCummaxs <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
     if (useNames) {
       stop("useNames = TRUE is not currently implemented")
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -162,7 +162,7 @@ colCummaxs <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
     if (useNames) {
       stop("useNames = TRUE is not currently implemented")
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   

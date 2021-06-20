@@ -18,7 +18,9 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
-- Revdep check the packages: `DelayedMatrixStats`, `matrixTests`, `abcrf`, one per time to avoid [Issue#5](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/5#issue-921332458).
+- Fixed errors from tests.
+
+- Revdep check the packages: `DelayedMatrixStats`, `matrixTests`, `abcrf`, one at a time to avoid [Issue#5](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/5#issue-921332458).
 
 - Not able to revdep check `sparseMatrixStats` because it failed downloading the package:
 ```

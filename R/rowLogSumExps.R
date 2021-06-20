@@ -49,8 +49,8 @@ rowLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
   if (is.na(useNames) || useNames) {
     names <- rownames(lx)
     if (!is.null(names)){
-      if (!is.null(cols)){
-        names <- names[cols]
+      if (!is.null(rows)){
+        names <- names[rows]
       }
       names(res) <- names
     }

@@ -26,7 +26,7 @@ rowDiffs <- function(x, rows = NULL, cols = NULL,
     if (useNames) {
       stop("useNames = TRUE is not currently implemented")
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
@@ -46,7 +46,7 @@ colDiffs <- function(x, rows = NULL, cols = NULL,
     if (useNames) {
       stop("useNames = TRUE is not currently implemented")
     } else {
-      names(res) <- NULL
+      dimnames(res) <- NULL
     }
   }
   
