@@ -24,7 +24,7 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 - Written `useNames` argument after the `dots` argument in order to break existing API.
 
-- Commented the skill test implementation of naming support for `colLogSumExps()` in C code in [`src/rowLogSumExp.c`](https://github.com/AngelPn/matrixStats/blob/useNames-NA/src/rowLogSumExp.c#L49-L71) for future use but kept the use of `coerceVector()` to preserve object attributes (instead of `as.numeric()` that removed all attributes of the object).
+- Reverted .Call(C_rowLogSumExps, ..., useNames)
 
 - Re-enabled test on [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/useNames-NA/tests/rowLogSumExps.R#L180-L181).
 
