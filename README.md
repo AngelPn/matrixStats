@@ -18,9 +18,13 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
+- Keep name implementations DRY in [`rowAlls()`](https://github.com/AngelPn/matrixStats/blob/useNames-FALSE/R/rowAlls.R#L141-L150).
+
+- Reverted .Call(C_rowLogSumExps, ..., useNames).
+
 - Fixed errors from tests.
 
-- - Re-enabled test on [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/useNames-FALSE/tests/rowLogSumExps.R#L180-L181), but added `useNames = NA` argument because `useNames = FALSE` is the default.
+- Re-enabled test on [`tests/rowLogSumExps.R`](https://github.com/AngelPn/matrixStats/blob/useNames-FALSE/tests/rowLogSumExps.R#L180-L181), but added `useNames = NA` argument because `useNames = FALSE` is the default.
 
 - Revdep check the packages: `DelayedMatrixStats`, `matrixTests`, `abcrf`, one at a time to avoid [Issue#5](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/5#issue-921332458).
 

@@ -62,43 +62,16 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
     has_nas <- TRUE
     if (isTRUE(value)) {
       counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas)
-      
-      # Update names attributes?
-      if (!is.na(useNames)) {
-        if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
-        } else {
-          names(counts) <- NULL
-        }
-      }
-      (counts == 0L)
+      res <- (counts == 0L)
     } else {
       counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas)
-      
-      # Update names attributes?
-      if (!is.na(useNames)) {
-        if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
-        } else {
-          names(counts) <- NULL
-        }
-      }
-      (counts == 1L)
+      res <- (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 0L, na.rm, has_nas)
-    
-    # Update names attributes?
-    if (!is.na(useNames)) {
-      if (useNames) {
-        stop("useNames = TRUE is not currently implemented")
-      } else {
-        names(counts) <- NULL
-      }
-    }
-    as.logical(counts)
+    res <- as.logical(counts)
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
@@ -110,11 +83,22 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
     dim. <- dim(x)
 
     if (is.na(value)) {
-      rowAlls(is.na(x), na.rm = na.rm, dim. = dim., ...)
+      res <- rowAlls(is.na(x), na.rm = na.rm, dim. = dim., ...)
     } else {
-      rowAlls(x == value, na.rm = na.rm, dim. = dim., ...)
+      res <- rowAlls(x == value, na.rm = na.rm, dim. = dim., ...)
     }
   }
+  
+  # Update name attributes?
+  if (!is.na(useNames)) {
+    if (useNames) {
+      stop("useNames = TRUE is not currently implemented")
+    } else {
+      names(res) <- NULL
+    }
+  }
+  
+  res
 }
 
 
@@ -127,43 +111,16 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
     has_nas <- TRUE
     if (isTRUE(value)) {
       counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas)
-      
-      # Update names attributes?
-      if (!is.na(useNames)) {
-        if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
-        } else {
-          names(counts) <- NULL
-        }
-      }
-      (counts == 0L)
+      res <- (counts == 0L)
     } else {
       counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas)
-      
-      # Update names attributes?
-      if (!is.na(useNames)) {
-        if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
-        } else {
-          names(counts) <- NULL
-        }
-      }
-      (counts == 1L)
+      res <- (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_colCounts, x, dim., rows, cols, value, 0L, na.rm, has_nas)
-    
-    # Update names attributes?
-    if (!is.na(useNames)) {
-      if (useNames) {
-        stop("useNames = TRUE is not currently implemented")
-      } else {
-        names(counts) <- NULL
-      }
-    }
-    as.logical(counts)
+    res <- as.logical(counts)
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
@@ -175,11 +132,22 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
     dim. <- dim(x)
 
     if (is.na(value)) {
-      colAlls(is.na(x), na.rm = na.rm, dim. = dim., ...)
+      res <- colAlls(is.na(x), na.rm = na.rm, dim. = dim., ...)
     } else {
-      colAlls(x == value, na.rm = na.rm, dim. = dim., ...)
+      res <- colAlls(x == value, na.rm = na.rm, dim. = dim., ...)
     }
   }
+  
+  # Update name attributes?
+  if (!is.na(useNames)) {
+    if (useNames) {
+      stop("useNames = TRUE is not currently implemented")
+    } else {
+      names(res) <- NULL
+    }
+  }
+  
+  res
 }
 
 
@@ -223,43 +191,16 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     has_nas <- TRUE
     if (isTRUE(value)) {
       counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas)
-      
-      # Update names attributes?
-      if (!is.na(useNames)) {
-        if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
-        } else {
-          names(counts) <- NULL
-        }
-      }
-      (counts == 0L)
+      res <- (counts == 0L)
     } else {
       counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas)
-      
-      # Update names attributes?
-      if (!is.na(useNames)) {
-        if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
-        } else {
-          names(counts) <- NULL
-        }
-      }
-      (counts == 1L)
+      res <- (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas)
-    
-    # Update names attributes?
-    if (!is.na(useNames)) {
-      if (useNames) {
-        stop("useNames = TRUE is not currently implemented")
-      } else {
-        names(counts) <- NULL
-      }
-    }
-    as.logical(counts)
+    res <- as.logical(counts)
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
@@ -271,11 +212,22 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     dim. <- dim(x)
 
     if (is.na(value)) {
-      rowAnys(is.na(x), na.rm = na.rm, dim. = dim., ...)
+      res <- rowAnys(is.na(x), na.rm = na.rm, dim. = dim., ...)
     } else {
-      rowAnys(x == value, na.rm = na.rm, dim. = dim., ...)
+      res <- rowAnys(x == value, na.rm = na.rm, dim. = dim., ...)
     }
   }
+  
+  # Update name attributes?
+  if (!is.na(useNames)) {
+    if (useNames) {
+      stop("useNames = TRUE is not currently implemented")
+    } else {
+      names(res) <- NULL
+    }
+  }
+  
+  res
 }
 
 
@@ -288,43 +240,16 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     has_nas <- TRUE
     if (isTRUE(value)) {
       counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas)
-      
-      # Update names attributes?
-      if (!is.na(useNames)) {
-        if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
-        } else {
-          names(counts) <- NULL
-        }
-      }
-      (counts == 0L)
+      res <- (counts == 0L)
     } else {
       counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas)
-      
-      # Update names attributes?
-      if (!is.na(useNames)) {
-        if (useNames) {
-          stop("useNames = TRUE is not currently implemented")
-        } else {
-          names(counts) <- NULL
-        }
-      }
-      (counts == 1L)
+      res <- (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_colCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas)
-    
-    # Update names attributes?
-    if (!is.na(useNames)) {
-      if (useNames) {
-        stop("useNames = TRUE is not currently implemented")
-      } else {
-        names(counts) <- NULL
-      }
-    }
-    as.logical(counts)
+    res <- as.logical(counts)
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
@@ -336,11 +261,22 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     dim. <- dim(x)
 
     if (is.na(value)) {
-      colAnys(is.na(x), na.rm = na.rm, dim. = dim., ...)
+      res <- colAnys(is.na(x), na.rm = na.rm, dim. = dim., ...)
     } else {
-      colAnys(x == value, na.rm = na.rm, dim. = dim., ...)
+      res <- colAnys(x == value, na.rm = na.rm, dim. = dim., ...)
     }
   }
+  
+  # Update name attributes?
+  if (!is.na(useNames)) {
+    if (useNames) {
+      stop("useNames = TRUE is not currently implemented")
+    } else {
+      names(res) <- NULL
+    }
+  }
+  
+  res
 }
 
 
