@@ -18,6 +18,10 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
+- Kept name implementations DRY in [`rowAlls.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L92-L103).
+
+- Reverted .Call(C_rowLogSumExps, ..., useNames).
+
 - Added naming support to functions in the following 5 files:
   * [`rowAlls.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R) - [`tests/rowAllAnys.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowAllAnys.R)
   * [`rowCollapse.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowCollapse.R) - [`tests/rowCollapse.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowCollapse.R)
