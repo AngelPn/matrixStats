@@ -28,7 +28,7 @@
 #' @author Henrik Bengtsson
 #' @keywords utilities
 #' @export
-rowTabulates <- function(x, rows = NULL, cols = NULL, values = NULL, ..., useNames = FALSE) {
+rowTabulates <- function(x, rows = NULL, cols = NULL, values = NULL, ..., useNames = TRUE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -79,12 +79,16 @@ rowTabulates <- function(x, rows = NULL, cols = NULL, values = NULL, ..., useNam
     counts[, kk] <- rowCounts(x, value = values[kk], na.rm = na.rm)
   }
   
-  # Update names attributes?
+  # Update name attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      rownames <- rownames(x)
+      if (!is.null(rownames)) {
+        if (!is.null(rows)) rownames <- rownames[rows]
+        rownames(counts) <- rownames
+      }
     } else {
-      names(counts) <- NULL
+      rownames(counts) <- NULL
     }
   }
 
@@ -94,7 +98,7 @@ rowTabulates <- function(x, rows = NULL, cols = NULL, values = NULL, ..., useNam
 
 #' @rdname rowTabulates
 #' @export
-colTabulates <- function(x, rows = NULL, cols = NULL, values = NULL, ..., useNames = FALSE) {
+colTabulates <- function(x, rows = NULL, cols = NULL, values = NULL, ..., useNames = TRUE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -148,12 +152,16 @@ colTabulates <- function(x, rows = NULL, cols = NULL, values = NULL, ..., useNam
     }
   }
   
-  # Update names attributes?
+  # Update name attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      colnames <- colnames(x)
+      if (!is.null(colnames)) {
+        if (!is.null(cols)) colnames <- colnames[cols]
+        rownames(counts) <- colnames
+      }
     } else {
-      names(counts) <- NULL
+      rownames(counts) <- NULL
     }
   }
   

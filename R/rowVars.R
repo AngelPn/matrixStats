@@ -26,7 +26,7 @@
 #' @keywords array iteration robust univar
 #' @export
 rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
-                    dim. = dim(x), ..., useNames = FALSE) {
+                    dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
 
   if (is.null(center)) {
@@ -34,10 +34,14 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     has_nas <- TRUE
     sigma2 <- .Call(C_rowVars, x, dim., rows, cols, na.rm, has_nas, TRUE)
     
-    # Update names attributes?
+    # Update name attributes?
     if (!is.na(useNames)) {
       if (useNames) {
-        stop("useNames = TRUE is not currently implemented")
+        names <- rownames(x)
+        if (!is.null(names)) {
+          if (!is.null(rows)) names <- names[rows]
+          names(sigma2) <- names
+        }
       } else {
         names(sigma2) <- NULL
       }      
@@ -48,6 +52,12 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
 
   ## https://github.com/HenrikBengtsson/matrixStats/issues/187
   centerOnUse("rowVars")
+  
+  ## BACKWARD COMPATIBILITY: matrixStats (<= 0.57.0) returns names
+  ## when !is.null(center), which is tested by DelayedMatrixStats
+  ## and sparseMatrixStats
+  names <- rownames(x)
+  print(names)
 
   # Apply new dimensions
   if (!identical(dim(x), dim.)) dim(x) <- dim.
@@ -74,7 +84,19 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
 
   # Nothing to do?
   if (ncol <= 1L) {
+    # Preserve names
+    names <- rownames(x)
+    
     x <- rep(NA_real_, times = nrow(x))
+    
+    # Update name attributes?
+    if (!is.na(useNames)) {
+      if (useNames) {
+        names(x) <- names
+      } else {
+        names(x) <- NULL
+      }      
+    }
     return(x)
   }
 
@@ -97,11 +119,6 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     # Assuming no missing values
     n <- ncol
   }
-
-  ## BACKWARD COMPATIBILITY: matrixStats (<= 0.57.0) returns names
-  ## when !is.null(center), which is tested by DelayedMatrixStats
-  ## and sparseMatrixStats
-  names <- rownames(x)
 
   validate <- validateVarsCenterFormula()
   if (!validate) {
@@ -139,7 +156,7 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
   
   x <- x * (n / (n - 1))
   
-  # Preserve names attributes?
+  # Preserve name attributes?
   if (is.na(useNames) || useNames) {
     names(x) <- names
   } else {
@@ -153,7 +170,7 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
 #' @rdname rowVars
 #' @export
 colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
-                    dim. = dim(x), ..., useNames = FALSE) {
+                    dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
 
   if (is.null(center)) {
@@ -162,10 +179,14 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     has_nas <- TRUE
     sigma2 <- .Call(C_rowVars, x, dim., rows, cols, na.rm, has_nas, FALSE)
     
-    # Update names attributes?
+    # Update name attributes?
     if (!is.na(useNames)) {
       if (useNames) {
-        stop("useNames = TRUE is not currently implemented")
+        names <- colnames(x)
+        if (!is.null(names)) {
+          if (!is.null(cols)) names <- names[cols]
+          names(sigma2) <- names
+        }
       } else {
         names(sigma2) <- NULL
       }      
@@ -176,6 +197,11 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
 
   ## https://github.com/HenrikBengtsson/matrixStats/issues/187
   centerOnUse("colVars")
+  
+  ## BACKWARD COMPATIBILITY: matrixStats (<= 0.57.0) returns names
+  ## when !is.null(center), which is tested by DelayedMatrixStats
+  ## and sparseMatrixStats
+  names <- colnames(x)
 
   # Apply new dimensions
   if (!identical(dim(x), dim.)) dim(x) <- dim.
@@ -202,7 +228,19 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
 
   # Nothing to do?
   if (nrow <= 1L) {
+    # Preserve names
+    names <- colnames(x)
+    
     x <- rep(NA_real_, times = ncol(x))
+    
+    # Update name attributes?
+    if (!is.na(useNames)) {
+      if (useNames) {
+        names(x) <- names
+      } else {
+        names(x) <- NULL
+      }      
+    }
     return(x)
   }
 
@@ -225,11 +263,6 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     # Assuming no missing values
     n <- nrow
   }
-
-  ## BACKWARD COMPATIBILITY: matrixStats (<= 0.57.0) returns names
-  ## when !is.null(center), which is tested by DelayedMatrixStats
-  ## and sparseMatrixStats
-  names <- names(x)
   
   validate <- validateVarsCenterFormula()
   if (!validate) {
@@ -271,7 +304,7 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
   
   x <- x * (n / (n - 1))
   
-  # Preserve names attributes?
+  # Preserve name attributes?
   if (is.na(useNames) || useNames) {
     names(x) <- names
   } else {

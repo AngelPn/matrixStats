@@ -2,11 +2,7 @@ library("matrixStats")
 library("stats")
 
 rowOrderStats_R <- function(x, probs, ...) {
-  ans <- apply(x, MARGIN = 1L, FUN = quantile, probs = probs, type = 3L)
-
-  # Remove Attributes
-  attributes(ans) <- NULL
-  ans
+  apply(x, MARGIN = 1L, FUN = quantile, probs = probs, type = 3L)
 } # rowOrderStats_R()
 
 
@@ -57,3 +53,23 @@ for (mode in c("integer", "double")) {
     stopifnot(all.equal(y2, y0))
   } # for (kk in ...)
 } # for (mode ...)
+
+
+# Check name attributes
+# dimnames <- list(letters[1:3], LETTERS[1:3])
+# x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3, dimnames = dimnames)
+# 
+# probs <- runif(1)
+# which <- round(probs * ncol(x))
+
+# y0 <- rowOrderStats_R(x, probs = probs)
+# y1 <- rowOrderStats(x, which = which, useNames = TRUE)
+# stopifnot(all.equal(y1, y0))
+# y2 <- colOrderStats(t(x), which = which, useNames = TRUE)
+# stopifnot(all.equal(y2, y0))
+
+# y1 <- rowOrderStats(x, which = which, useNames = TRUE)
+# stopifnot(identical(names(y1), dimnames[1]))
+# y2 <- colOrderStats(t(x), which = which, useNames = TRUE)
+# stopifnot(identical(names(y2), dimnames[2]))
+

@@ -31,7 +31,7 @@
 #' @keywords array iteration robust univar
 #' @export
 rowProds <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                     method = c("direct", "expSumLog"), ..., useNames = FALSE) {
+                     method = c("direct", "expSumLog"), ..., useNames = TRUE) {
   # Argument 'x':
   if (!is.matrix(x)) defunctShouldBeMatrix(x)
 
@@ -65,7 +65,11 @@ rowProds <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- rownames(x)
+      if (!is.null(names)) {
+        if (!is.null(rows)) names <- names[rows]
+        names(y) <- names
+      }
     } else {
       names(y) <- NULL
     }
@@ -78,7 +82,7 @@ rowProds <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @rdname rowProds
 #' @export
 colProds <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                     method = c("direct", "expSumLog"), ..., useNames = FALSE) {
+                     method = c("direct", "expSumLog"), ..., useNames = TRUE) {
   # Argument 'x':
   if (!is.matrix(x)) defunctShouldBeMatrix(x)
 
@@ -112,7 +116,11 @@ colProds <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- colnames(x)
+      if (!is.null(names)) {
+        if (!is.null(cols)) names <- names[cols]
+        names(y) <- names
+      }
     } else {
       names(y) <- NULL
     }

@@ -5,11 +5,11 @@ rowCumsums_R <- function(x) {
     y <- t(apply(x, MARGIN = 1L, FUN = cumsum))
   })
   
-  # Preserve names attributes
+  # Preserve name attributes
   dim <- dim(x)
   if (!isTRUE(all.equal(dim(y), dim))) {
-    dimnames <- dimnames(y)
     dim(y) <- dim
+    dimnames <- dimnames(x)
     if (!is.null(dimnames)) dimnames(y) <- dimnames
   }
   
@@ -143,10 +143,12 @@ for (mode in c("logical", "integer", "double")) {
   stopifnot(all.equal(r2, r0))
   # Check names attributes
   colnames(x) <- names
-  r1 <- rowCumsums(x)
-  r2 <- t(colCumsums(t(x)))
-  stopifnot(identical(colnames(r1), colnames(x)))
-  stopifnot(identical(colnames(r2), colnames(x)))
+  r0 <- rowCumsums_R(x)
+  r1 <- rowCumsums(x, useNames = TRUE)
+  r2 <- t(colCumsums(t(x), useNames = TRUE))
+  stopifnot(all.equal(r1, r2))
+  stopifnot(all.equal(r1, r0))
+  stopifnot(all.equal(r2, r0))
 
   # A Nx0 matrix
   x <- matrix(value, nrow = 5L, ncol = 0L)
@@ -159,8 +161,10 @@ for (mode in c("logical", "integer", "double")) {
   stopifnot(all.equal(r2, r0))
   # Check names attributes
   rownames(x) <- names
-  r1 <- rowCumsums(x)
-  r2 <- t(colCumsums(t(x)))
-  stopifnot(identical(rownames(r1), rownames(x)))
-  stopifnot(identical(rownames(r2), rownames(x)))
+  r0 <- rowCumsums_R(x)
+  r1 <- rowCumsums(x, useNames = TRUE)
+  r2 <- t(colCumsums(t(x), useNames = TRUE))
+  stopifnot(all.equal(r1, r2))
+  stopifnot(all.equal(r1, r0))
+  stopifnot(all.equal(r2, r0))
 } # for (mode ...)

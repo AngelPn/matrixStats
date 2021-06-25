@@ -20,7 +20,7 @@
 #'
 #' @export
 rowRanges <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                      dim. = dim(x), ..., useNames = FALSE) {
+                      dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
   res <- .Call(C_rowRanges, x, dim., rows, cols, 2L, na.rm, TRUE)
@@ -28,9 +28,13 @@ rowRanges <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      rownames <- rownames(x)
+      if (!is.null(rownames)) {
+        if (!is.null(rows)) rownames <- names[rows]
+        rownames(res) <- rownames
+      }
     } else {
-      names(res) <- NULL
+      rownames(res) <- NULL
     }
   }
   
@@ -41,7 +45,7 @@ rowRanges <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @rdname rowRanges
 #' @export
 rowMins <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                    dim. = dim(x), ..., useNames = FALSE) {
+                    dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
   res <- .Call(C_rowRanges, x, dim., rows, cols, 0L, na.rm, TRUE)
@@ -49,7 +53,11 @@ rowMins <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- rownames(x)
+      if (!is.null(names)) {
+        if (!is.null(rows)) names <- names[rows]
+        names(res) <- names
+      }
     } else {
       names(res) <- NULL
     }
@@ -62,7 +70,7 @@ rowMins <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @rdname rowRanges
 #' @export
 rowMaxs <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                    dim. = dim(x), ..., useNames = FALSE) {
+                    dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
   res <- .Call(C_rowRanges, x, dim., rows, cols, 1L, na.rm, TRUE)
@@ -70,7 +78,11 @@ rowMaxs <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- rownames(x)
+      if (!is.null(names)) {
+        if (!is.null(rows)) names <- names[rows]
+        names(res) <- names
+      }
     } else {
       names(res) <- NULL
     }
@@ -83,7 +95,7 @@ rowMaxs <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @rdname rowRanges
 #' @export
 colRanges <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                      dim. = dim(x), ..., useNames = FALSE) {
+                      dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
   res <- .Call(C_colRanges, x, dim., rows, cols, 2L, na.rm, TRUE)
@@ -91,9 +103,13 @@ colRanges <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      colnames <- colnames(x)
+      if (!is.null(colnames)) {
+        if (!is.null(cols)) colnames <- colnames[cols]
+        rownames(res) <- colnames
+      }
     } else {
-      names(res) <- NULL
+      colnames(res) <- NULL
     }
   }
   
@@ -104,7 +120,7 @@ colRanges <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @rdname rowRanges
 #' @export
 colMins <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                    dim. = dim(x), ..., useNames = FALSE) {
+                    dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
   res <- .Call(C_colRanges, x, dim., rows, cols, 0L, na.rm, TRUE)
@@ -112,7 +128,11 @@ colMins <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- colnames(x)
+      if (!is.null(names)) {
+        if (!is.null(cols)) names <- names[cols]
+        names(res) <- names
+      }
     } else {
       names(res) <- NULL
     }
@@ -125,7 +145,7 @@ colMins <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @rdname rowRanges
 #' @export
 colMaxs <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                    dim. = dim(x), ..., useNames = FALSE) {
+                    dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
   res <- .Call(C_colRanges, x, dim., rows, cols, 1L, na.rm, TRUE)
@@ -133,7 +153,11 @@ colMaxs <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- colnames(x)
+      if (!is.null(names)) {
+        if (!is.null(cols)) names <- names[cols]
+        names(res) <- names
+      }
     } else {
       names(res) <- NULL
     }

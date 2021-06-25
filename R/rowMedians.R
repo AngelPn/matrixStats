@@ -40,7 +40,7 @@
 #' @keywords array iteration robust univar
 #' @export
 rowMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                       dim. = dim(x), ..., useNames = FALSE) {
+                       dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
   has_nas <- TRUE  # Add as an argument? /2007-08-24
@@ -50,7 +50,11 @@ rowMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- rownames(x)
+      if (!is.null(names)) {
+        if (!is.null(rows)) names <- names[rows]
+        names(res) <- names
+      }
     } else {
       names(res) <- NULL
     }
@@ -62,7 +66,7 @@ rowMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @rdname rowMedians
 #' @export
 colMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                       dim. = dim(x), ..., useNames = FALSE) {
+                       dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
   has_nas <- TRUE  # Add as an argument? /2007-08-24
@@ -72,7 +76,11 @@ colMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- colnames(x)
+      if (!is.null(names)) {
+        if (!is.null(cols)) names <- names[cols]
+        names(res) <- names
+      }
     } else {
       names(res) <- NULL
     }

@@ -21,22 +21,22 @@ rowDiffs <- function(x, rows = NULL, cols = NULL,
   res <- .Call(C_rowDiffs, x, dim., rows, cols,
         as.integer(lag), as.integer(differences), TRUE)
   
-  # Update names attributes?
+  # Update name attributes?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {
-        
         rownames <- rownames(x)
         if (!is.null(rownames)) {
           if (!is.null(rows)) rownames <- rownames[rows]
         }
-        
         colnames <- colnames(x)
         if (!is.null(colnames)) {
           if (!is.null(cols)) colnames <- colnames[cols]
-          if (ncol(res) != ncol(x)) colnames <- tail(colnames, ncol(res))          
+          len <- length(colnames)
+          ncols <- ncol(res)
+          if (ncols <= 0) colnames <- NULL
+          else colnames <- colnames[(len - ncols + 1):len]
         }
-
         dimnames(res) <- list(rownames, colnames)
       }
     } else {
@@ -55,22 +55,22 @@ colDiffs <- function(x, rows = NULL, cols = NULL,
   res <- .Call(C_rowDiffs, x, dim., rows, cols,
         as.integer(lag), as.integer(differences), FALSE)
   
-  # Update names attributes?
+  # Update name attributes?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {
-        
         colnames <- colnames(x)
         if (!is.null(colnames)) {
           if (!is.null(cols)) colnames <- colnames[cols]
         }
-        
         rownames <- rownames(x)
         if (!is.null(rownames)) {
           if (!is.null(rows)) rownames <- rownames[rows]
-          if (nrow(res) != nrow(x)) rownames <- tail(rownames, nrow(res))          
+          len <- length(rownames)
+          nrows <- nrow(res)
+          if (nrows <= 0) rownames <- NULL
+          else rownames <- rownames[(len - nrows + 1):len]
         }
-        
         dimnames(res) <- list(rownames, colnames)
       }
     } else {

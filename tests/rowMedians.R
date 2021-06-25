@@ -15,14 +15,29 @@ cat("Special case: Non-ties:\n")
 for (mode in c("integer", "double")) {
   x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3)
   storage.mode(x) <- mode
+  
+  # To check name attributes
+  dimnames <- list(letters[1:3], LETTERS[1:3])
 
   y0 <- rowMedians_R(x, na.rm = FALSE)
   y1 <- rowMedians(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
+  # Check name attributes
+  dimnames(x) <- dimnames
+  y0 <- rowMedians_R(x, na.rm = FALSE)
+  y1 <- rowMedians(x, na.rm = FALSE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 
   y0 <- colMedians_R(x, na.rm = FALSE)
   y1 <- colMedians(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
+  # Check name attributes
+  dimnames(x) <- dimnames
+  y0 <- colMedians_R(x, na.rm = FALSE)
+  y1 <- colMedians(x, na.rm = FALSE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 }
 
 
@@ -33,14 +48,29 @@ cat("Special case: Ties:\n")
 for (mode in c("integer", "double")) {
   x <- matrix(1:16 + 0.1, nrow = 4, ncol = 4)
   storage.mode(x) <- mode
+  
+  # To check name attributes
+  dimnames <- list(letters[1:4], LETTERS[1:4])
 
   y0 <- rowMedians_R(x, na.rm = FALSE)
   y1 <- rowMedians(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
+  # Check name attributes
+  dimnames(x) <- dimnames
+  y0 <- rowMedians_R(x, na.rm = FALSE)
+  y1 <- rowMedians(x, na.rm = FALSE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 
   y0 <- colMedians_R(x, na.rm = FALSE)
   y1 <- colMedians(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
+  # Check name attributes
+  dimnames(x) <- dimnames
+  y0 <- colMedians_R(x, na.rm = FALSE)
+  y1 <- colMedians(x, na.rm = FALSE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 }
 
 
@@ -51,14 +81,29 @@ cat("Special case: Single-element matrix:\n")
 for (mode in c("integer", "double")) {
   x <- matrix(1, nrow = 1, ncol = 1)
   storage.mode(x) <- mode
+  
+  # To check name attributes
+  dimnames <- list("a", "A")
 
   y0 <- rowMedians_R(x, na.rm = FALSE)
   y1 <- rowMedians(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
+  # Check name attributes
+  dimnames(x) <- dimnames
+  y0 <- rowMedians_R(x, na.rm = FALSE)
+  y1 <- rowMedians(x, na.rm = FALSE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 
   y0 <- colMedians_R(x, na.rm = FALSE)
   y1 <- colMedians(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
+  # Check name attributes
+  dimnames(x) <- dimnames
+  y0 <- colMedians_R(x, na.rm = FALSE)
+  y1 <- colMedians(x, na.rm = FALSE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 }
 
 
@@ -87,14 +132,29 @@ cat("Special case: All NAs:\n")
 for (mode in c("integer", "double")) {
   x <- matrix(NA_integer_, nrow = 3, ncol = 3)
   storage.mode(x) <- mode
+  
+  # To check name attributes
+  dimnames <- list(letters[1:3], LETTERS[1:3])
 
   y0 <- rowMedians_R(x, na.rm = TRUE)
   y1 <- rowMedians(x, na.rm = TRUE)
   stopifnot(all.equal(y1, y0))
+  # Check name attributes
+  dimnames(x) <- dimnames
+  y0 <- rowMedians_R(x, na.rm = TRUE)
+  y1 <- rowMedians(x, na.rm = TRUE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 
   y0 <- colMedians_R(x, na.rm = TRUE)
   y1 <- colMedians(x, na.rm = TRUE)
   stopifnot(all.equal(y1, y0))
+  # Check name attributes
+  dimnames(x) <- dimnames
+  y0 <- colMedians_R(x, na.rm = TRUE)
+  y1 <- colMedians(x, na.rm = TRUE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 }
 
 
@@ -107,10 +167,22 @@ x <- matrix(NA_real_, nrow = 3, ncol = 3)
 y0 <- rowMedians_R(x, na.rm = TRUE)
 y1 <- rowMedians(x, na.rm = TRUE)
 stopifnot(all.equal(y1, y0))
+# Check name attributes
+dimnames(x) <- dimnames
+y0 <- rowMedians_R(x, na.rm = TRUE)
+y1 <- rowMedians(x, na.rm = TRUE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 y0 <- colMedians_R(x, na.rm = TRUE)
 y1 <- colMedians(x, na.rm = TRUE)
 stopifnot(all.equal(y1, y0))
+# Check name attributes
+dimnames(x) <- dimnames
+y0 <- colMedians_R(x, na.rm = TRUE)
+y1 <- colMedians(x, na.rm = TRUE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -122,10 +194,22 @@ x <- matrix(Inf, nrow = 3, ncol = 3)
 y0 <- rowMedians_R(x, na.rm = FALSE)
 y1 <- rowMedians(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check name attributes
+dimnames(x) <- dimnames
+y0 <- rowMedians_R(x, na.rm = FALSE)
+y1 <- rowMedians(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 y0 <- colMedians_R(x, na.rm = FALSE)
 y1 <- colMedians(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check name attributes
+dimnames(x) <- dimnames
+y0 <- colMedians_R(x, na.rm = FALSE)
+y1 <- colMedians(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -137,10 +221,22 @@ x <- matrix(-Inf, nrow = 3, ncol = 3)
 y0 <- rowMedians_R(x, na.rm = FALSE)
 y1 <- rowMedians(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check name attributes
+dimnames(x) <- dimnames
+y0 <- rowMedians_R(x, na.rm = FALSE)
+y1 <- rowMedians(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 y0 <- colMedians_R(x, na.rm = FALSE)
 y1 <- colMedians(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check name attributes
+dimnames(x) <- dimnames
+y0 <- colMedians_R(x, na.rm = FALSE)
+y1 <- colMedians(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -149,13 +245,28 @@ stopifnot(all.equal(y1, y0))
 cat("Special case: Infs and -Infs:\n")
 x <- matrix(c(-Inf, +Inf), nrow = 4, ncol = 4)
 
+# To check name attributes
+dimnames <- list(letters[1:4], LETTERS[1:4])
+
 y0 <- rowMedians_R(x, na.rm = FALSE)
 y1 <- rowMedians(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check name attributes
+dimnames(x) <- dimnames
+y0 <- rowMedians_R(x, na.rm = FALSE)
+y1 <- rowMedians(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 y0 <- colMedians_R(x, na.rm = FALSE)
 y1 <- colMedians(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check name attributes
+dimnames(x) <- dimnames
+y0 <- colMedians_R(x, na.rm = FALSE)
+y1 <- colMedians(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -167,10 +278,22 @@ x <- matrix(.Machine$integer.max, nrow = 4, ncol = 4)
 y0 <- rowMedians_R(x, na.rm = FALSE)
 y1 <- rowMedians(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check name attributes
+dimnames(x) <- dimnames
+y0 <- rowMedians_R(x, na.rm = FALSE)
+y1 <- rowMedians(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 y0 <- colMedians_R(x, na.rm = FALSE)
 y1 <- colMedians(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check name attributes
+dimnames(x) <- dimnames
+y0 <- colMedians_R(x, na.rm = FALSE)
+y1 <- colMedians(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

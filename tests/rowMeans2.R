@@ -4,14 +4,29 @@ for (mode in c("integer", "logical", "double")) {
   x <- matrix(-4:4, nrow = 3, ncol = 3)
   storage.mode(x) <- mode
   if (mode == "double") x <- x + 0.1
+  
+  # To check names attributes
+  dimnames <- list(letters[1:3], LETTERS[1:3])
 
   y0 <- rowMeans(x, na.rm = FALSE)
   y1 <- rowMeans2(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
+  # Check names attributes
+  dimnames(x) <- dimnames
+  y0 <- rowMeans(x, na.rm = FALSE)
+  y1 <- rowMeans2(x, na.rm = FALSE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 
+  y0 <- colMeans(x, na.rm = FALSE)
+  y1 <- colMeans2(x, na.rm = FALSE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  # Check names attributes
+  dimnames(x) <- dimnames
   y0 <- colMeans(x, na.rm = FALSE)
   y1 <- colMeans2(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -21,14 +36,29 @@ cat("Special case: Single-element matrix:\n")
 for (mode in c("integer", "logical", "double")) {
   x <- matrix(1, nrow = 1, ncol = 1)
   storage.mode(x) <- mode
+  
+  # To check names attributes
+  dimnames <- list("a", "A")
 
   y0 <- rowMeans(x, na.rm = FALSE)
   y1 <- rowMeans2(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
+  # Check names attributes
+  dimnames(x) <- dimnames
+  y0 <- rowMeans(x, na.rm = FALSE)
+  y1 <- rowMeans2(x, na.rm = FALSE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 
   y0 <- colMeans(x, na.rm = FALSE)
   y1 <- colMeans2(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
+  # Check names attributes
+  dimnames(x) <- dimnames
+  y0 <- colMeans(x, na.rm = FALSE)
+  y1 <- colMeans2(x, na.rm = FALSE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 }
 
 
@@ -57,14 +87,29 @@ cat("Special case: All NAs:\n")
 for (mode in c("integer", "logical", "double")) {
   x <- matrix(NA_integer_, nrow = 3, ncol = 3)
   storage.mode(x) <- mode
+  
+  # To check names attributes
+  dimnames <- list(letters[1:3], LETTERS[1:3])
 
   y0 <- rowMeans(x, na.rm = TRUE)
   y1 <- rowMeans2(x, na.rm = TRUE)
   stopifnot(all.equal(y1, y0))
+  # Check names attributes
+  dimnames(x) <- dimnames
+  y0 <- rowMeans(x, na.rm = TRUE)
+  y1 <- rowMeans2(x, na.rm = TRUE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 
   y0 <- colMeans(x, na.rm = TRUE)
   y1 <- colMeans2(x, na.rm = TRUE)
   stopifnot(all.equal(y1, y0))
+  # Check names attributes
+  dimnames(x) <- dimnames
+  y0 <- colMeans(x, na.rm = TRUE)
+  y1 <- colMeans2(x, na.rm = TRUE, useNames = TRUE)
+  stopifnot(all.equal(y1, y0))
+  dimnames(x) <- NULL
 }
 
 
@@ -77,10 +122,22 @@ x <- matrix(NA_real_, nrow = 3, ncol = 3)
 y0 <- rowMeans(x, na.rm = TRUE)
 y1 <- rowMeans2(x, na.rm = TRUE)
 stopifnot(all.equal(y1, y0))
+# Check names attributes
+dimnames(x) <- dimnames
+y0 <- rowMeans(x, na.rm = TRUE)
+y1 <- rowMeans2(x, na.rm = TRUE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 y0 <- colMeans(x, na.rm = TRUE)
 y1 <- colMeans2(x, na.rm = TRUE)
 stopifnot(all.equal(y1, y0))
+# Check names attributes
+dimnames(x) <- dimnames
+y0 <- colMeans(x, na.rm = TRUE)
+y1 <- colMeans2(x, na.rm = TRUE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -92,10 +149,22 @@ x <- matrix(Inf, nrow = 3, ncol = 3)
 y0 <- rowMeans(x, na.rm = FALSE)
 y1 <- rowMeans2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check names attributes
+dimnames(x) <- dimnames
+y0 <- rowMeans(x, na.rm = FALSE)
+y1 <- rowMeans2(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 y0 <- colMeans(x, na.rm = FALSE)
 y1 <- colMeans2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check names attributes
+dimnames(x) <- dimnames
+y0 <- colMeans(x, na.rm = FALSE)
+y1 <- colMeans2(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -107,10 +176,22 @@ x <- matrix(-Inf, nrow = 3, ncol = 3)
 y0 <- rowMeans(x, na.rm = FALSE)
 y1 <- rowMeans2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check names attributes
+dimnames(x) <- dimnames
+y0 <- rowMeans(x, na.rm = FALSE)
+y1 <- rowMeans2(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 y0 <- colMeans(x, na.rm = FALSE)
 y1 <- colMeans2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check names attributes
+dimnames(x) <- dimnames
+y0 <- colMeans(x, na.rm = FALSE)
+y1 <- colMeans2(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -119,13 +200,28 @@ stopifnot(all.equal(y1, y0))
 cat("Special case: Infs and -Infs:\n")
 x <- matrix(c(-Inf, +Inf), nrow = 4, ncol = 4)
 
+# To check names attributes
+dimnames <- list(letters[1:4], LETTERS[1:4])
+
 y0 <- rowMeans(x, na.rm = FALSE)
 y1 <- rowMeans2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check names attributes
+dimnames(x) <- dimnames
+y0 <- rowMeans(x, na.rm = FALSE)
+y1 <- rowMeans2(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 y0 <- colMeans(x, na.rm = FALSE)
 y1 <- colMeans2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check names attributes
+dimnames(x) <- dimnames
+y0 <- colMeans(x, na.rm = FALSE)
+y1 <- colMeans2(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Special case: NaNs and NAs
@@ -140,11 +236,23 @@ y1 <- rowMeans2(x, na.rm = FALSE)
 str(y1)
 stopifnot(all(is.na(y1)), length(unique(y1)) >= 1L)
 stopifnot(all.equal(y1, y0))
+# Check names attributes
+dimnames(x) <- dimnames
+y0 <- rowMeans(x, na.rm = FALSE)
+y1 <- rowMeans2(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 y0 <- colMeans(x, na.rm = FALSE)
 stopifnot(all(is.na(y0)), length(unique(y0)) == 1L)
 y1 <- colMeans2(x, na.rm = FALSE)
 stopifnot(all(is.na(y1)), length(unique(y1)) == 1L)
+# Check names attributes
+dimnames(x) <- dimnames
+y0 <- colMeans(x, na.rm = FALSE)
+y1 <- colMeans2(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 ## NOTE, due to compiler optimization, it is not guaranteed that NA is
 ## returned here (as one would expect). NaN might very well be returned,
 ## when both NA and NaN are involved.  This is an accepted feature in R,
@@ -164,10 +272,22 @@ x <- matrix(.Machine$integer.max, nrow = 4, ncol = 4)
 y0 <- rowMeans(x, na.rm = FALSE)
 y1 <- rowMeans2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check names attributes
+dimnames(x) <- dimnames
+y0 <- rowMeans(x, na.rm = FALSE)
+y1 <- rowMeans2(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 y0 <- colMeans(x, na.rm = FALSE)
 y1 <- colMeans2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
+# Check names attributes
+dimnames(x) <- dimnames
+y0 <- colMeans(x, na.rm = FALSE)
+y1 <- colMeans2(x, na.rm = FALSE, useNames = TRUE)
+stopifnot(all.equal(y1, y0))
+dimnames(x) <- NULL
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -

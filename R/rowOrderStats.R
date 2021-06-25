@@ -29,7 +29,7 @@
 #' @keywords array iteration robust univar
 #' @export
 rowOrderStats <- function(x, rows = NULL, cols = NULL, which,
-                          dim. = dim(x), ..., useNames = FALSE) {
+                          dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
 
   # Check missing values
@@ -40,10 +40,14 @@ rowOrderStats <- function(x, rows = NULL, cols = NULL, which,
   which <- as.integer(which)
   res <- .Call(C_rowOrderStats, x, dim., rows, cols, which)
   
-  # Update names attributes?
+  # Update name attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- rownames(x)
+      if (!is.null(names)) {
+        if (!is.null(rows)) names <- names[rows]
+        names(res) <- names
+      }
     } else {
       names(res) <- NULL
     }
@@ -56,7 +60,7 @@ rowOrderStats <- function(x, rows = NULL, cols = NULL, which,
 #' @rdname rowOrderStats
 #' @export
 colOrderStats <- function(x, rows = NULL, cols = NULL, which,
-                          dim. = dim(x), ..., useNames = FALSE) {
+                          dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
 
   # Check missing values
@@ -67,10 +71,14 @@ colOrderStats <- function(x, rows = NULL, cols = NULL, which,
   which <- as.integer(which)
   res <- .Call(C_colOrderStats, x, dim., rows, cols, which)
   
-  # Update names attributes?
+  # Update name attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- colnames(x)
+      if (!is.null(names)) {
+        if (!is.null(cols)) names <- names[cols]
+        names(res) <- names
+      }
     } else {
       names(res) <- NULL
     }

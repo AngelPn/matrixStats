@@ -15,7 +15,7 @@
 #' @keywords array iteration robust univar
 #' @export
 rowSums2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                       dim. = dim(x), ..., useNames = FALSE) {
+                       dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
 
@@ -25,7 +25,11 @@ rowSums2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- rownames(x)
+      if (!is.null(names)) {
+        if (!is.null(rows)) names <- names[rows]
+        names(res) <- names
+      }
     } else {
       names(res) <- NULL
     }
@@ -37,7 +41,7 @@ rowSums2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @rdname rowSums2
 #' @export
 colSums2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
-                       dim. = dim(x), ..., useNames = FALSE) {
+                       dim. = dim(x), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   na.rm <- as.logical(na.rm)
 
@@ -47,7 +51,11 @@ colSums2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
-      stop("useNames = TRUE is not currently implemented")
+      names <- colnames(x)
+      if (!is.null(names)) {
+        if (!is.null(cols)) names <- names[cols]
+        names(res) <- names
+      }
     } else {
       names(res) <- NULL
     }
