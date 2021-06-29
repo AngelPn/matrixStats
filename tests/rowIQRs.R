@@ -8,12 +8,12 @@ rowIQRs_R <- function(x, na.rm = FALSE) {
   }
   q <- apply(x, MARGIN = 1L, FUN = quantile_na,
              probs = c(0.25, 0.75), na.rm = na.rm)
-  rownames(q) <- NULL
+  rownames(q) <- NULL # Not needed anymore
 
-  # Preserve name attributes
+  # Preserve names attributes
   dim <- c(2L, nrow(x))
   if (!isTRUE(all.equal(dim(q), dim))) {
-    names <- names(q)
+    names <- rownames(x)
     dim(q) <- dim
     if (!is.null(names)) names(q) <- names
   }
@@ -30,7 +30,7 @@ for (mode in c("integer", "double")) {
   storage.mode(x) <- mode
   str(x)
   
-  # To check name attributes
+  # To check names attributes
   dimnames <- list(letters[1:10], LETTERS[1:10])
 
   for (add_na in c(FALSE, TRUE)) {
@@ -46,13 +46,16 @@ for (mode in c("integer", "double")) {
       stopifnot(all.equal(q1, q0))
       q2 <- colIQRs(t(x), na.rm = na.rm)
       stopifnot(all.equal(q2, q0))
-      
-      # Check name attributes
+      # Check names attributes
       dimnames(x) <- dimnames
+      q1 <- rowIQRs(x, na.rm = na.rm, useNames = FALSE)
+      q2 <- colIQRs(t(x), na.rm = na.rm, useNames = FALSE)
+      stopifnot(all.equal(q1, q0))
+      stopifnot(all.equal(q2, q0))
       q0 <- rowIQRs_R(x, na.rm = na.rm)
       q1 <- rowIQRs(x, na.rm = na.rm, useNames = TRUE)
-      stopifnot(all.equal(q1, q0))
       q2 <- colIQRs(t(x), na.rm = na.rm, useNames = TRUE)
+      stopifnot(all.equal(q1, q0))
       stopifnot(all.equal(q2, q0))
       dimnames(x) <- NULL
 
@@ -92,11 +95,13 @@ for (mode in c("integer", "double")) {
 x <- matrix(1, nrow = 1L, ncol = 2L)
 q <- rowIQRs(x)
 stopifnot(identical(q, 0))
-# Check name attributes
+# Check names attributes
 dimnames(x) <- list("a",  LETTERS[1:2])
 q0 <- rowIQRs_R(x)
 q1 <- rowIQRs(x, useNames = TRUE)
+q2 <- colIQRs(t(x), useNames = TRUE)
 stopifnot(all.equal(q0, q1))
+stopifnot(all.equal(q0, q2))
 
 x <- matrix(1, nrow = 2L, ncol = 1L)
 q <- colIQRs(x)

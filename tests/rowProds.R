@@ -33,6 +33,10 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(y2, y1))
   # Check names attributes
   dimnames(x) <- dimnames
+  y1 <- rowProds(x, na.rm = TRUE, useNames = FALSE)
+  y2 <- colProds(t(x), na.rm = TRUE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
+  stopifnot(all.equal(y2, y0))
   y0 <- rowProds_R(x, na.rm = TRUE)
   y1 <- rowProds(x, na.rm = TRUE, useNames = TRUE)
   y2 <- colProds(t(x), na.rm = TRUE, useNames = TRUE)
@@ -55,6 +59,10 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal.na(y1, y3))
   # Check names attributes
   dimnames(x) <- dimnames
+  y1 <- rowProds(x, na.rm = FALSE, useNames = FALSE)
+  y2 <- colProds(t(x), na.rm = FALSE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
+  stopifnot(all.equal(y2, y0))
   y0 <- rowProds_R(x, na.rm = FALSE)
   y1 <- rowProds(x, na.rm = FALSE, useNames = TRUE)
   y2 <- colProds(t(x), na.rm = FALSE, useNames = TRUE)

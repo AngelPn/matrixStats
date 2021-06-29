@@ -13,18 +13,22 @@ for (mode in c("integer", "logical", "double")) {
   stopifnot(all.equal(y1, y0))
   # Check names attributes
   dimnames(x) <- dimnames
+  y1 <- rowMeans2(x, na.rm = FALSE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
   y0 <- rowMeans(x, na.rm = FALSE)
   y1 <- rowMeans2(x, na.rm = FALSE, useNames = TRUE)
   stopifnot(all.equal(y1, y0))
   dimnames(x) <- NULL
 
   y0 <- colMeans(x, na.rm = FALSE)
-  y1 <- colMeans2(x, na.rm = FALSE, useNames = TRUE)
+  y1 <- colMeans2(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
   # Check names attributes
   dimnames(x) <- dimnames
+  y1 <- colMeans2(x, na.rm = FALSE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
   y0 <- colMeans(x, na.rm = FALSE)
-  y1 <- colMeans2(x, na.rm = FALSE)
+  y1 <- colMeans2(x, na.rm = FALSE, useNames = TRUE)
   stopifnot(all.equal(y1, y0))
   dimnames(x) <- NULL
 }
@@ -45,6 +49,8 @@ for (mode in c("integer", "logical", "double")) {
   stopifnot(all.equal(y1, y0))
   # Check names attributes
   dimnames(x) <- dimnames
+  y1 <- rowMeans2(x, na.rm = FALSE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
   y0 <- rowMeans(x, na.rm = FALSE)
   y1 <- rowMeans2(x, na.rm = FALSE, useNames = TRUE)
   stopifnot(all.equal(y1, y0))
@@ -55,6 +61,8 @@ for (mode in c("integer", "logical", "double")) {
   stopifnot(all.equal(y1, y0))
   # Check names attributes
   dimnames(x) <- dimnames
+  y1 <- colMeans2(x, na.rm = FALSE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
   y0 <- colMeans(x, na.rm = FALSE)
   y1 <- colMeans2(x, na.rm = FALSE, useNames = TRUE)
   stopifnot(all.equal(y1, y0))
@@ -96,6 +104,8 @@ for (mode in c("integer", "logical", "double")) {
   stopifnot(all.equal(y1, y0))
   # Check names attributes
   dimnames(x) <- dimnames
+  y1 <- rowMeans2(x, na.rm = TRUE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
   y0 <- rowMeans(x, na.rm = TRUE)
   y1 <- rowMeans2(x, na.rm = TRUE, useNames = TRUE)
   stopifnot(all.equal(y1, y0))
@@ -106,6 +116,8 @@ for (mode in c("integer", "logical", "double")) {
   stopifnot(all.equal(y1, y0))
   # Check names attributes
   dimnames(x) <- dimnames
+  y1 <- colMeans2(x, na.rm = TRUE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
   y0 <- colMeans(x, na.rm = TRUE)
   y1 <- colMeans2(x, na.rm = TRUE, useNames = TRUE)
   stopifnot(all.equal(y1, y0))
@@ -124,6 +136,8 @@ y1 <- rowMeans2(x, na.rm = TRUE)
 stopifnot(all.equal(y1, y0))
 # Check names attributes
 dimnames(x) <- dimnames
+y1 <- rowMeans2(x, na.rm = TRUE, useNames = FALSE)
+stopifnot(all.equal(y1, y0))
 y0 <- rowMeans(x, na.rm = TRUE)
 y1 <- rowMeans2(x, na.rm = TRUE, useNames = TRUE)
 stopifnot(all.equal(y1, y0))
@@ -134,6 +148,8 @@ y1 <- colMeans2(x, na.rm = TRUE)
 stopifnot(all.equal(y1, y0))
 # Check names attributes
 dimnames(x) <- dimnames
+y1 <- colMeans2(x, na.rm = TRUE, useNames = FALSE)
+stopifnot(all.equal(y1, y0))
 y0 <- colMeans(x, na.rm = TRUE)
 y1 <- colMeans2(x, na.rm = TRUE, useNames = TRUE)
 stopifnot(all.equal(y1, y0))
@@ -151,6 +167,8 @@ y1 <- rowMeans2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
 # Check names attributes
 dimnames(x) <- dimnames
+y1 <- rowMeans2(x, na.rm = FALSE, useNames = FALSE)
+stopifnot(all.equal(y1, y0))
 y0 <- rowMeans(x, na.rm = FALSE)
 y1 <- rowMeans2(x, na.rm = FALSE, useNames = TRUE)
 stopifnot(all.equal(y1, y0))
@@ -161,6 +179,8 @@ y1 <- colMeans2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
 # Check names attributes
 dimnames(x) <- dimnames
+y1 <- colMeans2(x, na.rm = FALSE, useNames = FALSE)
+stopifnot(all.equal(y1, y0))
 y0 <- colMeans(x, na.rm = FALSE)
 y1 <- colMeans2(x, na.rm = FALSE, useNames = TRUE)
 stopifnot(all.equal(y1, y0))

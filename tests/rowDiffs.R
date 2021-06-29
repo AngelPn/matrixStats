@@ -4,7 +4,7 @@ rowDiffs_R <- function(x, lag = 1L, differences = 1L, ...) {
   ncol2 <- ncol(x) - lag * differences
   if (ncol2 <= 0) {
     y <- matrix(x[integer(0L)], nrow = nrow(x), ncol = 0L)
-    # Preserve name attributes
+    # Preserve names attributes
     if (!is.null(rownames(x))) rownames(y) <- rownames(x)
     return(y)
   }
@@ -13,11 +13,11 @@ rowDiffs_R <- function(x, lag = 1L, differences = 1L, ...) {
   })
   y <- t(y)
   
-  # Preserve name attributes
+  # Preserve dimnames attributes
   dim <- c(nrow(x), ncol2)
   if (!isTRUE(all.equal(dim(y), dim))) {
     dim(y) <- dim
-    
+  
     colnames <- colnames(x)
     if (!is.null(colnames)) {
       len <- length(colnames)
@@ -61,9 +61,12 @@ for (mode in c("integer", "double")) {
         stopifnot(all.equal(r1, r0))
         stopifnot(all.equal(r2, r0))
         stopifnot(all.equal(r1, r2))
-        
-        # Check name attributes
+        # Check dimnames attributes
         dimnames(x) <- dimnames
+        r1 <- rowDiffs(x, lag = lag, differences = differences, useNames = FALSE)
+        r2 <- t(colDiffs(t(x), lag = lag, differences = differences, useNames = FALSE))
+        stopifnot(all.equal(r1, r0))
+        stopifnot(all.equal(r2, r0))
         r0 <- rowDiffs_R(x, lag = lag, differences = differences)
         r1 <- rowDiffs(x, lag = lag, differences = differences, useNames = TRUE)
         r2 <- t(colDiffs(t(x), lag = lag, differences = differences, useNames = TRUE))
@@ -92,9 +95,12 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(r1, r2))
   stopifnot(all.equal(r1, r0))
   stopifnot(all.equal(r2, r0))
-  
-  # Check name attributes
+  # Check dimnames attributes
   dimnames(x) <- list(letters[1:20], LETTERS[1:5])
+  r1 <- rowDiffs(x, useNames = FALSE)
+  r2 <- t(colDiffs(t(x), useNames = FALSE))
+  stopifnot(all.equal(r1, r0))
+  stopifnot(all.equal(r2, r0))
   r0 <- rowDiffs_R(x)
   r1 <- rowDiffs(x, useNames = TRUE)
   r2 <- t(colDiffs(t(x), useNames = TRUE))
@@ -114,8 +120,12 @@ r2 <- t(colDiffs(t(x)))
 stopifnot(all.equal(r1, r2))
 stopifnot(all.equal(r1, r0))
 stopifnot(all.equal(r2, r0))
-# Check name attributes
+# Check dimnames attributes
 dimnames(x) <- list("a", "A")
+r1 <- rowDiffs(x, useNames = FALSE)
+r2 <- t(colDiffs(t(x), useNames = FALSE))
+stopifnot(all.equal(r1, r0))
+stopifnot(all.equal(r2, r0))
 r0 <- rowDiffs_R(x)
 r1 <- rowDiffs(x, useNames = TRUE)
 r2 <- t(colDiffs(t(x), useNames = TRUE))

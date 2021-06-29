@@ -34,7 +34,7 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     has_nas <- TRUE
     sigma2 <- .Call(C_rowVars, x, dim., rows, cols, na.rm, has_nas, TRUE)
     
-    # Update name attributes?
+    # Update names attributes?
     if (!is.na(useNames)) {
       if (useNames) {
         names <- rownames(x)
@@ -57,7 +57,6 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
   ## when !is.null(center), which is tested by DelayedMatrixStats
   ## and sparseMatrixStats
   names <- rownames(x)
-  print(names)
 
   # Apply new dimensions
   if (!identical(dim(x), dim.)) dim(x) <- dim.
@@ -89,7 +88,7 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     
     x <- rep(NA_real_, times = nrow(x))
     
-    # Update name attributes?
+    # Update names attributes?
     if (!is.na(useNames)) {
       if (useNames) {
         names(x) <- names
@@ -156,7 +155,7 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
   
   x <- x * (n / (n - 1))
   
-  # Preserve name attributes?
+  # Preserve names attributes?
   if (is.na(useNames) || useNames) {
     names(x) <- names
   } else {
@@ -179,7 +178,7 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     has_nas <- TRUE
     sigma2 <- .Call(C_rowVars, x, dim., rows, cols, na.rm, has_nas, FALSE)
     
-    # Update name attributes?
+    # Update names attributes?
     if (!is.na(useNames)) {
       if (useNames) {
         names <- colnames(x)
@@ -233,7 +232,7 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     
     x <- rep(NA_real_, times = ncol(x))
     
-    # Update name attributes?
+    # Update names attributes?
     if (!is.na(useNames)) {
       if (useNames) {
         names(x) <- names
@@ -304,7 +303,7 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
   
   x <- x * (n / (n - 1))
   
-  # Preserve name attributes?
+  # Preserve names attributes?
   if (is.na(useNames) || useNames) {
     names(x) <- names
   } else {

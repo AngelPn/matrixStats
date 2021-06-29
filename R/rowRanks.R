@@ -102,7 +102,7 @@ rowRanks <- function(x, rows = NULL, cols = NULL,
   # byrow = TRUE
   y <- .Call(C_rowRanksWithTies, x, dim., rows, cols, ties_method, TRUE)
   
-  # Update names attributes?
+  # Update dimnames attributes?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {
@@ -145,14 +145,14 @@ colRanks <- function(x, rows = NULL, cols = NULL,
   y <- .Call(C_rowRanksWithTies, x, dim., rows, cols, ties_method, FALSE)
   if (!preserveShape) y <- t(y)
   
-  # Update names attributes?
+  # Update dimnames attributes?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {
-        rownames <- rownames(x)
-        if (!is.null(rows)) rownames <- rownames[rows]
-        colnames <- colnames(x)
-        if (!is.null(cols)) colnames <- colnames[cols]
+        colnames <- rownames(x)
+        if (!is.null(rows)) colnames <- rownames[rows]
+        rownames <- colnames(x)
+        if (!is.null(cols)) rownames <- colnames[cols]
         dimnames(y) <- list(rownames, colnames)
       }
     } else {

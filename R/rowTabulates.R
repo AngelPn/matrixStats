@@ -79,7 +79,7 @@ rowTabulates <- function(x, rows = NULL, cols = NULL, values = NULL, ..., useNam
     counts[, kk] <- rowCounts(x, value = values[kk], na.rm = na.rm)
   }
   
-  # Update name attributes?
+  # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
       rownames <- rownames(x)
@@ -152,7 +152,7 @@ colTabulates <- function(x, rows = NULL, cols = NULL, values = NULL, ..., useNam
     }
   }
   
-  # Update name attributes?
+  # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
       colnames <- colnames(x)

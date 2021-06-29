@@ -21,7 +21,7 @@ rowDiffs <- function(x, rows = NULL, cols = NULL,
   res <- .Call(C_rowDiffs, x, dim., rows, cols,
         as.integer(lag), as.integer(differences), TRUE)
   
-  # Update name attributes?
+  # Update dimnames attributes?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {
@@ -55,7 +55,7 @@ colDiffs <- function(x, rows = NULL, cols = NULL,
   res <- .Call(C_rowDiffs, x, dim., rows, cols,
         as.integer(lag), as.integer(differences), FALSE)
   
-  # Update name attributes?
+  # Update dimnames attributes?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {

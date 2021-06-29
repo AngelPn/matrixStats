@@ -55,21 +55,15 @@ for (mode in c("integer", "double")) {
 } # for (mode ...)
 
 
-# Check name attributes
+# # Check names attributes
 # dimnames <- list(letters[1:3], LETTERS[1:3])
 # x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3, dimnames = dimnames)
 # 
 # probs <- runif(1)
 # which <- round(probs * ncol(x))
-
+# 
 # y0 <- rowOrderStats_R(x, probs = probs)
 # y1 <- rowOrderStats(x, which = which, useNames = TRUE)
 # stopifnot(all.equal(y1, y0))
 # y2 <- colOrderStats(t(x), which = which, useNames = TRUE)
 # stopifnot(all.equal(y2, y0))
-
-# y1 <- rowOrderStats(x, which = which, useNames = TRUE)
-# stopifnot(identical(names(y1), dimnames[1]))
-# y2 <- colOrderStats(t(x), which = which, useNames = TRUE)
-# stopifnot(identical(names(y2), dimnames[2]))
-

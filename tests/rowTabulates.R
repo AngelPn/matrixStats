@@ -4,7 +4,7 @@ nrow <- 6L
 ncol <- 5L
 data <- matrix(0:4, nrow = nrow, ncol = ncol)
 
-# To check name attributes
+# To check names attributes
 dimnames <- list(letters[1:6], LETTERS[1:5])
 
 modes <- c("integer", "logical", "raw")
@@ -30,12 +30,12 @@ for (mode in modes) {
     y0 <- t(table(x, row(x), useNA = "always")[, seq_len(nrow(x))])
     stopifnot(all(y == y0))
   }
-  # Check name attributes
+  # Check names attributes
   dimnames(x) <- dimnames
-  y <- rowTabulates(x, useNames = TRUE)
   y1 <- rowTabulates(x, useNames = FALSE)
+  stopifnot(all.equal(y1, y))
+  y <- rowTabulates(x, useNames = TRUE)
   stopifnot(identical(rownames(y), rownames(x)))
-  stopifnot(is.null(rownames(y1)))
   dimnames(x) <- NULL
 
   y <- colTabulates(x)
@@ -48,12 +48,12 @@ for (mode in modes) {
     y0 <- t(table(x, col(x), useNA = "always")[, seq_len(ncol(x))])
     stopifnot(all(y == y0))
   }
-  # Check name attributes
+  # Check names attributes
   dimnames(x) <- dimnames
-  y <- colTabulates(x, useNames = TRUE)
   y1 <- colTabulates(x, useNames = FALSE)
+  stopifnot(all.equal(y1, y))
+  y <- colTabulates(x, useNames = TRUE)
   stopifnot(identical(rownames(y), colnames(x)))
-  stopifnot(is.null(rownames(y1)))
   dimnames(x) <- NULL
 
   # Count only certain values
@@ -67,29 +67,29 @@ for (mode in modes) {
   y <- rowTabulates(x, values = subset)
   print(y)
   stopifnot(identical(dim(y), c(nrow, length(subset))))
-  # Check name attributes
+  # Check names attributes
   dimnames(x) <- dimnames
-  y <- rowTabulates(x, values = subset, useNames = TRUE)
   y1 <- rowTabulates(x, values = subset, useNames = FALSE)
+  stopifnot(all.equal(y1, y))
+  y <- rowTabulates(x, values = subset, useNames = TRUE)
   stopifnot(identical(rownames(y), rownames(x)))
-  stopifnot(is.null(rownames(y1)))
   dimnames(x) <- NULL
 
   y <- colTabulates(x, values = subset)
   print(y)
   stopifnot(identical(dim(y), c(ncol, length(subset))))
-  # Check name attributes
+  # Check names attributes
   dimnames(x) <- dimnames
-  y <- colTabulates(x, values = subset, useNames = TRUE)
   y1 <- colTabulates(x, values = subset, useNames = FALSE)
+  stopifnot(all.equal(y1, y))
+  y <- colTabulates(x, values = subset, useNames = TRUE)
   stopifnot(identical(rownames(y), colnames(x)))
-  stopifnot(is.null(rownames(y1)))
   dimnames(x) <- NULL
 
   # Raw
   if (mode %in% c("integer", "raw")) {
     subset <- c(0:2)
-    # Check name attributes
+    # Check names attributes
     dimnames(x) <- dimnames
     y <- rowTabulates(x, values = as.raw(subset), useNames = TRUE)
     y1 <- rowTabulates(x, values = as.raw(subset), useNames = FALSE)
@@ -100,19 +100,19 @@ for (mode in modes) {
     y <- rowTabulates(x, values = as.raw(subset))
     print(y)
     stopifnot(identical(dim(y), c(nrow, length(subset))))
-  
+    
     y2 <- colTabulates(t(x), values = as.raw(subset))
     print(y2)
     stopifnot(
       identical(dim(y2), c(nrow, length(subset))),
       identical(y2, y)
     )
-    # Check name attributes
+    # Check names attributes
     dimnames(x) <- dimnames
-    y <- colTabulates(t(x), values = as.raw(subset), useNames = TRUE)
     y1 <- colTabulates(t(x), values = as.raw(subset), useNames = FALSE)
+    stopifnot(all.equal(y1, y))
+    y <- colTabulates(t(x), values = as.raw(subset), useNames = TRUE)
     stopifnot(identical(rownames(y), colnames(t(x))))
-    stopifnot(is.null(rownames(y1)))
     dimnames(x) <- NULL
   }
 

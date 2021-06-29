@@ -40,7 +40,7 @@ rowOrderStats <- function(x, rows = NULL, cols = NULL, which,
   which <- as.integer(which)
   res <- .Call(C_rowOrderStats, x, dim., rows, cols, which)
   
-  # Update name attributes?
+  # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- rownames(x)
@@ -71,7 +71,7 @@ colOrderStats <- function(x, rows = NULL, cols = NULL, which,
   which <- as.integer(which)
   res <- .Call(C_colOrderStats, x, dim., rows, cols, which)
   
-  # Update name attributes?
+  # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- colnames(x)

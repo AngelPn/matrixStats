@@ -18,16 +18,40 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
+- Added `useNames = TRUE` implementation to every function that makes sense to support naming and wrote tests to check dimnames/names attributes. However, tests for subsets have not been added yet.
+
+- In order to cover testing every significant case, checking for dimnames/names attributes is added above or below every testing of the functionality of a function that is already written.
+
+- There are some functions that names are handled inconsistently between the various if-statements and the added naming support follows this incosistency:
+  * [`rowWeightedMeans()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowWeightedMeans.R): If `has_weights` and `nw == 0L`, the default behavior is no naming support. If `has_weights` and `not na.rm`, the default behavior is also no naming support. Else, the default behavior is preserving name attributes.
+  * [`rowVars()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowVars.R): If `is.null(center)`, the default behavior is no naming support. Else, if `ncol <= 1L`, the default behavior is also no naming support, else the default behavior is to preserve name attributes. Same for `colVars()`.
+  
+- Some of the functions that are used to test the results do not support naming because of `dim(res) <- dim(x)`, that removes any "dimnames" and "names" attributes. We need to keep this line for backward compatible, as came up from [Issue#11](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/11#issuecomment-867113030). For this, code was added to preserve dimnames/names attributes, if the dimensions of the result differ from the initial matrix. These changes will be added to the functions that are used to test subsets, as `validateIndicesTestMatrix()` uses `all.equal()`:
+  * [`tests/rowAllAnys.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowAllAnys.R#L9-L15).
+  * [`tests/rowCumsums.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowCumsums.R#L9-L15).
+  * [`tests/rowDiffs.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowDiffs.R#L16-L27).
+  * [`tests/rowIQRs.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowIQRs.R#L13-L19).
+
+- Issues in tests:
+  1. [`tests/rowOrderStats.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowOrderStats.R#L58-L69): 
+  ```
+  > # Check names attributes
+  > dimnames <- list(letters[1:3], LETTERS[1:3])
+  > x <- matrix(1:9 + 0.1, nrow = 3, ncol = 3, dimnames = dimnames)
+  > 
+  > probs <- runif(1)
+  > which <- round(probs * ncol(x))
+  > 
+  > y0 <- rowOrderStats_R(x, probs = probs)
+  > y1 <- rowOrderStats(x, which = which, useNames = TRUE)
+  Error in rowOrderStats(x, which = which, useNames = TRUE) : 
+    Argument 'which' is out of range.
+  Execution halted
+  ```
+  
 - Kept name implementations DRY in [`rowAlls.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L92-L103).
 
 - Reverted .Call(C_rowLogSumExps, ..., useNames).
-
-- Added naming support to functions in the following 5 files:
-  * [`rowAlls.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R) - [`tests/rowAllAnys.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowAllAnys.R)
-  * [`rowCollapse.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowCollapse.R) - [`tests/rowCollapse.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowCollapse.R)
-  * [`rowCounts.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowCounts.R) - [`tests/rowCounts.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowCounts.R)
-  * [`rowCumsums.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowCumsums.R) - [`tests/rowCumsums.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowCumsums.R)
-  * [`rowDiffs.R`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowDiffs.R) - [`tests/rowDiffs.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowDiffs.R)
 
 - The package passes `R CMD check` with all OKs.
 

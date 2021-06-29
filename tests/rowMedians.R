@@ -24,6 +24,8 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(y1, y0))
   # Check name attributes
   dimnames(x) <- dimnames
+  y1 <- rowMedians(x, na.rm = FALSE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
   y0 <- rowMedians_R(x, na.rm = FALSE)
   y1 <- rowMedians(x, na.rm = FALSE, useNames = TRUE)
   stopifnot(all.equal(y1, y0))
@@ -34,6 +36,8 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(y1, y0))
   # Check name attributes
   dimnames(x) <- dimnames
+  y1 <- colMedians(x, na.rm = FALSE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
   y0 <- colMedians_R(x, na.rm = FALSE)
   y1 <- colMedians(x, na.rm = FALSE, useNames = TRUE)
   stopifnot(all.equal(y1, y0))
@@ -57,6 +61,8 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(y1, y0))
   # Check name attributes
   dimnames(x) <- dimnames
+  y1 <- rowMedians(x, na.rm = FALSE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
   y0 <- rowMedians_R(x, na.rm = FALSE)
   y1 <- rowMedians(x, na.rm = FALSE, useNames = TRUE)
   stopifnot(all.equal(y1, y0))
@@ -67,6 +73,8 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(y1, y0))
   # Check name attributes
   dimnames(x) <- dimnames
+  y1 <- colMedians(x, na.rm = FALSE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
   y0 <- colMedians_R(x, na.rm = FALSE)
   y1 <- colMedians(x, na.rm = FALSE, useNames = TRUE)
   stopifnot(all.equal(y1, y0))
@@ -90,6 +98,8 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(y1, y0))
   # Check name attributes
   dimnames(x) <- dimnames
+  y1 <- rowMedians(x, na.rm = FALSE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
   y0 <- rowMedians_R(x, na.rm = FALSE)
   y1 <- rowMedians(x, na.rm = FALSE, useNames = TRUE)
   stopifnot(all.equal(y1, y0))
@@ -100,6 +110,8 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(y1, y0))
   # Check name attributes
   dimnames(x) <- dimnames
+  y1 <- colMedians(x, na.rm = FALSE, useNames = FALSE)
+  stopifnot(all.equal(y1, y0))
   y0 <- colMedians_R(x, na.rm = FALSE)
   y1 <- colMedians(x, na.rm = FALSE, useNames = TRUE)
   stopifnot(all.equal(y1, y0))

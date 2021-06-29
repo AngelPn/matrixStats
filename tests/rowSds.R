@@ -50,14 +50,14 @@ for (mode in c("integer", "double")) {
     storage.mode(x) <- mode
     str(x)
     
-    # To check name attributes
+    # To check names attributes
     dimnames <- list(letters[1:20], LETTERS[1:5])
 
     # Row/column ranges
     for (na.rm in c(FALSE, TRUE)) {
       cat("na.rm = ", na.rm, "\n", sep = "")
       
-      # Check name attributes
+      # Check names attributes
       dimnames(x) <- dimnames
       r0 <- rowSds_R(x, na.rm = na.rm)
       r1 <- rowSds(x, na.rm = na.rm, useNames = TRUE)
@@ -106,7 +106,7 @@ for (mode in c("integer", "double")) {
   for (na.rm in c(FALSE, TRUE)) {
     cat("na.rm = ", na.rm, "\n", sep = "")
     
-    # Check name attributes
+    # Check names attributes
     dimnames(x) <- dimnames
     r0 <- rowSds_R(x, na.rm = na.rm)
     r1 <- rowSds(x, na.rm = na.rm, useNames = TRUE)
@@ -149,7 +149,7 @@ x <- matrix(0, nrow = 1, ncol = 1)
 for (na.rm in c(FALSE, TRUE)) {
   cat("na.rm = ", na.rm, "\n", sep = "")
   
-  # Check name attributes
+  # Check names attributes
   dimnames(x) <- list("a", "A")
   r0 <- rowSds_R(x, na.rm = na.rm)
   r1 <- rowSds(x, na.rm = na.rm, useNames = TRUE)

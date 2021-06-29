@@ -44,11 +44,11 @@ rowMads <- function(x, rows = NULL, cols = NULL, center = NULL,
     x <- x - center
     if (is.null(dim(x))) dim(x) <- dim. # prevent from dim dropping
     x <- abs(x)
-    x <- rowMedians(x, na.rm = na.rm, useNames = useNames, ...)
+    x <- rowMedians(x, na.rm = na.rm, ...)
     x <- constant * x
   }
   
-  # Update name attributes?
+  # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(names)) {
@@ -116,7 +116,7 @@ colMads <- function(x, rows = NULL, cols = NULL, center = NULL,
     x <- constant * x
   }
   
-  # Update name attributes?
+  # Update names attributes?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(names)) {

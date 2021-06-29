@@ -57,6 +57,12 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(r2c, r2))
   # Check name attributes
   dimnames(x) <- dimnames
+  r1 <- rowMads(x, na.rm = TRUE, useNames = FALSE)
+  r2 <- colMads(t(x), na.rm = TRUE, useNames = FALSE)
+  r1c <- rowMads(x, center = center, na.rm = TRUE, useNames = FALSE)
+  stopifnot(all.equal(r1, r0))
+  stopifnot(all.equal(r2, r0))
+  stopifnot(all.equal(r1c, r1))
   r0 <- rowMads_R(x, na.rm = TRUE)
   r1 <- rowMads(x, na.rm = TRUE, useNames = TRUE)
   r1b <- rowMads_center(x, na.rm = TRUE, useNames = TRUE)
@@ -89,7 +95,13 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(r2c, r2))
   # Check name attributes
   dimnames(x) <- dimnames
-  center <- colMedians(x, na.rm = TRUE, useNames = TRUE)
+  r1 <- colMads(x, na.rm = TRUE, useNames = FALSE)
+  r2 <- rowMads(t(x), na.rm = TRUE, useNames = FALSE)
+  r1c <- colMads(x, center = center, na.rm = TRUE, useNames = FALSE)
+  stopifnot(all.equal(r1, r0))
+  stopifnot(all.equal(r2, r0))
+  stopifnot(all.equal(r1c, r1))
+  # center <- colMedians(x, na.rm = TRUE, useNames = TRUE)
   r0 <- colMads_R(x, na.rm = TRUE)
   r1 <- colMads(x, na.rm = TRUE, useNames = TRUE)
   r1b <- colMads_center(x, na.rm = TRUE, useNames = TRUE)
@@ -127,6 +139,10 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(r2, r0))
   # Check name attributes
   dimnames(x) <- dimnames
+  r1 <- rowMads(x, na.rm = TRUE, useNames = FALSE)
+  r2 <- colMads(tx, na.rm = TRUE, useNames = FALSE)
+  stopifnot(all.equal(r1, r0))
+  stopifnot(all.equal(r2, r0))
   r0 <- rowMads_R(x, na.rm = TRUE)
   r1 <- rowMads(x, na.rm = TRUE, useNames = TRUE)
   r2 <- colMads(t(x), na.rm = TRUE, useNames = TRUE)
@@ -144,6 +160,10 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(r2, r0))
   # Check name attributes
   dimnames(x) <- dimnames
+  r1 <- rowMads(x, na.rm = TRUE, useNames = FALSE)
+  r2 <- colMads(tx, na.rm = TRUE, useNames = FALSE)
+  stopifnot(all.equal(r1, r0))
+  stopifnot(all.equal(r2, r0))
   r0 <- colMads_R(x, na.rm = TRUE)
   r1 <- colMads(x, na.rm = TRUE, useNames = TRUE)
   r2 <- rowMads(t(x), na.rm = TRUE, useNames = TRUE)
@@ -178,6 +198,10 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(r2, r0))
   # Check name attributes
   dimnames(x) <- dimnames
+  r1 <- rowMads(x, na.rm = TRUE, useNames = FALSE)
+  r2 <- colMads(tx, na.rm = TRUE, useNames = FALSE)
+  stopifnot(all.equal(r1, r0))
+  stopifnot(all.equal(r2, r0))
   r0 <- rowMads_R(x, na.rm = TRUE)
   r1 <- rowMads(x, na.rm = TRUE, useNames = TRUE)
   r2 <- colMads(t(x), na.rm = TRUE, useNames = TRUE)
@@ -195,6 +219,10 @@ for (mode in c("integer", "double")) {
   stopifnot(all.equal(r2, r0))
   # Check name attributes
   dimnames(x) <- dimnames
+  r1 <- rowMads(x, na.rm = TRUE, useNames = FALSE)
+  r2 <- colMads(tx, na.rm = TRUE, useNames = FALSE)
+  stopifnot(all.equal(r1, r0))
+  stopifnot(all.equal(r2, r0))
   r0 <- colMads_R(x, na.rm = TRUE)
   r1 <- colMads(x, na.rm = TRUE, useNames = TRUE)
   r2 <- rowMads(t(x), na.rm = TRUE, useNames = TRUE)

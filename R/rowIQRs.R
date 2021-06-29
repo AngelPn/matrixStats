@@ -27,7 +27,7 @@
 rowIQRs <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, ..., useNames = TRUE) {
   Q <- rowQuantiles(x, rows = rows, cols = cols,
                     probs = c(0.25, 0.75), na.rm = na.rm, useNames = useNames, drop = FALSE, ...)
-  colnames(Q) <- NULL
+  colnames(Q) <- NULL # Not needed anymore
   ans <- Q[, 2L, drop = TRUE] - Q[, 1L, drop = TRUE]
 
   # Remove attributes
@@ -44,7 +44,7 @@ rowIQRs <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, ..., useNames = 
 colIQRs <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, ..., useNames = TRUE) {
   Q <- colQuantiles(x, rows = rows, cols = cols,
                     probs = c(0.25, 0.75), na.rm = na.rm, useNames = useNames, drop = FALSE, ...)
-  colnames(Q) <- NULL
+  colnames(Q) <- NULL # Not needed anymore
   ans <- Q[, 2L, drop = TRUE] - Q[, 1L, drop = TRUE]
 
   # Remove attributes

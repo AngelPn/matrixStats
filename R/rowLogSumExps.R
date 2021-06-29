@@ -38,7 +38,7 @@
 #' @keywords array
 #' @export
 rowLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
-                          dim. = dim(lx), ..., useNames = FALSE) {
+                          dim. = dim(lx), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   has_na <- TRUE
   res <- .Call(C_rowLogSumExps,
@@ -49,9 +49,7 @@ rowLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
   if (is.na(useNames) || useNames) {
     names <- rownames(lx)
     if (!is.null(names)){
-      if (!is.null(cols)){
-        names <- names[cols]
-      }
+      if (!is.null(rows)) names <- names[rows]
       names(res) <- names
     }
   } else {
@@ -65,7 +63,7 @@ rowLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @rdname rowLogSumExps
 #' @export
 colLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
-                          dim. = dim(lx), ..., useNames = FALSE) {
+                          dim. = dim(lx), ..., useNames = TRUE) {
   dim. <- as.integer(dim.)
   has_na <- TRUE
   
@@ -77,9 +75,7 @@ colLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
   if (is.na(useNames) || useNames) {
     names <- colnames(lx)
     if (!is.null(names)){
-      if (!is.null(cols)){
-        names <- names[cols]
-      }
+      if (!is.null(cols)) names <- names[cols]
       names(res) <- names
     }
   } else {

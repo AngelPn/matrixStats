@@ -42,12 +42,15 @@ for (mode in c("logical", "integer", "double")) {
     stopifnot(all.equal(r2, r0))
     # Check names attributes
     dimnames(x) <- dimnames
+    r1 <- rowCumsums(x, useNames = FALSE)
+    r2 <- t(colCumsums(t(x), useNames = FALSE))
+    stopifnot(all.equal(r1, r0))
+    stopifnot(all.equal(r2, r0))
     r0 <- rowCumsums_R(x)
     r1 <- rowCumsums(x, useNames = TRUE)
     r2 <- t(colCumsums(t(x), useNames = TRUE))
-    stopifnot(all.equal(r1, r2))
     stopifnot(all.equal(r1, r0))
-    stopifnot(all.equal(r2, r0))    
+    stopifnot(all.equal(r2, r0))
     dimnames(x) <- NULL
   } # for (add_na ...)
 }
@@ -70,12 +73,15 @@ for (mode in c("logical", "integer", "double")) {
   stopifnot(all.equal(r2, r0))
   # Check names attributes
   dimnames(x) <- dimnames
+  r1 <- rowCumsums(x, useNames = FALSE)
+  r2 <- t(colCumsums(t(x), useNames = FALSE))
+  stopifnot(all.equal(r1, r0))
+  stopifnot(all.equal(r2, r0))
   r0 <- rowCumsums_R(x)
   r1 <- rowCumsums(x, useNames = TRUE)
   r2 <- t(colCumsums(t(x), useNames = TRUE))
-  stopifnot(all.equal(r1, r2))
   stopifnot(all.equal(r1, r0))
-  stopifnot(all.equal(r2, r0))    
+  stopifnot(all.equal(r2, r0))
   dimnames(x) <- NULL
 } # for (mode ...)
 
@@ -143,12 +149,16 @@ for (mode in c("logical", "integer", "double")) {
   stopifnot(all.equal(r2, r0))
   # Check names attributes
   colnames(x) <- names
+  r1 <- rowCumsums(x, useNames = FALSE)
+  r2 <- t(colCumsums(t(x), useNames = FALSE))
+  stopifnot(all.equal(r1, r0))
+  stopifnot(all.equal(r2, r0))
   r0 <- rowCumsums_R(x)
   r1 <- rowCumsums(x, useNames = TRUE)
   r2 <- t(colCumsums(t(x), useNames = TRUE))
-  stopifnot(all.equal(r1, r2))
   stopifnot(all.equal(r1, r0))
   stopifnot(all.equal(r2, r0))
+  dimnames(x) <- NULL
 
   # A Nx0 matrix
   x <- matrix(value, nrow = 5L, ncol = 0L)
@@ -161,10 +171,14 @@ for (mode in c("logical", "integer", "double")) {
   stopifnot(all.equal(r2, r0))
   # Check names attributes
   rownames(x) <- names
+  r1 <- rowCumsums(x, useNames = FALSE)
+  r2 <- t(colCumsums(t(x), useNames = FALSE))
+  stopifnot(all.equal(r1, r0))
+  stopifnot(all.equal(r2, r0))
   r0 <- rowCumsums_R(x)
   r1 <- rowCumsums(x, useNames = TRUE)
   r2 <- t(colCumsums(t(x), useNames = TRUE))
-  stopifnot(all.equal(r1, r2))
   stopifnot(all.equal(r1, r0))
   stopifnot(all.equal(r2, r0))
+  dimnames(x) <- NULL
 } # for (mode ...)

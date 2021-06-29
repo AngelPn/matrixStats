@@ -56,9 +56,9 @@ for (mode in c("integer", "double")) {
   # Testing names
   rownames(lx_neg) <- seq_len(nrow(x))
   colnames(lx_neg) <- seq_len(ncol(x))
-  y2 <- rowLogSumExps(lx_neg, useNames = NA)
+  y2 <- rowLogSumExps(lx_neg, useNames = TRUE)
   stopifnot(identical(names(y2), rownames(lx_neg)))
-  y3 <- colLogSumExps(t(lx_neg), useNames = NA)
+  y3 <- colLogSumExps(t(lx_neg), useNames = TRUE)
   stopifnot(identical(names(y3), rownames(lx_neg)))
 } # for (mode ...)
 
@@ -177,7 +177,7 @@ str(y)
 ## used)
 x <- matrix(runif(6), nrow = 2L, ncol = 3L,
             dimnames = list(c("A", "B"), c("a", "b", "c")))
-y <- colLogSumExps(x, cols = 3:1)
+y <- colLogSumExps(x, cols = 3:1, useNames = TRUE)
 stopifnot(names(y) == c("c", "b", "a"))
-y <- rowLogSumExps(x, rows = 2)
+y <- rowLogSumExps(x, rows = 2, useNames = TRUE)
 stopifnot(names(y) == "B")
