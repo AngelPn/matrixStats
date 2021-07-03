@@ -4,7 +4,12 @@ rowCumsums_R <- function(x) {
   suppressWarnings({
     y <- t(apply(x, MARGIN = 1L, FUN = cumsum))
   })
+  
+  # Preserve dimnames attribute
   dim(y) <- dim(x)
+  dimnames <- dimnames(x)
+  if (!is.null(dimnames)) dimnames(y) <- dimnames  
+  
   y
 }
 
@@ -15,6 +20,10 @@ rowCumsums_R <- function(x) {
 source("utils/validateIndicesFramework.R")
 x <- matrix(runif(6 * 6, min = -3, max = 3), nrow = 6, ncol = 6)
 storage.mode(x) <- "integer"
+
+# To check dimnames attribute
+dimnames <- list(letters[1:6], LETTERS[1:6])
+
 for (rows in index_cases) {
   for (cols in index_cases) {
     validateIndicesTestMatrix(x, rows, cols,
@@ -23,5 +32,16 @@ for (rows in index_cases) {
                               ftest = function(x, rows, cols, ...) {
       t(colCumsums(t(x), rows = cols, cols = rows))
     }, fsure = rowCumsums_R)
+    
+    # Check dimnames attribute
+    dimnames(x) <- dimnames
+    validateIndicesTestMatrix(x, rows, cols,
+                              ftest = rowCumsums, fsure = rowCumsums_R)
+    validateIndicesTestMatrix(x, rows, cols,
+                              ftest = function(x, rows, cols, ...) {
+      t(colCumsums(t(x), rows = cols, cols = rows))
+    }, fsure = rowCumsums_R)
+    dimnames(x) <- NULL
   }
 }
+

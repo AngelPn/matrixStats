@@ -5,7 +5,7 @@ set.seed(1)
 x <- matrix(rnorm(20), nrow = 5, ncol = 4)
 print(x)
 
-# To check names attributes
+# To check names attribute
 dimnames <- list(letters[1:5], LETTERS[1:4])
 
 # Non-weighted row averages
@@ -15,7 +15,7 @@ print(x_est1)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMeans(t(x))
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMeans(x, useNames = FALSE)
 x_est2 <- colWeightedMeans(t(x), useNames = FALSE)
@@ -37,7 +37,7 @@ print(x_est1)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMeans(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMeans(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedMeans(t(x), w = w, useNames = FALSE)
@@ -59,7 +59,7 @@ print(x_est1)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMeans(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMeans(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedMeans(t(x), w = w, useNames = FALSE)
@@ -80,7 +80,7 @@ x_est1 <- rowWeightedMeans(x, w = w)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMeans(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMeans(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedMeans(t(x), w = w, useNames = FALSE)
@@ -101,7 +101,7 @@ x_est1 <- rowWeightedMeans(x, w = w)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMeans(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMeans(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedMeans(t(x), w = w, useNames = FALSE)
@@ -121,7 +121,7 @@ x_est1 <- rowWeightedMeans(x, w = w)
 print(x_est1)
 x_est2 <- colWeightedMeans(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est1))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMeans(x, w = w, useNames = TRUE)
 x_est2 <- colWeightedMeans(t(x), w = w, useNames = TRUE)
@@ -139,7 +139,7 @@ print(x_est1)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMeans(t(x), na.rm = TRUE)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMeans(x, na.rm = TRUE, useNames = FALSE)
 x_est2 <- colWeightedMeans(t(x), na.rm = TRUE, useNames = FALSE)
@@ -161,7 +161,7 @@ print(x_est1)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMeans(t(x), w = w, na.rm = TRUE)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMeans(x, w = w, na.rm = TRUE, useNames = FALSE)
 x_est2 <- colWeightedMeans(t(x), w = w, na.rm = TRUE, useNames = FALSE)
@@ -180,7 +180,7 @@ w <- 1:4
 x_est1 <- rowWeightedMeans(x, w = w, na.rm = TRUE)
 x_est2 <- colWeightedMeans(t(x), w = w, na.rm = TRUE)
 stopifnot(all.equal(x_est2, x_est1))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMeans(x, w = w, na.rm = TRUE, useNames = TRUE)
 x_est2 <- colWeightedMeans(t(x), w = w, na.rm = TRUE, useNames = TRUE)
@@ -193,7 +193,7 @@ w[1] <- NA_integer_
 x_est1 <- rowWeightedMeans(x, w = w, na.rm = TRUE)
 x_est2 <- colWeightedMeans(t(x), w = w, na.rm = TRUE)
 stopifnot(all.equal(x_est2, x_est1))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMeans(x, w = w, na.rm = TRUE, useNames = TRUE)
 x_est2 <- colWeightedMeans(t(x), w = w, na.rm = TRUE, useNames = TRUE)
@@ -203,7 +203,7 @@ dimnames(x) <- NULL
 x_est1 <- rowWeightedMeans(x, w = w, na.rm = FALSE)
 x_est2 <- colWeightedMeans(t(x), w = w, na.rm = FALSE)
 stopifnot(all.equal(x_est2, x_est1))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMeans(x, w = w, na.rm = FALSE, useNames = TRUE)
 x_est2 <- colWeightedMeans(t(x), w = w, na.rm = FALSE, useNames = TRUE)

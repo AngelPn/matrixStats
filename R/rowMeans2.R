@@ -22,7 +22,7 @@ rowMeans2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   has_nas <- TRUE
   res <- .Call(C_rowMeans2, x, dim., rows, cols, na.rm, has_nas, TRUE)
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- rownames(x)
@@ -48,7 +48,7 @@ colMeans2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   has_nas <- TRUE
   res <- .Call(C_rowMeans2, x, dim., rows, cols, na.rm, has_nas, FALSE)
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- colnames(x)

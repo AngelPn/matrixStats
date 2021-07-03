@@ -5,7 +5,7 @@ set.seed(1)
 x <- matrix(rnorm(20), nrow = 5, ncol = 4)
 print(x)
 
-# To check names attributes
+# To check names attribute
 dimnames <- list(letters[1:5], LETTERS[1:4])
 
 # Non-weighted row medians
@@ -14,7 +14,7 @@ x_est1 <- rowWeightedMedians(x)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMedians(t(x))
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMedians(x, useNames = FALSE)
 x_est2 <- colWeightedMedians(t(x), useNames = FALSE)
@@ -34,7 +34,7 @@ x_est1 <- rowWeightedMedians(x, w = w)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMedians(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMedians(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedMedians(t(x), w = w, useNames = FALSE)
@@ -54,7 +54,7 @@ x_est1 <- rowWeightedMedians(x, w = w)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMedians(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMedians(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedMedians(t(x), w = w, useNames = FALSE)
@@ -74,7 +74,7 @@ x_est1 <- rowWeightedMedians(x, w = w)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMedians(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMedians(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedMedians(t(x), w = w, useNames = FALSE)
@@ -94,7 +94,7 @@ x_est1 <- rowWeightedMedians(x, w = w)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMedians(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMedians(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedMedians(t(x), w = w, useNames = FALSE)
@@ -112,7 +112,7 @@ w <- 1:4
 x_est1 <- rowWeightedMedians(x, w = w)
 x_est2 <- colWeightedMedians(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est1))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMedians(x, w = w, useNames = TRUE)
 x_est2 <- colWeightedMedians(t(x), w = w, useNames = TRUE)
@@ -128,7 +128,7 @@ print(x_est1)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMedians(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMedians(x, w = w, na.rm = TRUE, useNames = FALSE)
 x_est2 <- colWeightedMedians(t(x), w = w, na.rm = TRUE, useNames = FALSE)
@@ -146,7 +146,7 @@ w <- 1:4
 x_est1 <- rowWeightedMedians(x, w = w, na.rm = TRUE)
 x_est2 <- colWeightedMedians(t(x), w = w, na.rm = TRUE)
 stopifnot(all.equal(x_est2, x_est1))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMedians(x, w = w, na.rm = TRUE, useNames = TRUE)
 x_est2 <- colWeightedMedians(t(x), w = w, na.rm = TRUE, useNames = TRUE)
@@ -161,7 +161,7 @@ x_est1 <- rowWeightedMedians(x, w = w)
 x_est2 <- colWeightedMedians(t(x), w = w)
 stopifnot(identical(2, x_est1))
 stopifnot(identical(2, x_est2))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- list("a", LETTERS[1:2])
 x_est1 <- rowWeightedMedians(x, w = w, useNames = TRUE)
 x_est2 <- colWeightedMedians(t(x), w = w, useNames = TRUE)

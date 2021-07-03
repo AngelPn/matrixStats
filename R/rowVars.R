@@ -34,7 +34,7 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     has_nas <- TRUE
     sigma2 <- .Call(C_rowVars, x, dim., rows, cols, na.rm, has_nas, TRUE)
     
-    # Update names attributes?
+    # Update names attribute?
     if (!is.na(useNames)) {
       if (useNames) {
         names <- rownames(x)
@@ -83,15 +83,16 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
 
   # Nothing to do?
   if (ncol <= 1L) {
-    # Preserve names
-    names <- rownames(x)
-    
+
     x <- rep(NA_real_, times = nrow(x))
     
-    # Update names attributes?
+    # Update names attribute?
     if (!is.na(useNames)) {
       if (useNames) {
-        names(x) <- names
+        if (!is.null(names)) {
+          if (!is.null(rows)) names <- names[rows]
+          names(x) <- names
+        }
       } else {
         names(x) <- NULL
       }      
@@ -128,7 +129,15 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     x[is.infinite(center)] <- NaN
     x <- rowMeans(x, na.rm = na.rm)
     x <- x * (n / (n - 1))
-    names(x) <- names
+    # Preserve names attribute?
+    if (is.na(useNames) || useNames) {
+      if (!is.null(names)) {
+        if (!is.null(rows)) names <- names[rows]
+        names(x) <- names
+      }
+    } else {
+      names(x) <- NULL
+    }
     return(x)
   }
 
@@ -145,7 +154,7 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
   ## just like for stats::var() - not Inf, e.g. var(c(0,Inf)) == NaN
   x[is.infinite(center)] <- NaN
 
-  equal <- all.equal(x, x2, check.attributes = FALSE)
+  equal <- all.equal(x, x2, check.attribute = FALSE)
   x2 <- NULL
   if (!isTRUE(equal)) {
     fcn <- getOption("matrixStats.vars.formula.onMistake", "deprecated")
@@ -155,9 +164,12 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
   
   x <- x * (n / (n - 1))
   
-  # Preserve names attributes?
+  # Preserve names attribute?
   if (is.na(useNames) || useNames) {
-    names(x) <- names
+    if (!is.null(names)) {
+      if (!is.null(rows)) names <- names[rows]
+      names(x) <- names
+    }
   } else {
     names(x) <- NULL
   }
@@ -178,7 +190,7 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     has_nas <- TRUE
     sigma2 <- .Call(C_rowVars, x, dim., rows, cols, na.rm, has_nas, FALSE)
     
-    # Update names attributes?
+    # Update names attribute?
     if (!is.na(useNames)) {
       if (useNames) {
         names <- colnames(x)
@@ -227,15 +239,16 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
 
   # Nothing to do?
   if (nrow <= 1L) {
-    # Preserve names
-    names <- colnames(x)
     
     x <- rep(NA_real_, times = ncol(x))
     
-    # Update names attributes?
+    # Update names attribute?
     if (!is.na(useNames)) {
       if (useNames) {
-        names(x) <- names
+        if (!is.null(names)) {
+          if (!is.null(cols)) names <- names[cols]
+          names(x) <- names
+        }
       } else {
         names(x) <- NULL
       }      
@@ -274,7 +287,15 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     ## just like for stats::var() - not Inf, e.g. var(c(0,Inf)) == NaN
     x[is.infinite(center)] <- NaN
     x <- x * (n / (n - 1))
-    names(x) <- names
+    # Preserve names attribute?
+    if (is.na(useNames) || useNames) {
+      if (!is.null(names)) {
+        if (!is.null(cols)) names <- names[cols]
+        names(x) <- names
+      }
+    } else {
+      names(x) <- NULL
+    }
     return(x)
   }
 
@@ -303,9 +324,12 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
   
   x <- x * (n / (n - 1))
   
-  # Preserve names attributes?
+  # Preserve names attribute?
   if (is.na(useNames) || useNames) {
-    names(x) <- names
+    if (!is.null(names)) {
+      if (!is.null(cols)) names <- names[cols]
+      names(x) <- names
+    }
   } else {
     names(x) <- NULL
   }

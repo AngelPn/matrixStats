@@ -24,7 +24,7 @@ rowCumsums <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCumsums, x, dim., rows, cols, TRUE)
   
-  # Update names attributes?
+  # Update dimnames attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {
@@ -49,7 +49,7 @@ colCumsums <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCumsums, x, dim., rows, cols, FALSE)
   
-  # Update names attributes?
+  # Update dimnames attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {
@@ -74,7 +74,7 @@ rowCumprods <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useName
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCumprods, x, dim., rows, cols, TRUE)
   
-  # Update names attributes?
+  # Update dimnames attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {
@@ -99,7 +99,7 @@ colCumprods <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useName
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCumprods, x, dim., rows, cols, FALSE)
   
-  # Update names attributes?
+  # Update dimnames attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {
@@ -124,7 +124,7 @@ rowCummins <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCummins, x, dim., rows, cols, TRUE)
   
-  # Update names attributes?
+  # Update dimnames attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {
@@ -149,7 +149,7 @@ colCummins <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCummins, x, dim., rows, cols, FALSE)
   
-  # Update names attributes?
+  # Update dimnames attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {
@@ -174,7 +174,7 @@ rowCummaxs <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCummaxs, x, dim., rows, cols, TRUE)
   
-  # Update names attributes?
+  # Update dimnames attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {
@@ -199,7 +199,7 @@ colCummaxs <- function(x, rows = NULL, cols = NULL, dim. = dim(x), ..., useNames
   dim. <- as.integer(dim.)
   res <- .Call(C_rowCummaxs, x, dim., rows, cols, FALSE)
   
-  # Update names attributes?
+  # Update dimnames attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(dimnames(x))) {

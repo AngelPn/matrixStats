@@ -34,7 +34,7 @@ rowProds <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
                      method = c("direct", "expSumLog"), ..., useNames = TRUE) {
   # Argument 'x':
   if (!is.matrix(x)) defunctShouldBeMatrix(x)
-
+  
   # Apply subset
   if (!is.null(rows) && !is.null(cols)) x <- x[rows, cols, drop = FALSE]
   else if (!is.null(rows)) x <- x[rows, , drop = FALSE]
@@ -62,14 +62,11 @@ rowProds <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
     y[ii] <- prod(x[ii, , drop = TRUE], na.rm = na.rm)
   }
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- rownames(x)
-      if (!is.null(names)) {
-        if (!is.null(rows)) names <- names[rows]
-        names(y) <- names
-      }
+      if (!is.null(names)) names(y) <- names
     } else {
       names(y) <- NULL
     }
@@ -113,14 +110,11 @@ colProds <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
     y[ii] <- prod(x[, ii, drop = TRUE], na.rm = na.rm)
   }
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- colnames(x)
-      if (!is.null(names)) {
-        if (!is.null(cols)) names <- names[cols]
-        names(y) <- names
-      }
+      if (!is.null(names)) names(y) <- names
     } else {
       names(y) <- NULL
     }

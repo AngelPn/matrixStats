@@ -43,13 +43,12 @@ rowCollapse <- function(x, idxs, rows = NULL, dim. = dim(x), ..., useNames = TRU
   idxs <- dim.[1L] * cols + seq_len(dim.[1L])
   cols <- NULL # Not needed anymore
   
-  # Update names attributes?
+  # Update names attribute?
   res <- x[idxs]
   if (!is.na(useNames)) {
     if (useNames) {
       names <- rownames(x)
       if (!is.null(names)) {
-        if (!is.null(rows)) names <- names[rows]
         names(res) <- names
       }
     } else {
@@ -87,13 +86,12 @@ colCollapse <- function(x, idxs, cols = NULL, dim. = dim(x), ..., useNames = TRU
   idxs <- dim.[1L] * 0:(dim.[2L] - 1L) + rows
   rows <- NULL # Not needed anymore
   
-  # Update names attributes?
+  # Update names attribute?
   res <- x[idxs]
   if (!is.na(useNames)) {
     if (useNames) {
       names <- colnames(x)
       if (!is.null(names)) {
-        if (!is.null(cols)) names <- names[cols]
         names(res) <- names
       }
     } else {

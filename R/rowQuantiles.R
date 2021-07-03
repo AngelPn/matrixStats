@@ -136,7 +136,7 @@ rowQuantiles <- function(x, rows = NULL, cols = NULL,
   digits <- max(2L, getOption("digits"))
   colnames(q) <- sprintf("%.*g%%", digits, 100 * probs)
   
-  # Preserve names attributes?
+  # Preserve names attribute?
   if (is.na(useNames) || useNames) {
     rownames(q) <- rownames(x)
   } else {
@@ -258,7 +258,7 @@ colQuantiles <- function(x, rows = NULL, cols = NULL,
   digits <- max(2L, getOption("digits"))
   colnames(q) <- sprintf("%.*g%%", digits, 100 * probs)
   
-  # Preserve names attributes?
+  # Preserve names attribute?
   if (is.na(useNames) || useNames) {
     rownames(q) <- colnames(x)
   } else {

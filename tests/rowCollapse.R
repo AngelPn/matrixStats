@@ -2,7 +2,7 @@ library("matrixStats")
 
 x <- matrix(1:27, ncol = 3)
 
-# To check names attributes
+# To check names attribute
 z <- x
 dimnames(z) <- list(letters[1:9], LETTERS[1:3])
 
@@ -11,7 +11,7 @@ y <- rowCollapse(x, idxs)
 stopifnot(identical(y, x[, idxs]))
 y2 <- colCollapse(t(x), idxs)
 stopifnot(identical(y2, y))
-# Check names attributes
+# Check names attribute
 y2 <- rowCollapse(z, idxs, useNames = FALSE)
 stopifnot(all.equal(y2, y))
 y2 <- colCollapse(t(z), idxs, useNames = FALSE)
@@ -26,7 +26,7 @@ y <- rowCollapse(x, idxs)
 stopifnot(identical(y, x[, idxs]))
 y2 <- colCollapse(t(x), idxs)
 stopifnot(identical(y2, y))
-# Check names attributes
+# Check names attribute
 y2 <- rowCollapse(z, idxs, useNames = FALSE)
 stopifnot(all.equal(y2, y))
 y2 <- colCollapse(t(z), idxs, useNames = FALSE)
@@ -41,7 +41,7 @@ y <- rowCollapse(x, idxs)
 stopifnot(identical(y, c(x[1:5, 1], x[6:9, 3])))
 y2 <- colCollapse(t(x), idxs)
 stopifnot(identical(y2, y))
-# Check names attributes
+# Check names attribute
 y2 <- rowCollapse(z, idxs, useNames = FALSE)
 stopifnot(all.equal(y2, y))
 y2 <- colCollapse(t(z), idxs, useNames = FALSE)
@@ -59,7 +59,7 @@ y_truth <- c(x[1, 1], x[2, 2], x[3, 3], x[4, 1], x[5, 2],
 stopifnot(identical(y, y_truth))
 y2 <- colCollapse(t(x), idxs)
 stopifnot(identical(y2, y))
-# Check names attributes
+# Check names attribute
 y2 <- rowCollapse(z, idxs, useNames = FALSE)
 stopifnot(all.equal(y2, y))
 y2 <- colCollapse(t(z), idxs, useNames = FALSE)

@@ -27,7 +27,7 @@ for (fcn in names(fcns)) {
       storage.mode(x) <- mode
       str(x)
       
-      # To check names attributes
+      # To check names attribute
       dimnames <- list(letters[1:20], LETTERS[1:5])
 
       # Row/column ranges
@@ -36,7 +36,7 @@ for (fcn in names(fcns)) {
         r1 <- row_fcn(x, na.rm = na.rm)
         r2 <- col_fcn(t(x), na.rm = na.rm)
         stopifnot(all.equal(r1, r2))
-        # Check names attributes
+        # Check names attribute
         dimnames(x) <- dimnames
         r1b <- row_fcn(x, na.rm = na.rm, useNames = FALSE)
         r2b <- col_fcn(t(x), na.rm = na.rm, useNames = FALSE)
@@ -65,7 +65,7 @@ for (fcn in names(fcns)) {
       r1 <- row_fcn(x, na.rm = na.rm)
       r2 <- col_fcn(t(x), na.rm = na.rm)
       stopifnot(all.equal(r1, r2))
-      # Check names attributes
+      # Check names attribute
       dimnames(x) <- dimnames
       r1b <- row_fcn(x, na.rm = na.rm, useNames = FALSE)
       r2b <- col_fcn(t(x), na.rm = na.rm, useNames = FALSE)
@@ -88,7 +88,7 @@ for (fcn in names(fcns)) {
     r1 <- row_fcn(x, na.rm = na.rm)
     r2 <- col_fcn(t(x), na.rm = na.rm)
     stopifnot(all.equal(r1, r2))
-    # Check names attributes
+    # Check names attribute
     dimnames(x) <- list("a", "A")
     r1b <- row_fcn(x, na.rm = na.rm, useNames = FALSE)
     r2b <- col_fcn(t(x), na.rm = na.rm, useNames = FALSE)

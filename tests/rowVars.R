@@ -71,7 +71,7 @@ for (mode in c("integer", "double")) {
     str(x)
     stopifnot(storage.mode(x) == mode)
     
-    # To check names attributes
+    # To check names attribute
     dimnames <- list(letters[1:20], LETTERS[1:5])
 
     # Row/column variance
@@ -79,7 +79,7 @@ for (mode in c("integer", "double")) {
       cat("na.rm = ", na.rm, "\n", sep = "")
       center <- rowMeans(x, na.rm = na.rm)
       
-      # Check names attributes
+      # Check names attribute
       dimnames(x) <- dimnames
       r0 <- rowVars_R(x, na.rm = na.rm)
       r1 <- rowVars(x, na.rm = na.rm, useNames = TRUE)
@@ -130,7 +130,7 @@ for (mode in c("integer", "double")) {
     
       center <- colMeans(x, na.rm = na.rm)
       
-      # Check names attributes
+      # Check names attribute
       dimnames(x) <- dimnames
       r3 <- colVars(x, center = center, na.rm = na.rm, useNames = TRUE)
       r3b <- colVars_center_naive(x, center = center, na.rm = na.rm)
@@ -179,7 +179,7 @@ for (mode in c("integer", "double")) {
   for (na.rm in c(FALSE, TRUE)) {
     cat("na.rm = ", na.rm, "\n", sep = "")
     
-    # Check names attributes
+    # Check names attribute
     dimnames(x) <- dimnames
     r0 <- rowVars_R(x, na.rm = na.rm)
     r1 <- rowVars(x, na.rm = na.rm, useNames = TRUE)
@@ -221,7 +221,7 @@ x <- matrix(0, nrow = 1, ncol = 1)
 for (na.rm in c(FALSE, TRUE)) {
   cat("na.rm = ", na.rm, "\n", sep = "")
   
-  # Check names attributes
+  # Check names attribute
   dimnames(x) <- list("a", "A")
   r0 <- rowVars_R(x, na.rm = na.rm)
   r1 <- rowVars(x, na.rm = na.rm, useNames = TRUE)

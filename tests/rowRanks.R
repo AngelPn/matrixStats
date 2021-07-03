@@ -6,7 +6,7 @@ rowRanks_R <- function(X, ties.method, ...) {
   if (ties.method == "dense") {
     res <- t(apply(X, MARGIN = 1L, FUN = dense_rank))
     
-    # Preserve dimnames attributes
+    # Preserve dimnames attribute
     colnames <- colnames(X)
     if (!is.null(colnames)) colnames(res) <- colnames
     
@@ -20,7 +20,7 @@ colRanks_R <- function(X, ties.method, ...) {
   if (ties.method == "dense") {
     res <- t(apply(X, MARGIN = 2L, FUN = dense_rank))
     
-    # Preserve dimnames attributes
+    # Preserve dimnames attribute
     colnames <- rownames(X)
     if (!is.null(colnames)) colnames(res) <- colnames
     
@@ -148,7 +148,7 @@ stopifnot(inherits(y, "try-error"))
 y <- try(colRanks(x, ties.method = "unknown"), silent = TRUE)
 stopifnot(inherits(y, "try-error"))
 
-# Check dimnames attributes
+# Check dimnames attribute
 dimnames(x) <- list(letters[1:3], LETTERS[1:4])
 for (ties in c("max", "min", "average", "first", "last", "dense")) {
   cat(sprintf("ties.method = %s\n", ties))

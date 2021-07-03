@@ -5,7 +5,7 @@ set.seed(1)
 x <- matrix(rnorm(20), nrow = 5L, ncol = 4L)
 print(x)
 
-# To check names attributes
+# To check names attribute
 dimnames <- list(letters[1:5], LETTERS[1:4])
 
 # Weighted row variances (uniform weights - all w = 1)
@@ -17,7 +17,7 @@ print(x_est1)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedVars(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedVars(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedVars(t(x), w = w, useNames = FALSE)
@@ -40,7 +40,7 @@ print(x_est1)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedVars(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedVars(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedVars(t(x), w = w, useNames = FALSE)
@@ -63,7 +63,7 @@ print(x_est1)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedVars(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedVars(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedVars(t(x), w = w, useNames = FALSE)
@@ -84,7 +84,7 @@ x_est1 <- rowWeightedVars(x, w = w)
 #stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedVars(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est1))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedVars(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedVars(t(x), w = w, useNames = FALSE)
@@ -105,7 +105,7 @@ x_est1 <- rowWeightedVars(x, w = w)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedVars(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedVars(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedVars(t(x), w = w, useNames = FALSE)
@@ -124,7 +124,7 @@ x_est1 <- rowWeightedVars(x, w = w)
 print(x_est1)
 x_est2 <- colWeightedVars(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est1))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedVars(x, w = w, useNames = TRUE)
 x_est2 <- colWeightedVars(t(x), w = w, useNames = TRUE)
@@ -142,7 +142,7 @@ print(x_est1)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedVars(t(x), w = rep(1, times = ncol(x)), na.rm = TRUE)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedVars(x, w = rep(1, times = ncol(x)), na.rm = TRUE, useNames = FALSE)
 x_est2 <- colWeightedVars(t(x), w = rep(1, times = ncol(x)), na.rm = TRUE, useNames = FALSE)
@@ -161,7 +161,7 @@ x_est1 <- rowWeightedVars(x, w = w, na.rm = TRUE)
 print(x_est1)
 x_est2 <- colWeightedVars(t(x), w = w, na.rm = TRUE)
 stopifnot(all.equal(x_est2, x_est1))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedVars(x, w = w, na.rm = TRUE, useNames = TRUE)
 x_est2 <- colWeightedVars(t(x), w = w, na.rm = TRUE, useNames = TRUE)
@@ -174,7 +174,7 @@ w <- 1:4
 x_est1 <- rowWeightedVars(x, w = w, na.rm = TRUE)
 x_est2 <- colWeightedVars(t(x), w = w, na.rm = TRUE)
 stopifnot(all.equal(x_est2, x_est1))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedVars(x, w = w, na.rm = TRUE, useNames = TRUE)
 x_est2 <- colWeightedVars(t(x), w = w, na.rm = TRUE, useNames = TRUE)
@@ -191,7 +191,7 @@ print(x_est1)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedSds(t(x), w = w, na.rm = FALSE)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedSds(x, w = w, na.rm = FALSE, useNames = FALSE)
 x_est2 <- colWeightedSds(t(x), w = w, na.rm = FALSE, useNames = FALSE)
@@ -213,7 +213,7 @@ print(x_est1)
 stopifnot(all.equal(x_est1, x_est0))
 x_est2 <- colWeightedMads(t(x), w = w)
 stopifnot(all.equal(x_est2, x_est0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 x_est1 <- rowWeightedMads(x, w = w, useNames = FALSE)
 x_est2 <- colWeightedMads(t(x), w = w, useNames = FALSE)

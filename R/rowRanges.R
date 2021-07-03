@@ -25,12 +25,12 @@ rowRanges <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   na.rm <- as.logical(na.rm)
   res <- .Call(C_rowRanges, x, dim., rows, cols, 2L, na.rm, TRUE)
   
-  # Update names attributes?
+  # Update rownames attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       rownames <- rownames(x)
       if (!is.null(rownames)) {
-        if (!is.null(rows)) rownames <- names[rows]
+        if (!is.null(rows)) rownames <- rownames[rows]
         rownames(res) <- rownames
       }
     } else {
@@ -50,7 +50,7 @@ rowMins <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   na.rm <- as.logical(na.rm)
   res <- .Call(C_rowRanges, x, dim., rows, cols, 0L, na.rm, TRUE)
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- rownames(x)
@@ -75,7 +75,7 @@ rowMaxs <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   na.rm <- as.logical(na.rm)
   res <- .Call(C_rowRanges, x, dim., rows, cols, 1L, na.rm, TRUE)
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- rownames(x)
@@ -100,7 +100,7 @@ colRanges <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   na.rm <- as.logical(na.rm)
   res <- .Call(C_colRanges, x, dim., rows, cols, 2L, na.rm, TRUE)
   
-  # Update names attributes?
+  # Update rownames attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       colnames <- colnames(x)
@@ -109,7 +109,7 @@ colRanges <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
         rownames(res) <- colnames
       }
     } else {
-      colnames(res) <- NULL
+      rownames(res) <- NULL
     }
   }
   
@@ -125,7 +125,7 @@ colMins <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   na.rm <- as.logical(na.rm)
   res <- .Call(C_colRanges, x, dim., rows, cols, 0L, na.rm, TRUE)
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- colnames(x)
@@ -150,7 +150,7 @@ colMaxs <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   na.rm <- as.logical(na.rm)
   res <- .Call(C_colRanges, x, dim., rows, cols, 1L, na.rm, TRUE)
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- colnames(x)

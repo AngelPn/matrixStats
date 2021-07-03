@@ -48,7 +48,7 @@ rowMads <- function(x, rows = NULL, cols = NULL, center = NULL,
     x <- constant * x
   }
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(names)) {
@@ -116,7 +116,7 @@ colMads <- function(x, rows = NULL, cols = NULL, center = NULL,
     x <- constant * x
   }
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(names)) {

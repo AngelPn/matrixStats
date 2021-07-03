@@ -83,13 +83,13 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
     dim. <- dim(x)
 
     if (is.na(value)) {
-      res <- rowAlls(is.na(x), na.rm = na.rm, dim. = dim., ...)
+      return(rowAlls(is.na(x), na.rm = na.rm, dim. = dim., ...))
     } else {
-      res <- rowAlls(x == value, na.rm = na.rm, dim. = dim., ...)
+      return(rowAlls(x == value, na.rm = na.rm, dim. = dim., ...))
     }
   }
-  
-  # Update name attributes?
+
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- rownames(x)
@@ -136,13 +136,13 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
     dim. <- dim(x)
 
     if (is.na(value)) {
-      res <- colAlls(is.na(x), na.rm = na.rm, dim. = dim., ...)
+      return(colAlls(is.na(x), na.rm = na.rm, dim. = dim., ...))
     } else {
-      res <- colAlls(x == value, na.rm = na.rm, dim. = dim., ...)
+      return(colAlls(x == value, na.rm = na.rm, dim. = dim., ...))
     }
   }
   
-  # Update name attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- colnames(x)
@@ -220,9 +220,9 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     dim. <- dim(x)
 
     if (is.na(value)) {
-      res <- rowAnys(is.na(x), na.rm = na.rm, dim. = dim., ...)
+      return(rowAnys(is.na(x), na.rm = na.rm, dim. = dim., ...))
     } else {
-      res <- rowAnys(x == value, na.rm = na.rm, dim. = dim., ...)
+      return(rowAnys(x == value, na.rm = na.rm, dim. = dim., ...))
     }
   }
   
@@ -273,13 +273,13 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     dim. <- dim(x)
 
     if (is.na(value)) {
-      res <- colAnys(is.na(x), na.rm = na.rm, dim. = dim., ...)
+      return(colAnys(is.na(x), na.rm = na.rm, dim. = dim., ...))
     } else {
-      res <- colAnys(x == value, na.rm = na.rm, dim. = dim., ...)
+      return(colAnys(x == value, na.rm = na.rm, dim. = dim., ...))
     }
   }
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- colnames(x)

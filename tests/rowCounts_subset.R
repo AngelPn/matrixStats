@@ -10,7 +10,11 @@ rowCounts_R <- function(x, value = TRUE, na.rm = FALSE, ...) {
       sum(x == value, na.rm = na.rm)
     )
   }
-  as.integer(counts)
+  # Preserve names attribute
+  names <- names(counts)  
+  counts <- as.integer(counts)
+  if (!is.null(names)) names(counts) <- names
+  counts
 } # rowCounts_R()
 
 
@@ -21,6 +25,10 @@ source("utils/validateIndicesFramework.R")
 x <- matrix(runif(6 * 6, min = -3, max = 3), nrow = 6, ncol = 6)
 x[2:3, 3:4] <- NA_real_
 storage.mode(x) <- "integer"
+
+# To check names attribute
+dimnames <- list(letters[1:6], LETTERS[1:6])
+
 for (rows in index_cases) {
   for (cols in index_cases) {
     validateIndicesTestMatrix(x, rows, cols,
@@ -37,6 +45,24 @@ for (rows in index_cases) {
                                 fcoltest = colCounts, fsure = rowCounts_R,
                                 value = value)
     }
+    
+    # Check names attribute
+    dimnames(x) <- dimnames
+    validateIndicesTestMatrix(x, rows, cols,
+                              ftest = rowCounts, fsure = rowCounts_R,
+                              value = 0, na.rm = TRUE)
+    validateIndicesTestMatrix(x, rows, cols,
+                              fcoltest = colCounts, fsure = rowCounts_R,
+                              value = 0, na.rm = TRUE)
+    for (value in c(0, NA_integer_)) {
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowCounts, fsure = rowCounts_R,
+                                value = value)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colCounts, fsure = rowCounts_R,
+                                value = value)
+    }
+    dimnames(x) <- NULL
   }
 }
 
@@ -58,5 +84,23 @@ for (rows in index_cases) {
                                 fcoltest = colCounts, fsure = rowCounts_R,
                                 value = value)
     }
+    
+    # Check names attribute
+    dimnames(x) <- dimnames
+    validateIndicesTestMatrix(x, rows, cols,
+                              ftest = rowCounts, fsure = rowCounts_R,
+                              value = "g", na.rm = TRUE)
+    validateIndicesTestMatrix(x, rows, cols,
+                              fcoltest = colCounts, fsure = rowCounts_R,
+                              value = "g", na.rm = TRUE)
+    for (value in c("g", NA_character_)) {
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowCounts, fsure = rowCounts_R,
+                                value = value)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colCounts, fsure = rowCounts_R,
+                                value = value)
+    }
+    dimnames(x) <- NULL
   }
 }

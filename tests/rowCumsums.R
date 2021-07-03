@@ -5,7 +5,7 @@ rowCumsums_R <- function(x) {
     y <- t(apply(x, MARGIN = 1L, FUN = cumsum))
   })
   
-  # Preserve name attributes
+  # Preserve dimnames attribute
   dim <- dim(x)
   if (!isTRUE(all.equal(dim(y), dim))) {
     dim(y) <- dim
@@ -20,7 +20,7 @@ rowCumsums_R <- function(x) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # With and without some NAs
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dimnames = list(letters[1:20], LETTERS[1:5]) # to check names attributes
+dimnames = list(letters[1:20], LETTERS[1:5]) # to check dimnames attribute
 for (mode in c("logical", "integer", "double")) {
   for (add_na in c(FALSE, TRUE)) {
     cat("add_na = ", add_na, "\n", sep = "")
@@ -40,7 +40,7 @@ for (mode in c("logical", "integer", "double")) {
     stopifnot(all.equal(r1, r2))
     stopifnot(all.equal(r1, r0))
     stopifnot(all.equal(r2, r0))
-    # Check names attributes
+    # Check dimnames attribute
     dimnames(x) <- dimnames
     r1 <- rowCumsums(x, useNames = FALSE)
     r2 <- t(colCumsums(t(x), useNames = FALSE))
@@ -71,7 +71,7 @@ for (mode in c("logical", "integer", "double")) {
   stopifnot(all.equal(r1, r2))
   stopifnot(all.equal(r1, r0))
   stopifnot(all.equal(r2, r0))
-  # Check names attributes
+  # Check dimnames attribute
   dimnames(x) <- dimnames
   r1 <- rowCumsums(x, useNames = FALSE)
   r2 <- t(colCumsums(t(x), useNames = FALSE))
@@ -89,7 +89,7 @@ for (mode in c("logical", "integer", "double")) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # A 1x1 matrix
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dimnames = list("a", "A") # to check names attributes
+dimnames = list("a", "A") # to check dimnames attribute
 for (mode in c("logical", "integer", "double")) {
   x <- matrix(0, nrow = 1, ncol = 1)
   cat("mode: ", mode, "\n", sep = "")
@@ -103,7 +103,7 @@ for (mode in c("logical", "integer", "double")) {
   stopifnot(all.equal(r1, r0))
   stopifnot(all.equal(r2, r0))
   
-  # Check names attributes
+  # Check dimnames attribute
   dimnames(x) <- dimnames
   # r0 <- rowCumsums_R(x)
   # > r0
@@ -120,7 +120,7 @@ for (mode in c("logical", "integer", "double")) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Corner cases
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-names <- LETTERS[1:5] # to check names attributes
+names <- LETTERS[1:5] # to check dimnames attribute
 for (mode in c("logical", "integer", "double")) {
   cat("mode: ", mode, "\n", sep = "")
   value <- 0
@@ -147,7 +147,7 @@ for (mode in c("logical", "integer", "double")) {
   stopifnot(all.equal(r1, r2))
   stopifnot(all.equal(r1, r0))
   stopifnot(all.equal(r2, r0))
-  # Check names attributes
+  # Check dimnames attribute
   colnames(x) <- names
   r1 <- rowCumsums(x, useNames = FALSE)
   r2 <- t(colCumsums(t(x), useNames = FALSE))
@@ -169,7 +169,7 @@ for (mode in c("logical", "integer", "double")) {
   stopifnot(all.equal(r1, r2))
   stopifnot(all.equal(r1, r0))
   stopifnot(all.equal(r2, r0))
-  # Check names attributes
+  # Check dimnames attribute
   rownames(x) <- names
   r1 <- rowCumsums(x, useNames = FALSE)
   r2 <- t(colCumsums(t(x), useNames = FALSE))

@@ -68,7 +68,7 @@ rowWeightedMeans <- function(x, w = NULL, rows = NULL, cols = NULL,
     if (nw == 0L) {
       res <- rep(NaN, times = m)
       
-      # Update names attributes?
+      # Update names attribute?
       if (!is.na(useNames)) {
         if (useNames) {
           names <- rownames(x)
@@ -112,7 +112,7 @@ rowWeightedMeans <- function(x, w = NULL, rows = NULL, cols = NULL,
 
       x <- W * x
       
-      # Preserve names attributes?
+      # Preserve dimnames attribute?
       if (!(is.na(useNames) || useNames)) {
         dimnames(x) <- NULL
       }
@@ -123,7 +123,7 @@ rowWeightedMeans <- function(x, w = NULL, rows = NULL, cols = NULL,
       # Standardize weights summing to one.
       w <- w / wS
       
-      # Preserve names attributes
+      # Preserve dimnames attribute
       dimnames <- dimnames(x)
 
       # Weighted values
@@ -131,7 +131,7 @@ rowWeightedMeans <- function(x, w = NULL, rows = NULL, cols = NULL,
       ## FAST:
       x <- t_tx_OP_y(x, w, OP = "*", na.rm = FALSE)
       
-      # Update names attributes?
+      # Update dimnames attribute?
       if (!is.na(useNames)) {
         if (useNames) {
           if (!is.null(dimnames)) {
@@ -150,7 +150,7 @@ rowWeightedMeans <- function(x, w = NULL, rows = NULL, cols = NULL,
   } else {
     res <- rowMeans(x, na.rm = na.rm)
     
-    # Preserve names attributes?
+    # Preserve names attribute?
     if (!(is.na(useNames) || useNames)) {
       names(res) <- NULL
     }    
@@ -205,7 +205,7 @@ colWeightedMeans <- function(x, w = NULL,  rows = NULL, cols = NULL,
     if (nw == 0L) {
       res <- rep(NaN, times = m)
       
-      # Update names attributes?
+      # Update names attribute?
       if (!is.na(useNames)) {
         if (useNames) {
           names <- colnames(x)
@@ -270,7 +270,7 @@ colWeightedMeans <- function(x, w = NULL,  rows = NULL, cols = NULL,
     res <- colMeans(x, na.rm = na.rm)
   }
   
-  # Preserve names attributes?
+  # Preserve names attribute?
   if (!(is.na(useNames) || useNames)) {
     names(res) <- NULL
   }

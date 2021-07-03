@@ -1,10 +1,10 @@
 library("matrixStats")
 
-rowOrderStats_R <- function(x, probs, ...) {
+rowOrderStats_R <- function(x, probs, useNames = NA, ...) {
   ans <- apply(x, MARGIN = 1L, FUN = quantile, probs = probs, type = 3L)
 
   # Remove Attributes
-  attributes(ans) <- NULL
+  if (is.na(useNames)) attributes(ans) <- NULL
   ans
 } # rowOrderStats_R()
 
@@ -15,6 +15,10 @@ rowOrderStats_R <- function(x, probs, ...) {
 source("utils/validateIndicesFramework.R")
 x <- matrix(runif(6 * 6, min = -6, max = 6), nrow = 6, ncol = 6)
 storage.mode(x) <- "integer"
+
+# To check names attribute
+dimnames <- list(letters[1:6], LETTERS[1:6])
+
 probs <- 0.3
 for (rows in index_cases) {
   for (cols in index_cases) {
@@ -35,5 +39,15 @@ for (rows in index_cases) {
     validateIndicesTestMatrix(x, rows, cols,
                               fcoltest = colOrderStats, fsure = rowOrderStats_R,
                               which = which, probs = probs)
+    
+    # Check names attribute
+    dimnames(x) <- dimnames
+    validateIndicesTestMatrix(x, rows, cols,
+                              ftest = rowOrderStats, fsure = rowOrderStats_R,
+                              which = which, probs = probs, useNames = TRUE)
+    validateIndicesTestMatrix(x, rows, cols,
+                              fcoltest = colOrderStats, fsure = rowOrderStats_R,
+                              which = which, probs = probs, useNames = TRUE)
+    dimnames(x) <- NULL
   }
 }

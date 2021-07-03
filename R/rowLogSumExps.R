@@ -45,7 +45,7 @@ rowLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
                as.numeric(lx),
                dim., rows, cols, as.logical(na.rm), has_na, TRUE)
 
-  # Preserve names attributes?
+  # Preserve names attribute?
   if (is.na(useNames) || useNames) {
     names <- rownames(lx)
     if (!is.null(names)){
@@ -71,7 +71,7 @@ colLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
                as.numeric(lx),
                dim., rows, cols, as.logical(na.rm), has_na, FALSE)
 
-  # Preserve names attributes?
+  # Preserve names attribute?
   if (is.na(useNames) || useNames) {
     names <- colnames(lx)
     if (!is.null(names)){

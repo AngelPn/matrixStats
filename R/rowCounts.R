@@ -47,10 +47,16 @@ rowCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
   # Count
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.numeric(x) || is.logical(x)) {
+    # Preserve rownames
+    names <- rownames(x)
+    
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 2L, na.rm, has_nas)
   } else {
+    # Preserve rownames
+    names <- rownames(x)
+    
     # Apply new dimensions
     if (!identical(dim(x), dim.)) dim(x) <- dim.
 
@@ -72,10 +78,9 @@ rowCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
   }
   counts <- as.integer(counts)
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
-      names <- rownames(x)
       if (!is.null(names)) {
         if (!is.null(rows)) names <- names[rows]
         names(counts) <- names
@@ -115,10 +120,16 @@ colCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
   # Count
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (is.numeric(x) || is.logical(x)) {
+    # Preserve colnames
+    names <- colnames(x)
+    
     na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_colCounts, x, dim., rows, cols, value, 2L, na.rm, has_nas)
   } else {
+    # Preserve colnames
+    names <- colnames(x)
+    
     # Apply new dimensions
     if (!identical(dim(x), dim.)) dim(x) <- dim.
 
@@ -140,10 +151,9 @@ colCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
   }
   counts <- as.integer(counts)
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
-      names <- colnames(x)
       if (!is.null(names)) {
         if (!is.null(cols)) names <- names[cols]
         names(counts) <- names

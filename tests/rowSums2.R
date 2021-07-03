@@ -19,13 +19,13 @@ for (mode in c("integer", "logical", "double")) {
   storage.mode(x) <- mode
   if (mode == "double") x <- x + 0.1
   
-  # To check names attributes
+  # To check names attribute
   dimnames <- list(letters[1:3], LETTERS[1:3])
  
   y0 <- rowSums_R(x, na.rm = FALSE)
   y1 <- rowSums2(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
-  # Check names attributes
+  # Check names attribute
   dimnames(x) <- dimnames
   y1 <- rowSums2(x, na.rm = FALSE, useNames = FALSE)
   stopifnot(all.equal(y1, y0))
@@ -37,7 +37,7 @@ for (mode in c("integer", "logical", "double")) {
   y0 <- colSums2_R(x, na.rm = FALSE)
   y1 <- colSums2(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
-  # Check names attributes
+  # Check names attribute
   dimnames(x) <- dimnames
   y1 <- colSums2(x, na.rm = FALSE, useNames = FALSE)
   stopifnot(all.equal(y1, y0))
@@ -55,13 +55,13 @@ for (mode in c("integer", "logical", "double")) {
   x <- matrix(1, nrow = 1, ncol = 1)
   storage.mode(x) <- mode
   
-  # To check names attributes
+  # To check names attribute
   dimnames <- list("a", "A")
 
   y0 <- rowSums_R(x, na.rm = FALSE)
   y1 <- rowSums2(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
-  # Check names attributes
+  # Check names attribute
   dimnames(x) <- dimnames
   y1 <- rowSums2(x, na.rm = FALSE, useNames = FALSE)
   stopifnot(all.equal(y1, y0))
@@ -73,7 +73,7 @@ for (mode in c("integer", "logical", "double")) {
   y0 <- colSums2_R(x, na.rm = FALSE)
   y1 <- colSums2(x, na.rm = FALSE)
   stopifnot(all.equal(y1, y0))
-  # Check names attributes
+  # Check names attribute
   dimnames(x) <- dimnames
   y1 <- colSums2(x, na.rm = FALSE, useNames = FALSE)
   stopifnot(all.equal(y1, y0))
@@ -110,13 +110,13 @@ for (mode in c("integer", "logical", "double")) {
   x <- matrix(NA_integer_, nrow = 3, ncol = 3)
   storage.mode(x) <- mode
   
-  # To check names attributes
+  # To check names attribute
   dimnames <- list(letters[1:3], LETTERS[1:3])
 
   y0 <- rowSums_R(x, na.rm = TRUE)
   y1 <- rowSums2(x, na.rm = TRUE)
   stopifnot(all.equal(y1, y0))
-  # Check names attributes
+  # Check names attribute
   dimnames(x) <- dimnames
   y1 <- rowSums2(x, na.rm = TRUE, useNames = FALSE)
   stopifnot(all.equal(y1, y0))
@@ -128,7 +128,7 @@ for (mode in c("integer", "logical", "double")) {
   y0 <- colSums2_R(x, na.rm = TRUE)
   y1 <- colSums2(x, na.rm = TRUE)
   stopifnot(all.equal(y1, y0))
-  # Check names attributes
+  # Check names attribute
   dimnames(x) <- dimnames
   y1 <- colSums2(x, na.rm = TRUE, useNames = FALSE)
   stopifnot(all.equal(y1, y0))
@@ -148,7 +148,7 @@ x <- matrix(NA_real_, nrow = 3, ncol = 3)
 y0 <- rowSums_R(x, na.rm = TRUE)
 y1 <- rowSums2(x, na.rm = TRUE)
 stopifnot(all.equal(y1, y0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 y1 <- rowSums2(x, na.rm = TRUE, useNames = FALSE)
 stopifnot(all.equal(y1, y0))
@@ -160,7 +160,7 @@ dimnames(x) <- NULL
 y0 <- colSums2_R(x, na.rm = TRUE)
 y1 <- colSums2(x, na.rm = TRUE)
 stopifnot(all.equal(y1, y0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 y1 <- colSums2(x, na.rm = TRUE, useNames = FALSE)
 stopifnot(all.equal(y1, y0))
@@ -179,7 +179,7 @@ x <- matrix(Inf, nrow = 3, ncol = 3)
 y0 <- rowSums_R(x, na.rm = FALSE)
 y1 <- rowSums2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 y1 <- rowSums2(x, na.rm = FALSE, useNames = FALSE)
 stopifnot(all.equal(y1, y0))
@@ -191,7 +191,7 @@ dimnames(x) <- NULL
 y0 <- colSums2_R(x, na.rm = FALSE)
 y1 <- colSums2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 y1 <- colSums2(x, na.rm = FALSE, useNames = FALSE)
 stopifnot(all.equal(y1, y0))
@@ -210,7 +210,7 @@ x <- matrix(-Inf, nrow = 3, ncol = 3)
 y0 <- rowSums_R(x, na.rm = FALSE)
 y1 <- rowSums2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 y1 <- rowSums2(x, na.rm = FALSE, useNames = FALSE)
 stopifnot(all.equal(y1, y0))
@@ -222,7 +222,7 @@ dimnames(x) <- NULL
 y0 <- colSums2_R(x, na.rm = FALSE)
 y1 <- colSums2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 y1 <- colSums2(x, na.rm = FALSE, useNames = FALSE)
 stopifnot(all.equal(y1, y0))
@@ -238,13 +238,13 @@ dimnames(x) <- NULL
 cat("Special case: Infs and -Infs:\n")
 x <- matrix(c(-Inf, +Inf), nrow = 4, ncol = 4)
 
-# To check names attributes
+# To check names attribute
 dimnames <- list(letters[1:4], LETTERS[1:4])
 
 y0 <- rowSums_R(x, na.rm = FALSE)
 y1 <- rowSums2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 y1 <- rowSums2(x, na.rm = FALSE, useNames = FALSE)
 stopifnot(all.equal(y1, y0))
@@ -256,7 +256,7 @@ dimnames(x) <- NULL
 y0 <- colSums2_R(x, na.rm = FALSE)
 y1 <- colSums2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 y1 <- colSums2(x, na.rm = FALSE, useNames = FALSE)
 stopifnot(all.equal(y1, y0))
@@ -301,7 +301,7 @@ x <- matrix(.Machine$integer.max, nrow = 4, ncol = 4)
 y0 <- rowSums_R(x, na.rm = FALSE)
 y1 <- rowSums2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 y1 <- rowSums2(x, na.rm = FALSE, useNames = FALSE)
 stopifnot(all.equal(y1, y0))
@@ -313,7 +313,7 @@ dimnames(x) <- NULL
 y0 <- colSums2_R(x, na.rm = FALSE)
 y1 <- colSums2(x, na.rm = FALSE)
 stopifnot(all.equal(y1, y0))
-# Check names attributes
+# Check names attribute
 dimnames(x) <- dimnames
 y1 <- colSums2(x, na.rm = FALSE, useNames = FALSE)
 stopifnot(all.equal(y1, y0))

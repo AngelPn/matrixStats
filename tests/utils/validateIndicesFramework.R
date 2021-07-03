@@ -1,7 +1,7 @@
 library("matrixStats")
 
 validateIndicesTestVector <- function(x, idxs, ftest, fsure,
-                                      debug = FALSE, ...) {
+                                      debug = TRUE, ...) {
   if (debug) cat(sprintf("idxs=%s, type=%s\n",
                          toString(idxs), toString(typeof(idxs))))
 
@@ -41,7 +41,7 @@ validateIndicesTestVector_w <- function(x, w, idxs, ftest, fsure,
 }
 
 validateIndicesTestMatrix <- function(x, rows, cols, ftest, fcoltest, fsure,
-                                      debug = FALSE, ...) {
+                                      debug = TRUE, ...) {
   if (debug) {
     cat(sprintf("rows=%s; type=%s\n", toString(rows), toString(typeof(rows))))
     cat(sprintf("cols=%s; type=%s\n", toString(cols), toString(typeof(cols))))
@@ -69,12 +69,15 @@ validateIndicesTestMatrix <- function(x, rows, cols, ftest, fcoltest, fsure,
   })
   if (debug) cat(sprintf("actual=%s\nexpect=%s\n",
                          toString(actual), toString(expect)))
-
-  stopifnot(all.equal(actual, expect))
+  
+  if (length(expect) == 0) { # actual is named zero vector, expect is unnamed
+    stopifnot(all.equal(actual, expect, check.attributes = FALSE))
+  }
+  else stopifnot(all.equal(actual, expect))
 }
 
 validateIndicesTestMatrix_w <- function(x, w, rows, cols, ftest,
-                                        fcoltest, fsure, debug = FALSE, ...) {
+                                        fcoltest, fsure, debug = TRUE, ...) {
   if (debug) {
     cat(sprintf("rows=%s; type=%s\n", toString(rows), toString(typeof(rows))))
     cat(sprintf("cols=%s; type=%s\n", toString(cols), toString(typeof(cols))))

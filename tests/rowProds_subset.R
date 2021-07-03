@@ -11,6 +11,10 @@ rowProds_R <- function(x, FUN = prod, na.rm = FALSE, ...) {
 source("utils/validateIndicesFramework.R")
 x <- matrix(runif(6 * 6, min = -6, max = 6), nrow = 6, ncol = 6)
 storage.mode(x) <- "integer"
+
+# To check names attribute
+dimnames <- list(letters[1:6], LETTERS[1:6])
+
 for (rows in index_cases) {
   for (cols in index_cases) {
     for (na.rm in c(TRUE, FALSE)) {
@@ -22,6 +26,18 @@ for (rows in index_cases) {
                                 fcoltest = colProds, fsure = rowProds_R,
                                 method = "expSumLog",
                                 FUN = product, na.rm = na.rm)
+      
+      # Check names attribute
+      dimnames(x) <- dimnames
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowProds, fsure = rowProds_R,
+                                method = "expSumLog",
+                                FUN = product, na.rm = na.rm)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colProds, fsure = rowProds_R,
+                                method = "expSumLog",
+                                FUN = product, na.rm = na.rm)
+      dimnames(x) <- NULL
     }
   }
 }

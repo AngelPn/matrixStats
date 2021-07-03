@@ -47,7 +47,7 @@ rowMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   
   res <- .Call(C_rowMedians, x, dim., rows, cols, na.rm, has_nas, TRUE)
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- rownames(x)
@@ -73,7 +73,7 @@ colMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   
   res <- .Call(C_rowMedians, x, dim., rows, cols, na.rm, has_nas, FALSE)
   
-  # Update names attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- colnames(x)
