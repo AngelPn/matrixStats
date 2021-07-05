@@ -7,7 +7,7 @@ rowAlls_R <- function(x, value = TRUE, na.rm = FALSE, ...) {
     y <- x == value
     
     # Preserve dimnames attribute
-    dim <- dim(x) # for 0×N and M×0 cases
+    dim <- dim(x) # for 0xN and Mx0 cases; needed in R (< 3.4.0)
     if (!isTRUE(all.equal(dim(y), dim))) {
       dim(y) <- dim
       dimnames <- dimnames(x)
@@ -25,7 +25,7 @@ rowAnys_R <- function(x, value = TRUE, na.rm = FALSE, ...) {
     y <- x == value
     
     # Preserve dimnames attribute
-    dim <- dim(x) # for 0×N and M×0 cases
+    dim <- dim(x) # for 0xN and Mx0 cases; needed in R (< 3.4.0)
     if (!isTRUE(all.equal(dim(y), dim))) {
       dim(y) <- dim
       dimnames <- dimnames(x)
