@@ -27,8 +27,9 @@ rowSums2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
     if (useNames) {
       names <- rownames(x)
       if (!is.null(names)) {
-        if (!is.null(rows)) names <- names[rows]
-        names(res) <- names
+        if (is.null(rows)) names(res) <- names
+        else if (length(rows)) names(res) <- names[rows]
+        else names(res) <- NULL # unnamed zero-length subset
       }
     } else {
       names(res) <- NULL
@@ -53,8 +54,9 @@ colSums2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
     if (useNames) {
       names <- colnames(x)
       if (!is.null(names)) {
-        if (!is.null(cols)) names <- names[cols]
-        names(res) <- names
+        if (is.null(cols)) names(res) <- names
+        else if (length(cols)) names(res) <- names[cols]
+        else names(res) <- NULL # unnamed zero-length subset
       }
     } else {
       names(res) <- NULL
