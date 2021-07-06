@@ -70,16 +70,7 @@ validateIndicesTestMatrix <- function(x, rows, cols, ftest, fcoltest, fsure,
   if (debug) cat(sprintf("actual=%s\nexpect=%s\n",
                          toString(actual), toString(expect)))
   
-  if (debug) {
-      print(actual)
-      print(expect)
-  }
-
-  
-  if (length(expect) == 0) { # actual is named zero vector, expect is unnamed
-    stopifnot(all.equal(actual, expect, check.attributes = FALSE))
-  }
-  else stopifnot(all.equal(actual, expect))
+  stopifnot(all.equal(actual, expect))
 }
 
 validateIndicesTestMatrix_w <- function(x, w, rows, cols, ftest,

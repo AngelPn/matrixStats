@@ -24,7 +24,7 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 - Solved [Issue#18](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/18).
 
-- When the result was zero length vector, in some cases, the matrixStats functions were keeping the names attributes, while the "expect" functions were not, causing `all.equal()` to give informative message. For this, code was added in [`validateIndicesTestMatrix`](https://github.com/AngelPn/matrixStats/blob/develop/tests/utils/validateIndicesFramework.R#L73-L75).
+- When the result was zero length vector, in some cases, the matrixStats functions were keeping the names attributes, while the "expect" functions were not, causing `all.equal()` to give informative message.
 
 - Used `if (which == 0) which <- 1` to solve the [Issue#17](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/17#issue-932975424).
 

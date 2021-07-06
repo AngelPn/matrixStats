@@ -94,8 +94,12 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
     if (useNames) {
       names <- rownames(x)
       if (!is.null(names)) {
-        if (!is.null(rows)) names <- names[rows]
-        names(res) <- names
+        if (is.null(rows)) names(res) <- names
+        else if (length(rows)) names(res) <- names[rows] # Read this like
+        # else if (length(rows) > 0) names(res) <- names[rows]
+        else names(res) <- NULL # For length(rows) == 0 case. 
+        # In this case, we do not want a zero-length attribute to
+        # keep rowAlls(x, rows = integer()) equivalent to rowAlls(x[integer(),])
       }
     } else {
       names(res) <- NULL
@@ -147,8 +151,12 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
     if (useNames) {
       names <- colnames(x)
       if (!is.null(names)) {
-        if (!is.null(cols)) names <- names[cols]
-        names(res) <- names
+        if (is.null(cols)) names(res) <- names
+        else if (length(cols)) names(res) <- names[cols] # Read this like
+        # else if (length(cols) > 0) names(res) <- names[cols]
+        else names(res) <- NULL # For length(cols) == 0 case. 
+        # In this case, we do not want a zero-length attribute to
+        # keep colAlls(x, cols = integer()) equivalent to colAlls(x[,integer()])
       }
     } else {
       names(res) <- NULL
@@ -226,13 +234,17 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     }
   }
   
-  # Update name attributes?
+  # Update names attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       names <- rownames(x)
       if (!is.null(names)) {
-        if (!is.null(rows)) names <- names[rows]
-        names(res) <- names
+        if (is.null(rows)) names(res) <- names
+        else if (length(rows)) names(res) <- names[rows] # Read this like
+        # else if (length(rows) > 0) names(res) <- names[rows]
+        else names(res) <- NULL # For length(rows) == 0 case. 
+        # In this case, we do not want a zero-length attribute to
+        # keep rowAnys(x, rows = integer()) equivalent to rowAnys(x[integer(),])
       }
     } else {
       names(res) <- NULL
@@ -284,8 +296,12 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     if (useNames) {
       names <- colnames(x)
       if (!is.null(names)) {
-        if (!is.null(cols)) names <- names[cols]
-        names(res) <- names
+        if (is.null(cols)) names(res) <- names
+        else if (length(cols)) names(res) <- names[cols] # Read this like
+        # else if (length(cols) > 0) names(res) <- names[cols]
+        else names(res) <- NULL # For length(cols) == 0 case. 
+        # In this case, we do not want a zero-length attribute to
+        # keep colAnys(x, cols = integer()) equivalent to colAnys(x[,integer()])
       }
     } else {
       names(res) <- NULL
