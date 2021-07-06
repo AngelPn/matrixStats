@@ -83,9 +83,9 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
     dim. <- dim(x)
 
     if (is.na(value)) {
-      return(rowAlls(is.na(x), na.rm = na.rm, dim. = dim., ...))
+      return(rowAlls(is.na(x), na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     } else {
-      return(rowAlls(x == value, na.rm = na.rm, dim. = dim., ...))
+      return(rowAlls(x == value, na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     }
   }
 
@@ -136,9 +136,9 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
     dim. <- dim(x)
 
     if (is.na(value)) {
-      return(colAlls(is.na(x), na.rm = na.rm, dim. = dim., ...))
+      return(colAlls(is.na(x), na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     } else {
-      return(colAlls(x == value, na.rm = na.rm, dim. = dim., ...))
+      return(colAlls(x == value, na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     }
   }
   
@@ -220,9 +220,9 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     dim. <- dim(x)
 
     if (is.na(value)) {
-      return(rowAnys(is.na(x), na.rm = na.rm, dim. = dim., ...))
+      return(rowAnys(is.na(x), na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     } else {
-      return(rowAnys(x == value, na.rm = na.rm, dim. = dim., ...))
+      return(rowAnys(x == value, na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     }
   }
   
@@ -273,9 +273,9 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     dim. <- dim(x)
 
     if (is.na(value)) {
-      return(colAnys(is.na(x), na.rm = na.rm, dim. = dim., ...))
+      return(colAnys(is.na(x), na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     } else {
-      return(colAnys(x == value, na.rm = na.rm, dim. = dim., ...))
+      return(colAnys(x == value, na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     }
   }
   

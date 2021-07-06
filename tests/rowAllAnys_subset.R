@@ -1,8 +1,8 @@
 library("matrixStats")
 
-rowAlls_R <- function(x, value = TRUE, na.rm = FALSE, ...) {
+rowAlls_R <- function(x, value = TRUE, na.rm = FALSE, ..., useNames = TRUE) {
   if (is.na(value)) {
-    apply(is.na(x), MARGIN = 1L, FUN = all, na.rm = na.rm)
+    res <- apply(is.na(x), MARGIN = 1L, FUN = all, na.rm = na.rm)
   } else {
     y <- x == value
     
@@ -14,13 +14,15 @@ rowAlls_R <- function(x, value = TRUE, na.rm = FALSE, ...) {
       if (!is.null(dimnames)) dimnames(y) <- dimnames
     }
     
-    apply(y, MARGIN = 1L, FUN = all, na.rm = na.rm)
+    res <- apply(y, MARGIN = 1L, FUN = all, na.rm = na.rm)
   }
+  if (!useNames) names(res) <- NULL
+  res
 }
 
-rowAnys_R <- function(x, value = TRUE, na.rm = FALSE, ...) {
+rowAnys_R <- function(x, value = TRUE, na.rm = FALSE, ..., useNames = TRUE) {
   if (is.na(value)) {
-    apply(is.na(x), MARGIN = 1L, FUN = any, na.rm = na.rm)
+    res <- apply(is.na(x), MARGIN = 1L, FUN = any, na.rm = na.rm)
   } else {
     y <- x == value
     
@@ -32,8 +34,10 @@ rowAnys_R <- function(x, value = TRUE, na.rm = FALSE, ...) {
       if (!is.null(dimnames)) dimnames(y) <- dimnames
     }
     
-    apply(y, MARGIN = 1L, FUN = any, na.rm = na.rm)
+    res <- apply(y, MARGIN = 1L, FUN = any, na.rm = na.rm)
   }
+  if (!useNames) names(res) <- NULL
+  res
 }
 
 rowAnyMissings_R <- function(x, ...) {
@@ -74,91 +78,93 @@ dimnames <- list(letters[1:6], LETTERS[1:6])
 
 for (rows in index_cases) {
   for (cols in index_cases) {
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAlls, fsure = rowAlls_R,
-                              value = 0, na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAlls, fsure = rowAlls_R,
-                              value = 0, na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAlls, fsure = rowAlls_R,
-                              value = NA_integer_)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAlls, fsure = rowAlls_R,
-                              value = 0, na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAlls, fsure = rowAlls_R,
-                              value = 0, na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAlls, fsure = rowAlls_R,
-                              value = NA_integer_)
-
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnys, fsure = rowAnys_R,
-                              value = 0, na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnys, fsure = rowAnys_R,
-                              value = 0, na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnys, fsure = rowAnys_R,
-                              value = NA_integer_)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnys, fsure = rowAnys_R,
-                              value = 0, na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnys, fsure = rowAnys_R,
-                              value = 0, na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnys, fsure = rowAnys_R,
-                              value = NA_integer_)
-
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnyMissings,
-                              fsure = rowAnyMissings_R)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnyMissings,
-                              fsure = rowAnyMissings_R)
-    
-    # Check names attribute
-    dimnames(x) <- dimnames
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAlls, fsure = rowAlls_R,
-                              value = 0, na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAlls, fsure = rowAlls_R,
-                              value = 0, na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAlls, fsure = rowAlls_R,
-                              value = NA_integer_)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAlls, fsure = rowAlls_R,
-                              value = 0, na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAlls, fsure = rowAlls_R,
-                              value = 0, na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAlls, fsure = rowAlls_R,
-                              value = NA_integer_)
-    
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnys, fsure = rowAnys_R,
-                              value = 0, na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnys, fsure = rowAnys_R,
-                              value = 0, na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnys, fsure = rowAnys_R,
-                              value = NA_integer_)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnys, fsure = rowAnys_R,
-                              value = 0, na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnys, fsure = rowAnys_R,
-                              value = 0, na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnys, fsure = rowAnys_R,
-                              value = NA_integer_)
-    dimnames(x) <- NULL
+    for (useNames in c(TRUE, FALSE)){
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAlls, fsure = rowAlls_R,
+                                value = 0, na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAlls, fsure = rowAlls_R,
+                                value = 0, na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAlls, fsure = rowAlls_R,
+                                value = NA_integer_, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAlls, fsure = rowAlls_R,
+                                value = 0, na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAlls, fsure = rowAlls_R,
+                                value = 0, na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAlls, fsure = rowAlls_R,
+                                value = NA_integer_, useNames = useNames)
+  
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnys, fsure = rowAnys_R,
+                                value = 0, na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnys, fsure = rowAnys_R,
+                                value = 0, na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnys, fsure = rowAnys_R,
+                                value = NA_integer_, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnys, fsure = rowAnys_R,
+                                value = 0, na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnys, fsure = rowAnys_R,
+                                value = 0, na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnys, fsure = rowAnys_R,
+                                value = NA_integer_, useNames = useNames)
+  
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnyMissings,
+                                fsure = rowAnyMissings_R)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnyMissings,
+                                fsure = rowAnyMissings_R)
+      
+      # Check names attribute
+      dimnames(x) <- dimnames
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAlls, fsure = rowAlls_R,
+                                value = 0, na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAlls, fsure = rowAlls_R,
+                                value = 0, na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAlls, fsure = rowAlls_R,
+                                value = NA_integer_, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAlls, fsure = rowAlls_R,
+                                value = 0, na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAlls, fsure = rowAlls_R,
+                                value = 0, na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAlls, fsure = rowAlls_R,
+                                value = NA_integer_, useNames = useNames)
+      
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnys, fsure = rowAnys_R,
+                                value = 0, na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnys, fsure = rowAnys_R,
+                                value = 0, na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnys, fsure = rowAnys_R,
+                                value = NA_integer_, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnys, fsure = rowAnys_R,
+                                value = 0, na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnys, fsure = rowAnys_R,
+                                value = 0, na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnys, fsure = rowAnys_R,
+                                value = NA_integer_, useNames = useNames)
+      dimnames(x) <- NULL
+    }
   }
 }
 
@@ -190,91 +196,93 @@ for (rr in seq_len(nrow(x))) {
 storage.mode(x) <- "character"
 for (rows in index_cases) {
   for (cols in index_cases) {
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAlls, fsure = rowAlls_R,
-                              value = "0", na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAlls, fsure = rowAlls_R,
-                              value = "0", na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAlls, fsure = rowAlls_R,
-                              value = NA_character_)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAlls, fsure = rowAlls_R,
-                              value = "0", na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAlls, fsure = rowAlls_R,
-                              value = "0", na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAlls, fsure = rowAlls_R,
-                              value = NA_character_)
-
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnys, fsure = rowAnys_R,
-                              value = "0", na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnys, fsure = rowAnys_R,
-                              value = "0", na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnys, fsure = rowAnys_R,
-                              value = NA_character_)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnys, fsure = rowAnys_R,
-                              value = "0", na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnys, fsure = rowAnys_R,
-                              value = "0", na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnys, fsure = rowAnys_R,
-                              value = NA_character_)
-
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnyMissings,
-                              fsure = rowAnyMissings_R)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnyMissings,
-                              fsure = rowAnyMissings_R)
-    
-    # Check names attribute
-    dimnames(x) <- dimnames
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAlls, fsure = rowAlls_R,
-                              value = "0", na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAlls, fsure = rowAlls_R,
-                              value = "0", na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAlls, fsure = rowAlls_R,
-                              value = NA_character_)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAlls, fsure = rowAlls_R,
-                              value = "0", na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAlls, fsure = rowAlls_R,
-                              value = "0", na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAlls, fsure = rowAlls_R,
-                              value = NA_character_)
-    
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnys, fsure = rowAnys_R,
-                              value = "0", na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnys, fsure = rowAnys_R,
-                              value = "0", na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowAnys, fsure = rowAnys_R,
-                              value = NA_character_)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnys, fsure = rowAnys_R,
-                              value = "0", na.rm = TRUE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnys, fsure = rowAnys_R,
-                              value = "0", na.rm = FALSE)
-    validateIndicesTestMatrix(x, rows, cols,
-                              fcoltest = colAnys, fsure = rowAnys_R,
-                              value = NA_character_)
-    dimnames(x) <- NULL
+    for (useNames in c(TRUE, FALSE)){
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAlls, fsure = rowAlls_R,
+                                value = "0", na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAlls, fsure = rowAlls_R,
+                                value = "0", na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAlls, fsure = rowAlls_R,
+                                value = NA_character_, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAlls, fsure = rowAlls_R,
+                                value = "0", na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAlls, fsure = rowAlls_R,
+                                value = "0", na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAlls, fsure = rowAlls_R,
+                                value = NA_character_, useNames = useNames)
+  
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnys, fsure = rowAnys_R,
+                                value = "0", na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnys, fsure = rowAnys_R,
+                                value = "0", na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnys, fsure = rowAnys_R,
+                                value = NA_character_, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnys, fsure = rowAnys_R,
+                                value = "0", na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnys, fsure = rowAnys_R,
+                                value = "0", na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnys, fsure = rowAnys_R,
+                                value = NA_character_, useNames = useNames)
+  
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnyMissings,
+                                fsure = rowAnyMissings_R)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnyMissings,
+                                fsure = rowAnyMissings_R)
+      
+      # Check names attribute
+      dimnames(x) <- dimnames
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAlls, fsure = rowAlls_R,
+                                value = "0", na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAlls, fsure = rowAlls_R,
+                                value = "0", na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAlls, fsure = rowAlls_R,
+                                value = NA_character_, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAlls, fsure = rowAlls_R,
+                                value = "0", na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAlls, fsure = rowAlls_R,
+                                value = "0", na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAlls, fsure = rowAlls_R,
+                                value = NA_character_)
+      
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnys, fsure = rowAnys_R,
+                                value = "0", na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnys, fsure = rowAnys_R,
+                                value = "0", na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowAnys, fsure = rowAnys_R,
+                                value = NA_character_, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnys, fsure = rowAnys_R,
+                                value = "0", na.rm = TRUE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnys, fsure = rowAnys_R,
+                                value = "0", na.rm = FALSE, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                fcoltest = colAnys, fsure = rowAnys_R,
+                                value = NA_character_, useNames = useNames)
+      dimnames(x) <- NULL
+    }
   }
 }
 

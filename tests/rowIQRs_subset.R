@@ -1,6 +1,6 @@
 library("matrixStats")
 
-rowIQRs_R <- function(x, na.rm = FALSE) {
+rowIQRs_R <- function(x, na.rm = FALSE, ..., useNames = TRUE) {
   quantile_na <- function(x, ..., na.rm = FALSE) {
     if (!na.rm && anyMissing(x))
       return(c(NA_real_, NA_real_))
@@ -13,7 +13,7 @@ rowIQRs_R <- function(x, na.rm = FALSE) {
   # Preserve names attribute
   dim(q) <- c(2L, nrow(x))
   names <- rownames(x)
-  if (!is.null(names)) colnames(q) <- names
+  if (useNames && !is.null(names)) colnames(q) <- names
   
   q[2L, , drop = TRUE] - q[1L, , drop = TRUE]
 }
@@ -41,22 +41,24 @@ dimnames <- list(letters[1:6], LETTERS[1:6])
 for (rows in index_cases) {
   for (cols in index_cases) {
     for (na.rm in c(TRUE, FALSE)) {
-      validateIndicesTestMatrix(x, rows, cols,
-                                ftest = rowIQRs, fsure = rowIQRs_R,
-                                na.rm = na.rm)
-      validateIndicesTestMatrix(x, rows, cols,
-                                fcoltest = colIQRs, fsure = rowIQRs_R,
-                                na.rm = na.rm)
-      
-      # Check names attribute
-      dimnames(x) <- dimnames
-      validateIndicesTestMatrix(x, rows, cols,
-                                ftest = rowIQRs, fsure = rowIQRs_R,
-                                na.rm = na.rm)
-      validateIndicesTestMatrix(x, rows, cols,
-                                fcoltest = colIQRs, fsure = rowIQRs_R,
-                                na.rm = na.rm)
-      dimnames(x) <- NULL
+      for (useNames in c(TRUE, FALSE)){
+        validateIndicesTestMatrix(x, rows, cols,
+                                  ftest = rowIQRs, fsure = rowIQRs_R,
+                                  na.rm = na.rm, useNames = useNames)
+        validateIndicesTestMatrix(x, rows, cols,
+                                  fcoltest = colIQRs, fsure = rowIQRs_R,
+                                  na.rm = na.rm, useNames = useNames)
+        
+        # Check names attribute
+        dimnames(x) <- dimnames
+        validateIndicesTestMatrix(x, rows, cols,
+                                  ftest = rowIQRs, fsure = rowIQRs_R,
+                                  na.rm = na.rm, useNames = useNames)
+        validateIndicesTestMatrix(x, rows, cols,
+                                  fcoltest = colIQRs, fsure = rowIQRs_R,
+                                  na.rm = na.rm, useNames = useNames)
+        dimnames(x) <- NULL
+      }
     }
   }
 }

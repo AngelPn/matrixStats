@@ -1,6 +1,6 @@
 library("matrixStats")
 
-rowCumprods_R <- function(x) {
+rowCumprods_R <- function(x, ..., useNames = TRUE) {
   suppressWarnings({
     y <- t(apply(x, MARGIN = 1L, FUN = cumprod))
   })
@@ -8,7 +8,7 @@ rowCumprods_R <- function(x) {
   # Preserve dimnames attribute
   dim(y) <- dim(x)
   dimnames <- dimnames(x)
-  if (!is.null(dimnames)) dimnames(y) <- dimnames  
+  if (useNames && !is.null(dimnames)) dimnames(y) <- dimnames  
   
   y
 }
@@ -26,21 +26,23 @@ dimnames <- list(letters[1:6], LETTERS[1:6])
 
 for (rows in index_cases) {
   for (cols in index_cases) {
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowCumprods, fsure = rowCumprods_R)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = function(x, rows, cols, ...) {
-      t(colCumprods(t(x), rows = cols, cols = rows))
-    }, fsure = rowCumprods_R)
-    
-    # Check dimnames attribute
-    dimnames(x) <- dimnames
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowCumprods, fsure = rowCumprods_R)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = function(x, rows, cols, ...) {
-                                t(colCumprods(t(x), rows = cols, cols = rows))
-                              }, fsure = rowCumprods_R)
-    dimnames(x) <- NULL
+    for (useNames in c(TRUE, FALSE)){
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowCumprods, fsure = rowCumprods_R, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = function(x, rows, cols, ..., useNames = useNames) {
+        t(colCumprods(t(x), rows = cols, cols = rows, useNames = useNames))
+      }, fsure = rowCumprods_R, useNames = useNames)
+      
+      # Check dimnames attribute
+      dimnames(x) <- dimnames
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowCumprods, fsure = rowCumprods_R, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = function(x, rows, cols, ..., useNames = useNames) {
+        t(colCumprods(t(x), rows = cols, cols = rows, useNames = useNames))
+                                }, fsure = rowCumprods_R, useNames = useNames)
+      dimnames(x) <- NULL
+    }
   }
 }

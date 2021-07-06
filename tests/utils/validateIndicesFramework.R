@@ -1,7 +1,7 @@
 library("matrixStats")
 
 validateIndicesTestVector <- function(x, idxs, ftest, fsure,
-                                      debug = TRUE, ...) {
+                                      debug = FALSE, ...) {
   if (debug) cat(sprintf("idxs=%s, type=%s\n",
                          toString(idxs), toString(typeof(idxs))))
 
@@ -70,6 +70,12 @@ validateIndicesTestMatrix <- function(x, rows, cols, ftest, fcoltest, fsure,
   if (debug) cat(sprintf("actual=%s\nexpect=%s\n",
                          toString(actual), toString(expect)))
   
+  if (debug) {
+      print(actual)
+      print(expect)
+  }
+
+  
   if (length(expect) == 0) { # actual is named zero vector, expect is unnamed
     stopifnot(all.equal(actual, expect, check.attributes = FALSE))
   }
@@ -77,7 +83,7 @@ validateIndicesTestMatrix <- function(x, rows, cols, ftest, fcoltest, fsure,
 }
 
 validateIndicesTestMatrix_w <- function(x, w, rows, cols, ftest,
-                                        fcoltest, fsure, debug = TRUE, ...) {
+                                        fcoltest, fsure, debug = FALSE, ...) {
   if (debug) {
     cat(sprintf("rows=%s; type=%s\n", toString(rows), toString(typeof(rows))))
     cat(sprintf("cols=%s; type=%s\n", toString(cols), toString(typeof(cols))))

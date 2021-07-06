@@ -1,5 +1,11 @@
 library("matrixStats")
 
+rowMeans_R <- function(x, na.rm = FALSE, ..., useNames = TRUE) {
+  res <- rowMeans(x, na.rm = na.rm)
+  if (!useNames) names(res) <- NULL
+  res
+}
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Subsetted tests
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13,22 +19,24 @@ dimnames <- list(letters[1:6], LETTERS[1:6])
 for (rows in index_cases) {
   for (cols in index_cases) {
     for (na.rm in c(TRUE, FALSE)) {
-      validateIndicesTestMatrix(x, rows, cols,
-                                ftest = rowMeans2, fsure = rowMeans,
-                                na.rm = na.rm)
-      validateIndicesTestMatrix(x, rows, cols,
-                                fcoltest = colMeans2, fsure = rowMeans,
-                                na.rm = na.rm)
-      
-      # Check names attribute
-      dimnames(x) <- dimnames
-      validateIndicesTestMatrix(x, rows, cols,
-                                ftest = rowMeans2, fsure = rowMeans,
-                                na.rm = na.rm)
-      validateIndicesTestMatrix(x, rows, cols,
-                                fcoltest = colMeans2, fsure = rowMeans,
-                                na.rm = na.rm)
-      dimnames(x) <- NULL
+      for (useNames in c(TRUE, FALSE)){
+        validateIndicesTestMatrix(x, rows, cols,
+                                  ftest = rowMeans2, fsure = rowMeans_R,
+                                  na.rm = na.rm, useNames = useNames)
+        validateIndicesTestMatrix(x, rows, cols,
+                                  fcoltest = colMeans2, fsure = rowMeans_R,
+                                  na.rm = na.rm, useNames = useNames)
+        
+        # Check names attribute
+        dimnames(x) <- dimnames
+        validateIndicesTestMatrix(x, rows, cols,
+                                  ftest = rowMeans2, fsure = rowMeans_R,
+                                  na.rm = na.rm, useNames = useNames)
+        validateIndicesTestMatrix(x, rows, cols,
+                                  fcoltest = colMeans2, fsure = rowMeans_R,
+                                  na.rm = na.rm, useNames = useNames)
+        dimnames(x) <- NULL
+      }
     }
   }
 }

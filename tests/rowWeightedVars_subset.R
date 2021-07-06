@@ -28,22 +28,24 @@ for (fcn in names(fcns)) {
     for (rows in index_cases) {
       for (cols in index_cases) {
         for (na.rm in c(TRUE, FALSE)) {
-          validateIndicesTestMatrix_w(x, w, rows, cols,
-                                      ftest = row_fcn, fsure = row_fcn,
-                                      na.rm = na.rm)
-          validateIndicesTestMatrix_w(x, w, rows, cols,
-                                      fcoltest = col_fcn, fsure = row_fcn,
-                                      na.rm = na.rm)
-          
-          # Check names attribute
-          dimnames(x) <- dimnames
-          validateIndicesTestMatrix_w(x, w, rows, cols,
-                                      ftest = row_fcn, fsure = row_fcn,
-                                      na.rm = na.rm)
-          validateIndicesTestMatrix_w(x, w, rows, cols,
-                                      fcoltest = col_fcn, fsure = row_fcn,
-                                      na.rm = na.rm)
-          dimnames(x) <- NULL
+          for (useNames in c(TRUE, FALSE)){
+            validateIndicesTestMatrix_w(x, w, rows, cols,
+                                        ftest = row_fcn, fsure = row_fcn,
+                                        na.rm = na.rm, useNames = useNames)
+            validateIndicesTestMatrix_w(x, w, rows, cols,
+                                        fcoltest = col_fcn, fsure = row_fcn,
+                                        na.rm = na.rm, useNames = useNames)
+            
+            # Check names attribute
+            dimnames(x) <- dimnames
+            validateIndicesTestMatrix_w(x, w, rows, cols,
+                                        ftest = row_fcn, fsure = row_fcn,
+                                        na.rm = na.rm, useNames = useNames)
+            validateIndicesTestMatrix_w(x, w, rows, cols,
+                                        fcoltest = col_fcn, fsure = row_fcn,
+                                        na.rm = na.rm, useNames = useNames)
+            dimnames(x) <- NULL
+          }
         }
       }
     }

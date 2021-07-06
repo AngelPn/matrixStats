@@ -27,22 +27,24 @@ for (fcn in names(fcns)) {
       for (rows in index_cases) {
         for (cols in index_cases) {
           for (na.rm in c(TRUE, FALSE)) {
-            validateIndicesTestMatrix(x, rows, cols,
-                                      ftest = row_fcn, fsure = row_fcn,
-                                      na.rm = na.rm, diff = diff, trim = trim)
-            validateIndicesTestMatrix(x, rows, cols,
-                                      fcoltest = col_fcn, fsure = row_fcn,
-                                      na.rm = na.rm, diff = diff, trim = trim)
-            
-            # Check names attribute
-            dimnames(x) <- dimnames
-            validateIndicesTestMatrix(x, rows, cols,
-                                      ftest = row_fcn, fsure = row_fcn,
-                                      na.rm = na.rm, diff = diff, trim = trim)
-            validateIndicesTestMatrix(x, rows, cols,
-                                      fcoltest = col_fcn, fsure = row_fcn,
-                                      na.rm = na.rm, diff = diff, trim = trim)
-            dimnames(x) <- NULL
+            for (useNames in c(TRUE, FALSE)){
+              validateIndicesTestMatrix(x, rows, cols,
+                                        ftest = row_fcn, fsure = row_fcn,
+                                        na.rm = na.rm, diff = diff, trim = trim, useNames = useNames)
+              validateIndicesTestMatrix(x, rows, cols,
+                                        fcoltest = col_fcn, fsure = row_fcn,
+                                        na.rm = na.rm, diff = diff, trim = trim, useNames = useNames)
+              
+              # Check names attribute
+              dimnames(x) <- dimnames
+              validateIndicesTestMatrix(x, rows, cols,
+                                        ftest = row_fcn, fsure = row_fcn,
+                                        na.rm = na.rm, diff = diff, trim = trim, useNames = useNames)
+              validateIndicesTestMatrix(x, rows, cols,
+                                        fcoltest = col_fcn, fsure = row_fcn,
+                                        na.rm = na.rm, diff = diff, trim = trim, useNames = useNames)
+              dimnames(x) <- NULL
+            }
           }
         }
       }

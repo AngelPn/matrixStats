@@ -1,6 +1,6 @@
 library("matrixStats")
 
-rowCollapse_R <- function(x, idxs, ...) {
+rowCollapse_R <- function(x, idxs, ..., useNames = TRUE) {
   ans <- c()
   storage.mode(ans) <- storage.mode(x)
   for (ii in seq_len(length(idxs))) {
@@ -8,9 +8,11 @@ rowCollapse_R <- function(x, idxs, ...) {
   }
   
   # Preserve names attribute
-  names <- rownames(x)
-  if (!is.null(names)) names(ans) <- names
-  
+  if (useNames) {
+    names <- rownames(x)
+    if (!is.null(names)) names(ans) <- names
+  }
+
   ans
 }
 
@@ -29,40 +31,42 @@ for (rows in index_cases) {
   if (is.null(rows)) rows <- seq_len(nrow(x))
 
   for (idxs in list(2L, seq_len(6L))) {
-    suppressWarnings({
-      actual <- tryCatch(rowCollapse(x, idxs, rows = rows),
-                         error = function(c) "error")
-      expect <- tryCatch({
-        idxs_0 <- rep(idxs, length.out = nrow(x))[rows]
-        rowCollapse_R(x[rows, , drop = FALSE], idxs_0)
-      }, error = function(c) "error")
-    })
-    stopifnot(all.equal(actual, expect))
-  
-    suppressWarnings({
-      actual <- tryCatch(colCollapse(t(x), idxs, cols = rows),
-                         error = function(c) "error")
-    })
-    stopifnot(all.equal(actual, expect))
+    for (useNames in c(TRUE, FALSE)){
+      suppressWarnings({
+        actual <- tryCatch(rowCollapse(x, idxs, rows = rows, useNames = useNames),
+                           error = function(c) "error")
+        expect <- tryCatch({
+          idxs_0 <- rep(idxs, length.out = nrow(x))[rows]
+          rowCollapse_R(x[rows, , drop = FALSE], idxs_0, useNames = useNames)
+        }, error = function(c) "error")
+      })
+      stopifnot(all.equal(actual, expect))
     
-    # Check names attribute
-    dimnames(x) <- dimnames
-    suppressWarnings({
-      actual <- tryCatch(rowCollapse(x, idxs, rows = rows, useNames = TRUE),
-                         error = function(c) "error")
-      expect <- tryCatch({
-        idxs_0 <- rep(idxs, length.out = nrow(x))[rows]
-        rowCollapse_R(x[rows, , drop = FALSE], idxs_0)
-      }, error = function(c) "error")
-    })
-    stopifnot(all.equal(actual, expect))
-    
-    suppressWarnings({
-      actual <- tryCatch(colCollapse(t(x), idxs, cols = rows, useNames = TRUE),
-                         error = function(c) "error")
-    })
-    stopifnot(all.equal(actual, expect))
-    
-    dimnames(x) <- NULL
+      suppressWarnings({
+        actual <- tryCatch(colCollapse(t(x), idxs, cols = rows, useNames = useNames),
+                           error = function(c) "error")
+      })
+      stopifnot(all.equal(actual, expect))
+      
+      # Check names attribute
+      dimnames(x) <- dimnames
+      suppressWarnings({
+        actual <- tryCatch(rowCollapse(x, idxs, rows = rows, useNames = useNames),
+                           error = function(c) "error")
+        expect <- tryCatch({
+          idxs_0 <- rep(idxs, length.out = nrow(x))[rows]
+          rowCollapse_R(x[rows, , drop = FALSE], idxs_0, useNames = useNames)
+        }, error = function(c) "error")
+      })
+      stopifnot(all.equal(actual, expect))
+      
+      suppressWarnings({
+        actual <- tryCatch(colCollapse(t(x), idxs, cols = rows, useNames = useNames),
+                           error = function(c) "error")
+      })
+      stopifnot(all.equal(actual, expect))
+      
+      dimnames(x) <- NULL
+    }
   }
 }

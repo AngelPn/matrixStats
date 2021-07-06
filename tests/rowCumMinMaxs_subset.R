@@ -1,6 +1,6 @@
 library("matrixStats")
 
-rowCummins_R <- function(x) {
+rowCummins_R <- function(x, ..., useNames = TRUE) {
   suppressWarnings({
     y <- t(apply(x, MARGIN = 1L, FUN = cummin))
   })
@@ -8,12 +8,12 @@ rowCummins_R <- function(x) {
   # Preserve dimnames attribute
   dim(y) <- dim(x)
   dimnames <- dimnames(x)
-  if (!is.null(dimnames)) dimnames(y) <- dimnames  
+  if (useNames && !is.null(dimnames)) dimnames(y) <- dimnames  
   
   y
 }
 
-rowCummaxs_R <- function(x) {
+rowCummaxs_R <- function(x, ..., useNames = TRUE) {
   mode <- storage.mode(x)
   # Change mode because a bug is detected on cummax for integer in R-3.2.0
   storage.mode(x) <- "numeric"
@@ -24,7 +24,7 @@ rowCummaxs_R <- function(x) {
   # Preserve dimnames attribute
   dim(y) <- dim(x)
   dimnames <- dimnames(x)
-  if (!is.null(dimnames)) dimnames(y) <- dimnames  
+  if (useNames && !is.null(dimnames)) dimnames(y) <- dimnames  
   
   storage.mode(y) <- mode
   y
@@ -43,35 +43,37 @@ dimnames <- list(letters[1:6], LETTERS[1:6])
 
 for (rows in index_cases) {
   for (cols in index_cases) {
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowCummins, fsure = rowCummins_R)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = function(x, rows, cols, ...) {
-      t(colCummins(t(x), rows = cols, cols = rows))
-    }, fsure = rowCummins_R)
-
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowCummaxs, fsure = rowCummaxs_R)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = function(x, rows, cols, ...) {
-      t(colCummaxs(t(x), rows = cols, cols = rows))
-    }, fsure = rowCummaxs_R)
-    
-    # Check dimnames attribute
-    dimnames(x) <- dimnames
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowCummins, fsure = rowCummins_R)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = function(x, rows, cols, ...) {
-                                t(colCummins(t(x), rows = cols, cols = rows))
-                              }, fsure = rowCummins_R)
-    
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = rowCummaxs, fsure = rowCummaxs_R)
-    validateIndicesTestMatrix(x, rows, cols,
-                              ftest = function(x, rows, cols, ...) {
-                                t(colCummaxs(t(x), rows = cols, cols = rows))
-                              }, fsure = rowCummaxs_R)
-    dimnames(x) <- NULL
+    for (useNames in c(TRUE, FALSE)){
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowCummins, fsure = rowCummins_R, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = function(x, rows, cols, ..., useNames) {
+        t(colCummins(t(x), rows = cols, cols = rows, useNames = useNames))
+      }, fsure = rowCummins_R, useNames = useNames)
+  
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowCummaxs, fsure = rowCummaxs_R, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = function(x, rows, cols, ..., useNames) {
+        t(colCummaxs(t(x), rows = cols, cols = rows, useNames = useNames))
+      }, fsure = rowCummaxs_R, useNames = useNames)
+      
+      # Check dimnames attribute
+      dimnames(x) <- dimnames
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowCummins, fsure = rowCummins_R, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = function(x, rows, cols, ..., useNames) {
+        t(colCummins(t(x), rows = cols, cols = rows, useNames = useNames))
+                                }, fsure = rowCummins_R, useNames = useNames)
+      
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = rowCummaxs, fsure = rowCummaxs_R, useNames = useNames)
+      validateIndicesTestMatrix(x, rows, cols,
+                                ftest = function(x, rows, cols, ..., useNames) {
+        t(colCummaxs(t(x), rows = cols, cols = rows, useNames = useNames))
+                                }, fsure = rowCummaxs_R, useNames = useNames)
+      dimnames(x) <- NULL
+    }
   }
 }
