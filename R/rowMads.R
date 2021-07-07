@@ -52,7 +52,11 @@ rowMads <- function(x, rows = NULL, cols = NULL, center = NULL,
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(names)) {
-        if (!is.null(rows)) names <- names[rows]
+        if (!is.null(rows)) {
+          names <- names[rows]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL
+        }
         names(x) <- names
       }
     } else {
@@ -120,7 +124,11 @@ colMads <- function(x, rows = NULL, cols = NULL, center = NULL,
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(names)) {
-        if (!is.null(cols)) names <- names[cols]
+        if (!is.null(cols)) {
+          names <- names[cols]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL         
+        }
         names(x) <- names
       }
     } else {

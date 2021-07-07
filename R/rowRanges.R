@@ -25,13 +25,15 @@ rowRanges <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   na.rm <- as.logical(na.rm)
   res <- .Call(C_rowRanges, x, dim., rows, cols, 2L, na.rm, TRUE)
   
-  # Update rownames attribute?
+  # Update dimnames attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       rownames <- rownames(x)
       if (!is.null(rownames)) {
         if (!is.null(rows)) rownames <- rownames[rows]
-        rownames(res) <- rownames
+        # Zero-length attribute? Keep behavior same as base R function
+        if (length(rownames) == 0L) dimnames <- NULL
+        else rownames(res) <- rownames
       }
     } else {
       rownames(res) <- NULL
@@ -55,7 +57,11 @@ rowMins <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
     if (useNames) {
       names <- rownames(x)
       if (!is.null(names)) {
-        if (!is.null(rows)) names <- names[rows]
+        if (!is.null(rows)) {
+          names <- names[rows]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL
+        }
         names(res) <- names
       }
     } else {
@@ -80,7 +86,11 @@ rowMaxs <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
     if (useNames) {
       names <- rownames(x)
       if (!is.null(names)) {
-        if (!is.null(rows)) names <- names[rows]
+        if (!is.null(rows)) {
+          names <- names[rows]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL
+        }
         names(res) <- names
       }
     } else {
@@ -100,13 +110,15 @@ colRanges <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
   na.rm <- as.logical(na.rm)
   res <- .Call(C_colRanges, x, dim., rows, cols, 2L, na.rm, TRUE)
   
-  # Update rownames attribute?
+  # Update dimnames attribute?
   if (!is.na(useNames)) {
     if (useNames) {
       colnames <- colnames(x)
       if (!is.null(colnames)) {
         if (!is.null(cols)) colnames <- colnames[cols]
-        rownames(res) <- colnames
+        # Zero-length attribute? Keep behavior same as base R function
+        if (length(colnames) == 0L) dimnames <- NULL
+        else rownames(res) <- colnames
       }
     } else {
       rownames(res) <- NULL
@@ -130,7 +142,11 @@ colMins <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
     if (useNames) {
       names <- colnames(x)
       if (!is.null(names)) {
-        if (!is.null(cols)) names <- names[cols]
+        if (!is.null(cols)) {
+          names <- names[cols]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL         
+        }
         names(res) <- names
       }
     } else {
@@ -155,7 +171,11 @@ colMaxs <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
     if (useNames) {
       names <- colnames(x)
       if (!is.null(names)) {
-        if (!is.null(cols)) names <- names[cols]
+        if (!is.null(cols)) {
+          names <- names[cols]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL         
+        }
         names(res) <- names
       }
     } else {

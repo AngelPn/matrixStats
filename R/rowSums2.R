@@ -27,12 +27,12 @@ rowSums2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
     if (useNames) {
       names <- rownames(x)
       if (!is.null(names)) {
-        if (is.null(rows)) names(res) <- names
-        else if (length(rows)) names(res) <- names[rows] # Read this like
-        # else if (length(rows) > 0) names(res) <- names[rows]
-        else names(res) <- NULL # For length(rows) == 0 case. 
-        # In this case, we do not want a zero-length attribute to
-        # keep rowSums2(x, rows = integer()) equivalent to rowSums2(x[integer(),])
+        if (!is.null(rows)) {
+          names <- names[rows]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL
+        }
+        names(res) <- names
       }
     } else {
       names(res) <- NULL
@@ -57,12 +57,12 @@ colSums2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
     if (useNames) {
       names <- colnames(x)
       if (!is.null(names)) {
-        if (is.null(cols)) names(res) <- names
-        else if (length(cols)) names(res) <- names[cols] # Read this like
-        # else if (length(cols) > 0) names(res) <- names[cols]
-        else names(res) <- NULL # For length(cols) == 0 case. 
-        # In this case, we do not want a zero-length attribute to
-        # keep colSums2(x, cols = integer()) equivalent to colSums2(x[,integer()])
+        if (!is.null(cols)) {
+          names <- names[cols]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL         
+        }
+        names(res) <- names
       }
     } else {
       names(res) <- NULL

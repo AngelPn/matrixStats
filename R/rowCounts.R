@@ -82,7 +82,11 @@ rowCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(names)) {
-        if (!is.null(rows)) names <- names[rows]
+        if (!is.null(rows)) {
+          names <- names[rows]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL
+        }
         names(counts) <- names
       }
     } else {
@@ -155,7 +159,11 @@ colCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
   if (!is.na(useNames)) {
     if (useNames) {
       if (!is.null(names)) {
-        if (!is.null(cols)) names <- names[cols]
+        if (!is.null(cols)) {
+          names <- names[cols]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL        
+        }
         names(counts) <- names
       }
     } else {

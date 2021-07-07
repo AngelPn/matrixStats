@@ -18,13 +18,40 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
+- rowOrderStats:
+```
+> x <- matrix(runif(6 * 6, min = -6, max = 6), nrow = 6, ncol = 6) # unnamed
+> rows
+[1] -1 -2 -3 -4 -5 -6
+> cols
+[1] -4  0  0 -3 -1 -3 -1
+> which
+[1] 1
+> probs
+[1] 0.3
+> res1 <- rowOrderStats(x,rows=rows, cols=cols, which=which, probs=probs, useNames = TRUE)
+> res1
+integer(0)
+>       if (!is.null(rows) && !is.null(cols)) {
++         x <- x[rows, cols, drop = FALSE]
++       } else if (!is.null(rows)) {
++         x <- x[rows, , drop = FALSE]
++       } else if (!is.null(cols)) {
++         x <- x[, cols, drop = FALSE]
++       }
+> res2 <- rowOrderStats_R(x,probs=probs, useNames = TRUE)
+> res2
+named integer(0)
+```
+Here, the expect function returns named zero-length vector. Current solution to this issue: cover this case in `rowOrderStats_R`.
+
 - Added `useNames = TRUE` implementation to every function that makes sense to support naming, wrote tests to check dimnames/names attributes and fixed errors that came up from subsetted tests.
 
 - In order to cover testing every significant case, checking for dimnames/names attributes is added above or below every testing of the functionality of a function that is already written.
 
 - Solved [Issue#18](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/18).
 
-- When the result was zero length vector, in some cases, the matrixStats functions were keeping the names attributes, while the "expect" functions were not, causing `all.equal()` to give informative message.
+- When the result was zero length vector, in some cases, the matrixStats functions were keeping the names attributes, while the "expect" functions were not, causing `all.equal()` to give informative message: [Issue#19](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/19) solved.
 
 - Used `if (which == 0) which <- 1` to solve the [Issue#17](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/17#issue-932975424).
 

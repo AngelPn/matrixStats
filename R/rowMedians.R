@@ -52,7 +52,11 @@ rowMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
     if (useNames) {
       names <- rownames(x)
       if (!is.null(names)) {
-        if (!is.null(rows)) names <- names[rows]
+        if (!is.null(rows)) {
+          names <- names[rows]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL
+        }
         names(res) <- names
       }
     } else {
@@ -78,7 +82,11 @@ colMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
     if (useNames) {
       names <- colnames(x)
       if (!is.null(names)) {
-        if (!is.null(cols)) names <- names[cols]
+        if (!is.null(cols)) {
+          names <- names[cols]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL         
+        }
         names(res) <- names
       }
     } else {

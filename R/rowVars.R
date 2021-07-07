@@ -39,7 +39,11 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
       if (useNames) {
         names <- rownames(x)
         if (!is.null(names)) {
-          if (!is.null(rows)) names <- names[rows]
+          if (!is.null(rows)) {
+            names <- names[rows]
+            # Zero-length attribute? Keep behavior same as base R function
+            if (length(names) == 0L) names <- NULL
+          }
           names(sigma2) <- names
         }
       } else {
@@ -90,7 +94,11 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     if (!is.na(useNames)) {
       if (useNames) {
         if (!is.null(names)) {
-          if (!is.null(rows)) names <- names[rows]
+          if (!is.null(rows)) {
+            names <- names[rows]
+            # Zero-length attribute? Keep behavior same as base R function
+            if (length(names) == 0L) names <- NULL
+          }
           names(x) <- names
         }
       } else {
@@ -132,7 +140,11 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     # Preserve names attribute?
     if (is.na(useNames) || useNames) {
       if (!is.null(names)) {
-        if (!is.null(rows)) names <- names[rows]
+        if (!is.null(rows)) {
+          names <- names[rows]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL
+        }
         names(x) <- names
       }
     } else {
@@ -167,7 +179,11 @@ rowVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
   # Preserve names attribute?
   if (is.na(useNames) || useNames) {
     if (!is.null(names)) {
-      if (!is.null(rows)) names <- names[rows]
+      if (!is.null(rows)) {
+        names <- names[rows]
+        # Zero-length attribute? Keep behavior same as base R function
+        if (length(names) == 0L) names <- NULL
+      }
       names(x) <- names
     }
   } else {
@@ -195,7 +211,11 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
       if (useNames) {
         names <- colnames(x)
         if (!is.null(names)) {
-          if (!is.null(cols)) names <- names[cols]
+          if (!is.null(cols)) {
+            names <- names[cols]
+            # Zero-length attribute? Keep behavior same as base R function
+            if (length(names) == 0L) names <- NULL         
+          }
           names(sigma2) <- names
         }
       } else {
@@ -246,7 +266,11 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     if (!is.na(useNames)) {
       if (useNames) {
         if (!is.null(names)) {
-          if (!is.null(cols)) names <- names[cols]
+          if (!is.null(cols)) {
+            names <- names[cols]
+            # Zero-length attribute? Keep behavior same as base R function
+            if (length(names) == 0L) names <- NULL         
+          }
           names(x) <- names
         }
       } else {
@@ -290,7 +314,11 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
     # Preserve names attribute?
     if (is.na(useNames) || useNames) {
       if (!is.null(names)) {
-        if (!is.null(cols)) names <- names[cols]
+        if (!is.null(cols)) {
+          names <- names[cols]
+          # Zero-length attribute? Keep behavior same as base R function
+          if (length(names) == 0L) names <- NULL         
+        }
         names(x) <- names
       }
     } else {
@@ -327,7 +355,11 @@ colVars <- function(x, rows = NULL, cols = NULL, na.rm = FALSE, center = NULL,
   # Preserve names attribute?
   if (is.na(useNames) || useNames) {
     if (!is.null(names)) {
-      if (!is.null(cols)) names <- names[cols]
+      if (!is.null(cols)) {
+        names <- names[cols]
+        # Zero-length attribute? Keep behavior same as base R function
+        if (length(names) == 0L) names <- NULL         
+      }
       names(x) <- names
     }
   } else {
