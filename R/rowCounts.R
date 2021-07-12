@@ -72,7 +72,9 @@ rowCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
       })
     } else {
       counts <- apply(x, MARGIN = 1L, FUN = function(x) {
-        sum(x == value, na.rm = na.rm)
+        z <- (x == value)
+        if (isTRUE(useNames)) dimnames(z) <- dimnames(x)
+        sum(z, na.rm = na.rm)
       })
     }
   }
@@ -148,9 +150,11 @@ colCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
         sum(is.na(x))
       )
     } else {
-      counts <- apply(x, MARGIN = 2L, FUN = function(x)
-        sum(x == value, na.rm = na.rm)
-      )
+      counts <- apply(x, MARGIN = 2L, FUN = function(x) {
+        z <- (x == value)
+        if (isTRUE(useNames)) dimnames(z) <- dimnames(x)
+        sum(z, na.rm = na.rm)
+      })
     }
   }
   counts <- as.integer(counts)

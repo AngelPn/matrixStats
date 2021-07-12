@@ -18,42 +18,17 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
-- rowOrderStats:
-```
-> x <- matrix(runif(6 * 6, min = -6, max = 6), nrow = 6, ncol = 6) # unnamed
-> rows
-[1] -1 -2 -3 -4 -5 -6
-> cols
-[1] -4  0  0 -3 -1 -3 -1
-> which
-[1] 1
-> probs
-[1] 0.3
-> res1 <- rowOrderStats(x,rows=rows, cols=cols, which=which, probs=probs, useNames = TRUE)
-> res1
-integer(0)
->       if (!is.null(rows) && !is.null(cols)) {
-+         x <- x[rows, cols, drop = FALSE]
-+       } else if (!is.null(rows)) {
-+         x <- x[rows, , drop = FALSE]
-+       } else if (!is.null(cols)) {
-+         x <- x[, cols, drop = FALSE]
-+       }
-> res2 <- rowOrderStats_R(x,probs=probs, useNames = TRUE)
-> res2
-named integer(0)
-```
-Here, the expect function returns named zero-length vector. Current solution to this issue: cover this case in `rowOrderStats_R`.
+- [Issue#21](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/21): workaround on [`rowAlls()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L88-L90), [`colAlls()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L147-L149), [`rowAnys()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L237-L239), [`colAnys()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L296-L299), [`rowCounts()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowCounts.R#L75-L77), [`colCounts()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowCounts.R#L154-L156)
 
-- Added `useNames = TRUE` implementation to every function that makes sense to support naming, wrote tests to check dimnames/names attributes and fixed errors that came up from subsetted tests.
+- [Issue#22](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/22): Tests for `useNames = NA` added.
 
-- In order to cover testing every significant case, checking for dimnames/names attributes is added above or below every testing of the functionality of a function that is already written.
-
-- Solved [Issue#18](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/18).
+- [Issue#25](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/25): Naming code placed right before the [matrix transpose](https://github.com/AngelPn/matrixStats/blob/develop/R/rowRanks.R#L147) and updated the package tests to also check with `perserveShape = TRUE`: [`tests/rowRanks.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowRanks.R#L184-L188), [`tests/rowRanks_subset.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowRanks_subset.R#L58-L63)
 
 - When the result was zero length vector, in some cases, the matrixStats functions were keeping the names attributes, while the "expect" functions were not, causing `all.equal()` to give informative message: [Issue#19](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/19) solved.
 
-- Used `if (which == 0) which <- 1` to solve the [Issue#17](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/17#issue-932975424).
+- There are some functions that names are handled inconsistently between the various if-statements. So, the added naming support and the functions that are used in tests follow this incosistency:
+  * [`rowWeightedMeans()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowWeightedMeans.R): If `has_weights` and `nw == 0L`, the default behavior is no naming support. If `has_weights` and `not na.rm`, the default behavior is also no naming support. Else, the default behavior is preserving names attribute. The expect functions: [`rowWeightedMeans_R()`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowWeightedMeans_subset.R#L3-L16), [`colWeightedMeans_R()`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowWeightedMeans_subset.R#L18-L30)
+  * [`rowVars()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowVars.R): If `is.null(center)`, the default behavior is no naming support. Else, if `ncol <= 1L`, the default behavior is also no naming support, else the default behavior is to preserve name attributes. Same for `colVars()`. The expect functions: [`rowRanks_R()`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowRanks_subset.R#L3-L13), [`colRanks_R()`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowRanks_subset.R#L15-L26). Same for `rowSds()`.
 
 - The package passes `R CMD check` with all OKs.
 
