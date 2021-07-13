@@ -18,7 +18,7 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
-- [Issue#21](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/21): workaround on [`rowAlls()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L88-L90), [`colAlls()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L147-L149), [`rowAnys()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L237-L239), [`colAnys()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L296-L299), [`rowCounts()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowCounts.R#L75-L77), [`colCounts()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowCounts.R#L154-L156)
+- [Issue#21](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/21): workaround on [`rowAlls()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L88-L90), [`colAlls()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L147-L149), [`rowAnys()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L237-L239), [`colAnys()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L296-L299)
 
 - [Issue#22](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/22): Tests for `useNames = NA` added.
 
