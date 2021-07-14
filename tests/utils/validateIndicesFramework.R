@@ -41,7 +41,7 @@ validateIndicesTestVector_w <- function(x, w, idxs, ftest, fsure,
 }
 
 validateIndicesTestMatrix <- function(x, rows, cols, ftest, fcoltest, fsure,
-                                      debug = TRUE, ...) {
+                                      debug = FALSE, ...) {
   if (debug) {
     cat(sprintf("rows=%s; type=%s\n", toString(rows), toString(typeof(rows))))
     cat(sprintf("cols=%s; type=%s\n", toString(cols), toString(typeof(cols))))
@@ -70,16 +70,11 @@ validateIndicesTestMatrix <- function(x, rows, cols, ftest, fcoltest, fsure,
   if (debug) cat(sprintf("actual=%s\nexpect=%s\n",
                          toString(actual), toString(expect)))
   
-  if (debug) {
-    print(actual)
-    print(expect)
-  }
-  
   stopifnot(all.equal(actual, expect))
 }
 
 validateIndicesTestMatrix_w <- function(x, w, rows, cols, ftest,
-                                        fcoltest, fsure, debug = TRUE, ...) {
+                                        fcoltest, fsure, debug = FALSE, ...) {
   if (debug) {
     cat(sprintf("rows=%s; type=%s\n", toString(rows), toString(typeof(rows))))
     cat(sprintf("cols=%s; type=%s\n", toString(cols), toString(typeof(cols))))
@@ -109,10 +104,6 @@ validateIndicesTestMatrix_w <- function(x, w, rows, cols, ftest,
   })
   if (debug) cat(sprintf("actual=%s\nexpect=%s\n",
                          toString(actual), toString(expect)))
-  if (debug) {
-    print(actual)
-    print(expect)
-  }
 
   stopifnot(all.equal(actual, expect))
 }
