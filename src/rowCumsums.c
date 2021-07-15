@@ -16,6 +16,7 @@ SEXP rowCumsums(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP byRow) {
   R_xlen_t nrow, ncol;
 
   /* Argument 'x' and 'dim': */
+  PROTECT(dim = coerceVector(dim, INTSXP));
   assertArgMatrix(x, dim, (R_TYPE_LGL | R_TYPE_INT | R_TYPE_REAL), "x");
   nrow = asR_xlen_t(dim, 0);
   ncol = asR_xlen_t(dim, 1);
@@ -39,6 +40,7 @@ SEXP rowCumsums(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP byRow) {
     rowCumsums_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, byrow, INTEGER(ans));
     UNPROTECT(1);
   }
+  UNPROTECT(1); /* PROTECT(dim = ...) */
 
   return(ans);
 } /* rowCumsums() */

@@ -30,14 +30,12 @@
 #' @export
 rowOrderStats <- function(x, rows = NULL, cols = NULL, which,
                           dim. = dim(x), ..., useNames = NA) {
-  dim. <- as.integer(dim.)
 
   # Check missing values
   if (anyMissing(x)) {
     stop(sprintf("Argument '%s' must not contain missing values", "x"))
   }
 
-  which <- as.integer(which)
   res <- .Call(C_rowOrderStats, x, dim., rows, cols, which)
   
   # Update names attribute?
@@ -65,14 +63,12 @@ rowOrderStats <- function(x, rows = NULL, cols = NULL, which,
 #' @export
 colOrderStats <- function(x, rows = NULL, cols = NULL, which,
                           dim. = dim(x), ..., useNames = NA) {
-  dim. <- as.integer(dim.)
 
   # Check missing values
   if (anyMissing(x)) {
     stop(sprintf("Argument '%s' must not contain missing values", "x"))
   }
 
-  which <- as.integer(which)
   res <- .Call(C_colOrderStats, x, dim., rows, cols, which)
   
   # Update names attribute?

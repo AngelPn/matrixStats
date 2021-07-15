@@ -58,7 +58,6 @@
 rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
                     na.rm = FALSE, dim. = dim(x), ..., useNames = NA) {
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
-    na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     if (isTRUE(value)) {
       counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas)
@@ -68,7 +67,6 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
       res <- (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
-    na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 0L, na.rm, has_nas)
     res <- as.logical(counts)
@@ -117,7 +115,6 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
 colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
                     na.rm = FALSE, dim. = dim(x), ..., useNames = NA) {
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
-    na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     if (isTRUE(value)) {
       counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas)
@@ -127,7 +124,6 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
       res <- (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
-    na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_colCounts, x, dim., rows, cols, value, 0L, na.rm, has_nas)
     res <- as.logical(counts)
@@ -175,7 +171,6 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
 #' @export
 allValue <- function(x, idxs = NULL, value = TRUE, na.rm = FALSE, ...) {
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
-    na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     if (isTRUE(value)) {
       counts <- .Call(C_count, x, idxs, FALSE, 1L, na.rm, has_nas)
@@ -185,7 +180,6 @@ allValue <- function(x, idxs = NULL, value = TRUE, na.rm = FALSE, ...) {
       (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
-    na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_count, x, idxs, value, 0L, na.rm, has_nas)
     as.logical(counts)
@@ -207,7 +201,6 @@ allValue <- function(x, idxs = NULL, value = TRUE, na.rm = FALSE, ...) {
 rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
                     na.rm = FALSE, dim. = dim(x), ..., useNames = NA) {
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
-    na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     if (isTRUE(value)) {
       counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas)
@@ -217,7 +210,6 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
       res <- (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
-    na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas)
     res <- as.logical(counts)
@@ -266,7 +258,6 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
 colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
                     na.rm = FALSE, dim. = dim(x), ..., useNames = NA) {
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
-    na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     if (isTRUE(value)) {
       counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas)
@@ -276,7 +267,6 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
       res <- (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
-    na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_colCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas)
     res <- as.logical(counts)
@@ -324,7 +314,6 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
 #' @export
 anyValue <- function(x, idxs = NULL, value = TRUE, na.rm = FALSE, ...) {
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
-    na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     if (isTRUE(value)) {
       counts <- .Call(C_count, x, idxs, FALSE, 0L, na.rm, has_nas)
@@ -334,7 +323,6 @@ anyValue <- function(x, idxs = NULL, value = TRUE, na.rm = FALSE, ...) {
       (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
-    na.rm <- as.logical(na.rm)
     has_nas <- TRUE
     counts <- .Call(C_count, x, idxs, value, 1L, na.rm, has_nas)
     as.logical(counts)

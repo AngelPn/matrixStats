@@ -98,7 +98,6 @@ rowRanks <- function(x, rows = NULL, cols = NULL,
     stop(sprintf("Unknown value of argument '%s': %s", "ties.method", ties.method))
   }
 
-  dim. <- as.integer(dim.)
   # byrow = TRUE
   y <- .Call(C_rowRanksWithTies, x, dim., rows, cols, ties_method, TRUE)
   
@@ -140,7 +139,6 @@ colRanks <- function(x, rows = NULL, cols = NULL,
     stop(sprintf("Unknown value of argument '%s': %s", "ties.method", ties.method))
   }
 
-  dim. <- as.integer(dim.)
   # byrow = FALSE
   y <- .Call(C_rowRanksWithTies, x, dim., rows, cols, ties_method, FALSE)
   

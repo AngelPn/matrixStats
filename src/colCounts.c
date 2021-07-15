@@ -14,6 +14,7 @@ SEXP colCounts(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP value, SEXP what, SE
   R_xlen_t ii, nrow, ncol;
 
   /* Argument 'x' and 'dim': */
+  PROTECT(dim = coerceVector(dim, INTSXP));
   assertArgMatrix(x, dim, (R_TYPE_LGL | R_TYPE_INT | R_TYPE_REAL), "x");
   nrow = asR_xlen_t(dim, 0);
   ncol = asR_xlen_t(dim, 1);
@@ -67,7 +68,7 @@ SEXP colCounts(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP value, SEXP what, SE
       ans_ptr[ii] = (int)count[ii];
     }
   }
-  UNPROTECT(1);
+  UNPROTECT(2);
 
   return(ans);
 } // colCounts()

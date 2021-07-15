@@ -6,8 +6,6 @@ rowMads <- function(x, rows = NULL, cols = NULL, center = NULL,
                     constant = 1.4826, na.rm = FALSE,
                     dim. = dim(x), ..., useNames = NA) {
   if (is.null(center)) {
-    dim. <- as.integer(dim.)
-    na.rm <- as.logical(na.rm)
     constant <- as.numeric(constant)
     has_nas <- TRUE
     
@@ -74,8 +72,6 @@ colMads <- function(x, rows = NULL, cols = NULL, center = NULL,
                     constant = 1.4826, na.rm = FALSE,
                     dim. = dim(x), ..., useNames = NA) {
   if (is.null(center)) {
-    dim. <- as.integer(dim.)
-    na.rm <- as.logical(na.rm)
     constant <- as.numeric(constant)
     has_nas <- TRUE
     

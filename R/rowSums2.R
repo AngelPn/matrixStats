@@ -16,9 +16,6 @@
 #' @export
 rowSums2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
                        dim. = dim(x), ..., useNames = NA) {
-  dim. <- as.integer(dim.)
-  na.rm <- as.logical(na.rm)
-
   has_nas <- TRUE
   res <- .Call(C_rowSums2, x, dim., rows, cols, na.rm, has_nas, TRUE)
   
@@ -46,9 +43,6 @@ rowSums2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @export
 colSums2 <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
                        dim. = dim(x), ..., useNames = NA) {
-  dim. <- as.integer(dim.)
-  na.rm <- as.logical(na.rm)
-
   has_nas <- TRUE
   res <- .Call(C_rowSums2, x, dim., rows, cols, na.rm, has_nas, FALSE)
   

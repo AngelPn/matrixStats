@@ -18,6 +18,7 @@ SEXP rowDiffs(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP lag, SEXP differences
   R_xlen_t nrow_ans, ncol_ans;
 
   /* Argument 'x' and 'dim': */
+  PROTECT(dim = coerceVector(dim, INTSXP));
   assertArgMatrix(x, dim, (R_TYPE_INT | R_TYPE_REAL), "x");
   nrow = asR_xlen_t(dim, 0);
   ncol = asR_xlen_t(dim, 1);
@@ -64,6 +65,7 @@ SEXP rowDiffs(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP lag, SEXP differences
     rowDiffs_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, byrow, lagg, diff, INTEGER(ans), nrow_ans, ncol_ans);
     UNPROTECT(1);
   }
+  UNPROTECT(1); /* PROTECT(dim = ...) */
 
   return(ans);
 } /* rowDiffs() */

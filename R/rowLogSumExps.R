@@ -39,11 +39,10 @@
 #' @export
 rowLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
                           dim. = dim(lx), ..., useNames = NA) {
-  dim. <- as.integer(dim.)
   has_na <- TRUE
   res <- .Call(C_rowLogSumExps,
-               as.numeric(lx),
-               dim., rows, cols, as.logical(na.rm), has_na, TRUE)
+               lx,
+               dim., rows, cols, na.rm, has_na, TRUE)
 
   # Preserve names attribute?
   if (is.na(useNames) || useNames) {
@@ -68,12 +67,11 @@ rowLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @export
 colLogSumExps <- function(lx, rows = NULL, cols = NULL, na.rm = FALSE,
                           dim. = dim(lx), ..., useNames = NA) {
-  dim. <- as.integer(dim.)
   has_na <- TRUE
   
   res <- .Call(C_rowLogSumExps,
-               as.numeric(lx),
-               dim., rows, cols, as.logical(na.rm), has_na, FALSE)
+               lx,
+               dim., rows, cols, na.rm, has_na, FALSE)
 
   # Preserve names attribute?
   if (is.na(useNames) || useNames) {

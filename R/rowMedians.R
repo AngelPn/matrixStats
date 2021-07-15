@@ -41,8 +41,6 @@
 #' @export
 rowMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
                        dim. = dim(x), ..., useNames = NA) {
-  dim. <- as.integer(dim.)
-  na.rm <- as.logical(na.rm)
   has_nas <- TRUE  # Add as an argument? /2007-08-24
   
   res <- .Call(C_rowMedians, x, dim., rows, cols, na.rm, has_nas, TRUE)
@@ -71,8 +69,6 @@ rowMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
 #' @export
 colMedians <- function(x, rows = NULL, cols = NULL, na.rm = FALSE,
                        dim. = dim(x), ..., useNames = NA) {
-  dim. <- as.integer(dim.)
-  na.rm <- as.logical(na.rm)
   has_nas <- TRUE  # Add as an argument? /2007-08-24
   
   res <- .Call(C_rowMedians, x, dim., rows, cols, na.rm, has_nas, FALSE)

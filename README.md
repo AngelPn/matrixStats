@@ -18,17 +18,12 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
-- [Issue#21](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/21): workaround on [`rowAlls()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L88-L90), [`colAlls()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L147-L149), [`rowAnys()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L237-L239), [`colAnys()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowAlls.R#L296-L299)
-
-- [Issue#22](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/22): Tests for `useNames = NA` added.
-
-- [Issue#25](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/25): Naming code placed right before the [matrix transpose](https://github.com/AngelPn/matrixStats/blob/develop/R/rowRanks.R#L147) and updated the package tests to also check with `perserveShape = TRUE`: [`tests/rowRanks.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowRanks.R#L184-L188), [`tests/rowRanks_subset.R`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowRanks_subset.R#L58-L63)
-
-- When the result was zero length vector, in some cases, the matrixStats functions were keeping the names attributes, while the "expect" functions were not, causing `all.equal()` to give informative message: [Issue#19](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/19) solved.
-
-- There are some functions that names are handled inconsistently between the various if-statements. So, the added naming support and the functions that are used in tests follow this incosistency:
-  * [`rowWeightedMeans()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowWeightedMeans.R): If `has_weights` and `nw == 0L`, the default behavior is no naming support. If `has_weights` and `not na.rm`, the default behavior is also no naming support. Else, the default behavior is preserving names attribute. The expect functions: [`rowWeightedMeans_R()`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowWeightedMeans_subset.R#L3-L16), [`colWeightedMeans_R()`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowWeightedMeans_subset.R#L18-L30)
-  * [`rowVars()`](https://github.com/AngelPn/matrixStats/blob/develop/R/rowVars.R): If `is.null(center)`, the default behavior is no naming support. Else, if `ncol <= 1L`, the default behavior is also no naming support, else the default behavior is to preserve name attributes. Same for `colVars()`. The expect functions: [`rowRanks_R()`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowRanks_subset.R#L3-L13), [`colRanks_R()`](https://github.com/AngelPn/matrixStats/blob/develop/tests/rowRanks_subset.R#L15-L26). Same for `rowSds()`.
+- Moved coercion down to C:
+  * `dim. <- as.integer(dim.)` in R-code replaced with `PROTECT(dim = coerceVector(dim, INTSXP));` in C-code.
+  * Removed `na.rm <- as.logical(na.rm)` because this statement is not necessary at all with low-level C-code as the statement `na.rm = asLogicalNoNA(naRm, "na.rm");` works.
+  * `rowLogSumExps()/colLogSumExps()` were the only functions where `as.numeric()` is used to coerce the data at R level (example: https://github.com/HenrikBengtsson/matrixStats/blob/3b55d4ebcedc2f127d70b6148b8589be525d78ca/R/rowLogSumExps.R#L42). However, this removes attributes of the matrix and hence the dimnames which are needed for naming. This is solved by replacing the call to as.numeric by `PROTECT(lx = coerceVector(lx, REALSXP));` in C-code.
+  * `rowDiffs()/colDiffs()`: In C-code, [`asInteger()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowDiffs.c#L26-L32) is used to turn length one R vectors (`lag` and `differences`) into C scalars, so `as.integer(lag)` and `as.integer(differences)` (https://github.com/HenrikBengtsson/matrixStats/blob/develop/R/rowDiffs.R#L22) probably are not needed.
+  * `rowOrderStats()/colOrderStats()`: Same as above, [`asInteger()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowOrderStats.c#L48) is used for `which` making [`which <- as.integer(which)`](https://github.com/HenrikBengtsson/matrixStats/blob/develop/R/rowOrderStats.R#L40) probably unnecessary.
 
 - The package passes `R CMD check` with all OKs.
 
