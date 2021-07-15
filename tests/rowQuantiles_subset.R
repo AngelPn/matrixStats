@@ -1,5 +1,10 @@
 library("matrixStats")
 
+## Create isFALSE() if running on an old version of R
+if (!exists("isFALSE", mode="function")) {
+  isFALSE <- function(x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
+}
+
 rowQuantiles_R <- function(x, probs, na.rm = FALSE, drop = TRUE, ..., useNames = NA) {
   q <- apply(x, MARGIN = 1L, FUN = function(x, probs, na.rm) {
     if (!na.rm && any(is.na(x))) {
