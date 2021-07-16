@@ -84,6 +84,8 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
       return(rowAlls(is.na(x), na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     } else {
       z <- (x == value)
+      dim <- dim(x) # for 0xN and Mx0 cases; needed in R (< 3.4.0)
+      if (!isTRUE(all.equal(dim(z), dim))) dim(z) <- dim
       if (isTRUE(useNames)) dimnames(z) <- dimnames(x)
       return(rowAlls(z, na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     }
@@ -141,6 +143,8 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
       return(colAlls(is.na(x), na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     } else {
       z <- (x == value)
+      dim <- dim(x) # for 0xN and Mx0 cases; needed in R (< 3.4.0)
+      if (!isTRUE(all.equal(dim(z), dim))) dim(z) <- dim
       if (isTRUE(useNames)) dimnames(z) <- dimnames(x)
       return(colAlls(z, na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     }
@@ -227,6 +231,8 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
       return(rowAnys(is.na(x), na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     } else {
       z <- (x == value)
+      dim <- dim(x) # for 0xN and Mx0 cases; needed in R (< 3.4.0)
+      if (!isTRUE(all.equal(dim(z), dim))) dim(z) <- dim
       if (isTRUE(useNames)) dimnames(z) <- dimnames(x)
       return(rowAnys(z, na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     }
@@ -284,6 +290,8 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
       return(colAnys(is.na(x), na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     } else {
       z <- (x == value)
+      dim <- dim(x) # for 0xN and Mx0 cases; needed in R (< 3.4.0)
+      if (!isTRUE(all.equal(dim(z), dim))) dim(z) <- dim
       if (isTRUE(useNames)) dimnames(z) <- dimnames(x)
       return(colAnys(z, na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     }
