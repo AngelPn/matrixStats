@@ -1,9 +1,9 @@
 /***********************************************************************
  TEMPLATE:
-  void diff2_<int|dbl>[idxsType](ARGUMENTS_LIST)
+  void diff2_<int|dbl>(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  X_C_TYPE *x, R_xlen_t nx, void *idxs, R_xlen_t nidxs, R_xlen_t lag, R_xlen_t differences, X_C_TYPE *ans, R_xlen_t nans
+  X_C_TYPE *x, R_xlen_t nx, R_xlen_t *idxs, R_xlen_t nidxs, R_xlen_t lag, R_xlen_t differences, X_C_TYPE *ans, R_xlen_t nans
 
  Arguments:
    The following macros ("arguments") should be defined for the
@@ -38,14 +38,14 @@
 #endif
 
 
-RETURN_TYPE METHOD_NAME_IDXS(ARGUMENTS_LIST) {
+RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t ii, tt, uu;
   X_C_TYPE xvalue1, xvalue2;
   X_C_TYPE *tmp = NULL;
 
-#ifdef IDXS_TYPE
+// #ifdef IDXS_TYPE
   IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-#endif
+// #endif
 
   /* Nothing to do? */
   if (nans <= 0) return;

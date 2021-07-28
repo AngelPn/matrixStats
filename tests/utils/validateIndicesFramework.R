@@ -1,7 +1,7 @@
 library("matrixStats")
 
 validateIndicesTestVector <- function(x, idxs, ftest, fsure,
-                                      debug = FALSE, ...) {
+                                      debug = TRUE, ...) {
   if (debug) cat(sprintf("idxs=%s, type=%s\n",
                          toString(idxs), toString(typeof(idxs))))
 

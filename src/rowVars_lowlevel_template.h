@@ -3,7 +3,7 @@
   void rowVars_<int|dbl>(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, void *rows, R_xlen_t nrows, void *cols, R_xlen_t ncols, int narm, int hasna, int byrow, double *ans
+  X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, int narm, int hasna, int byrow, double *ans
 
  Arguments:
    The following macros ("arguments") should be defined for the
@@ -28,18 +28,18 @@
 #include "000.templates-types.h"
 
 
-RETURN_TYPE METHOD_NAME_ROWS_COLS(ARGUMENTS_LIST) {
+RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t ii, jj, kk, idx;
   R_xlen_t *colOffset;
   X_C_TYPE *values, value;
   double value_d, mu_d, sigma2_d;
 
-#ifdef ROWS_TYPE
+// #ifdef ROWS_TYPE
   ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
-#endif
-#ifdef COLS_TYPE
+// #endif
+// #ifdef COLS_TYPE
   COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
-#endif
+// #endif
 
   /* R allocate memory for the 'values'.  This will be
      taken care of by the R garbage collector later on. */

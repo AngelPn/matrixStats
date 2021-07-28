@@ -18,36 +18,48 @@
  */
 #include "000.templates-types.h"
 
-#undef int_from_idx_TYPE
-#undef dbl_from_idx_TYPE
+// #undef int_from_idx_TYPE
+// #undef dbl_from_idx_TYPE
+#undef R_xlen_t_from_idx_TYPE
 #if X_TYPE == 'i'
-#define int_from_idx_TYPE CONCAT_MACROS(int_from_idx, int)
-#define dbl_from_idx_TYPE CONCAT_MACROS(dbl_from_idx, int)
+// #define int_from_idx_TYPE CONCAT_MACROS(int_from_idx, int)
+// #define dbl_from_idx_TYPE CONCAT_MACROS(dbl_from_idx, int)
+#define R_xlen_t_from_idx_TYPE CONCAT_MACROS(R_xlen_t_from_idx, int)
 #elif X_TYPE == 'r'
-#define int_from_idx_TYPE CONCAT_MACROS(int_from_idx, dbl)
-#define dbl_from_idx_TYPE CONCAT_MACROS(dbl_from_idx, dbl)
+// #define int_from_idx_TYPE CONCAT_MACROS(int_from_idx, dbl)
+// #define dbl_from_idx_TYPE CONCAT_MACROS(dbl_from_idx, dbl)
+#define R_xlen_t_from_idx_TYPE CONCAT_MACROS(R_xlen_t_from_idx, dbl)
 #endif
 
-static R_INLINE int int_from_idx_TYPE(X_C_TYPE x, R_xlen_t maxIdx) {
-  if (X_ISNAN(x)) return NA_INTEGER;
-#if X_TYPE == 'r'
-  if (x > R_INT_MAX || x < R_INT_MIN) return NA_INTEGER; // including the cases of Inf
-#endif
-  if (x > maxIdx) return NA_INTEGER;
-  return x;
-}
+// static R_INLINE int int_from_idx_TYPE(X_C_TYPE x, R_xlen_t maxIdx) {
+//   if (X_ISNAN(x)) return NA_INTEGER;
+// #if X_TYPE == 'r'
+//   if (x > R_INT_MAX || x < R_INT_MIN) return NA_INTEGER; // including the cases of Inf
+// #endif
+//   if (x > maxIdx) return NA_INTEGER;
+//   return x;
+// }
+// 
+// static R_INLINE int dbl_from_idx_TYPE(X_C_TYPE x, R_xlen_t maxIdx) {
+//   if (X_ISNAN(x)) return NA_REAL;
+// #if X_TYPE == 'r'
+//   if (IS_INF(x)) return NA_REAL;
+// #endif
+//   if (x > maxIdx) return NA_REAL;
+//   return x;
+// }
 
-static R_INLINE int dbl_from_idx_TYPE(X_C_TYPE x, R_xlen_t maxIdx) {
-  if (X_ISNAN(x)) return NA_REAL;
+static R_INLINE R_xlen_t R_xlen_t_from_idx_TYPE(X_C_TYPE x, R_xlen_t maxIdx) {
+  if (X_ISNAN(x)) return NA_R_XLEN_T;
 #if X_TYPE == 'r'
-  if (IS_INF(x)) return NA_REAL;
+  if (IS_INF(x)) return NA_R_XLEN_T;
 #endif
-  if (x > maxIdx) return NA_REAL;
-  return x;
+  if (x > maxIdx) return NA_R_XLEN_T;
+  return x - 1;
 }
 
 /** idxs must not be NULL, which should be checked before calling this function. **/
-void* METHOD_NAME(X_C_TYPE *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int allowOutOfBound, R_xlen_t *ansNidxs, int *subsettedType, int *hasna) {
+R_xlen_t* METHOD_NAME(X_C_TYPE *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int allowOutOfBound, R_xlen_t *ansNidxs, int *subsettedType, int *hasna) {
   // set default as no NA.
   *hasna = FALSE;
   // For a un-full positive legal idxs array, we should use SUBSETTED_INTEGER as default.
@@ -101,17 +113,13 @@ void* METHOD_NAME(X_C_TYPE *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int allowOutO
   if (state >= 0) *ansNidxs = count;
   if (!needReAlloc) { // must have: state >= 0
     *subsettedType = SUBSETTED_DEFAULT;
-    return idxs;
+    // return idxs;
   }
 
   // fill positive idxs into ans
   if (state >= 0) {
-    if (*subsettedType == SUBSETTED_INTEGER) {
-      // NOTE: braces is needed here, because of macro-defined function
-      RETURN_VALIDATED_ANS(int, nidxs, idxs[ii], int_from_idx_TYPE(idxs[ii],maxIdx),);
-    }
-    // *subsettedType == SUBSETTED_REAL
-    RETURN_VALIDATED_ANS(double, nidxs, idxs[ii], dbl_from_idx_TYPE(idxs[ii],maxIdx),);
+    // NOTE: braces is needed here, because of macro-defined function
+    RETURN_VALIDATED_ANS(R_xlen_t, nidxs, idxs[ii], R_xlen_t_from_idx_TYPE(idxs[ii],maxIdx),);
   }
 
   // state < 0
@@ -144,12 +152,8 @@ void* METHOD_NAME(X_C_TYPE *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int allowOutO
   if (upperBound > R_INT_MAX) *subsettedType = SUBSETTED_REAL;
 
   // fill required idxs into ans
-  if (*subsettedType == SUBSETTED_INTEGER) {
-    // NOTE: braces is needed here, because of macro-defined function
-    RETURN_VALIDATED_ANS(int, upperBound, !filter[ii], ii + 1, Free(filter););
-  }
-  // *subsettedType == SUBSETTED_REAL
-  RETURN_VALIDATED_ANS(double, upperBound, !filter[ii], ii + 1, Free(filter););
+  // NOTE: braces is needed here, because of macro-defined function
+  RETURN_VALIDATED_ANS(R_xlen_t, upperBound, !filter[ii], ii, Free(filter););
 }
 
 

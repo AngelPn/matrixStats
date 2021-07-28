@@ -8,7 +8,7 @@
 
 
 /** idxs must not be NULL, which should be checked before calling this function. **/
-void* validateIndices_lgl(int *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int allowOutOfBound, R_xlen_t *ansNidxs, int *subsettedType, int *hasna) {
+R_xlen_t* validateIndices_lgl(int *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int allowOutOfBound, R_xlen_t *ansNidxs, int *subsettedType, int *hasna) {
   R_xlen_t ii, jj, kk;
   R_xlen_t count1 = 0, count2 = 0;
 
@@ -40,20 +40,11 @@ void* validateIndices_lgl(int *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int allowO
       }
     }
     *ansNidxs = count1 + count2;
-
-    if (*subsettedType == SUBSETTED_INTEGER) {
-      int *ans = (int*) R_alloc(*ansNidxs, sizeof(int));
-      FILL_VALIDATED_ANS(maxIdx, idxs[ii], idxs[ii] == NA_LOGICAL ? NA_INTEGER : ii + 1);
-      for (ii = count1; ii < *ansNidxs; ++ ii) {
-        ans[ii] = NA_INTEGER;
-      }
-      return ans;
-    }
-    // *subsettedType == SUBSETTED_REAL
-    double *ans = (double*) R_alloc(*ansNidxs, sizeof(double));
-    FILL_VALIDATED_ANS(maxIdx, idxs[ii], idxs[ii] == NA_LOGICAL ? NA_REAL : ii + 1);
+    
+    R_xlen_t *ans = (R_xlen_t *) R_alloc(*ansNidxs, sizeof(R_xlen_t));
+    FILL_VALIDATED_ANS(maxIdx, idxs[ii], idxs[ii] == NA_LOGICAL ? NA_R_XLEN_T : ii);
     for (ii = count1; ii < *ansNidxs; ++ ii) {
-      ans[ii] = NA_REAL;
+      ans[ii] = NA_R_XLEN_T;
     }
     return ans;
   }
@@ -87,36 +78,24 @@ void* validateIndices_lgl(int *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int allowO
   if (naCount == 0 && count == nidxs) { // All True
     *ansNidxs = maxIdx;
     *subsettedType = SUBSETTED_ALL;
-    return NULL;
+    // return NULL;
+    R_xlen_t *ans = (R_xlen_t *) R_alloc(maxIdx, sizeof(R_xlen_t));
+    FILL_VALIDATED_ANS(maxIdx, 1, ii);
+    return ans;
   }
   if (naCount) *hasna = TRUE;
 
   *ansNidxs = maxIdx / nidxs * count + count1;
-  if (*subsettedType == SUBSETTED_INTEGER) {
-    int *ans = (int*) R_alloc(*ansNidxs, sizeof(int));
-    FILL_VALIDATED_ANS(nidxs, idxs[ii], idxs[ii] == NA_LOGICAL ? NA_INTEGER : ii + 1);
-
-    for (ii = count, kk = nidxs; kk+nidxs <= maxIdx; kk += nidxs, ii += count) {
-      for (jj = 0; jj < count; ++ jj) {
-        ans[ii+jj] = ans[jj] == NA_INTEGER ? NA_INTEGER : ans[jj] + kk;
-      }
-    }
-    for (jj = 0; jj < count1; ++ jj) {
-      ans[ii+jj] = ans[jj] == NA_INTEGER ? NA_INTEGER : ans[jj] + kk;
-    }
-    return ans;
-  }
-  // *subsettedType == SUBSETTED_REAL
-  double *ans = (double*) R_alloc(*ansNidxs, sizeof(double));
-  FILL_VALIDATED_ANS(nidxs, idxs[ii], idxs[ii] == NA_LOGICAL ? NA_REAL : ii + 1);
-
+  R_xlen_t *ans = (R_xlen_t *) R_alloc(*ansNidxs, sizeof(R_xlen_t));
+  FILL_VALIDATED_ANS(nidxs, idxs[ii], idxs[ii] == NA_LOGICAL ? NA_R_XLEN_T : ii);
+  
   for (ii = count, kk = nidxs; kk+nidxs <= maxIdx; kk += nidxs, ii += count) {
     for (jj = 0; jj < count; ++ jj) {
-      ans[ii+jj] = ISNAN(ans[jj]) ? NA_REAL : ans[jj] + kk;
+      ans[ii+jj] = ans[jj] == NA_R_XLEN_T ? NA_R_XLEN_T : ans[jj] + kk;
     }
   }
   for (jj = 0; jj < count1; ++ jj) {
-    ans[ii+jj] = ISNAN(ans[jj]) ? NA_REAL : ans[jj] + kk;
+    ans[ii+jj] = ans[jj] == NA_R_XLEN_T ? NA_R_XLEN_T : ans[jj] + kk;
   }
   return ans;
 }
@@ -132,13 +111,13 @@ void* validateIndices_lgl(int *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int allowO
   * `subsettedType` is used for returning the new idxs array's datatype.
   * `hasna` is TRUE, if NA is included in returned result.
   ************************************************************/
-void *validateIndices(SEXP idxs, R_xlen_t maxIdx, int allowOutOfBound, R_xlen_t *ansNidxs, int *subsettedType) {
+R_xlen_t *validateIndices(SEXP idxs, R_xlen_t maxIdx, int allowOutOfBound, R_xlen_t *ansNidxs, int *subsettedType) {
   int hasna;
   return validateIndicesCheckNA(idxs, maxIdx, allowOutOfBound, ansNidxs, subsettedType, &hasna);
 }
 
 
-void *validateIndicesCheckNA(SEXP idxs, R_xlen_t maxIdx, int allowOutOfBound, R_xlen_t *ansNidxs, int *subsettedType, int *hasna) {
+R_xlen_t *validateIndicesCheckNA(SEXP idxs, R_xlen_t maxIdx, int allowOutOfBound, R_xlen_t *ansNidxs, int *subsettedType, int *hasna) {
   R_xlen_t nidxs = xlength(idxs);
   int mode = TYPEOF(idxs);
   // Set no NA as default.
@@ -153,7 +132,12 @@ void *validateIndicesCheckNA(SEXP idxs, R_xlen_t maxIdx, int allowOutOfBound, R_
     case NILSXP:
       *subsettedType = SUBSETTED_ALL;
       *ansNidxs = maxIdx;
-      return NULL;
+      //return NULL;
+      R_xlen_t *ans = (R_xlen_t *) R_alloc(maxIdx, sizeof(R_xlen_t));
+      for (R_xlen_t ii = 0; ii < maxIdx; ii++) {
+        ans[ii] = ii;
+      }
+      return ans;
     default:
       error("idxs can only be integer, numeric, or logical.");
   }
@@ -176,7 +160,7 @@ SEXP validate(SEXP idxs, SEXP maxIdx, SEXP allowOutOfBound) {
   R_xlen_t cmaxIdx = asR_xlen_t(maxIdx, 0);
   R_xlen_t nidxs = xlength(idxs);
   int callowOutOfBound = asLogicalNoNA(allowOutOfBound, "allowOutOfBound");
-  void *cidxs;
+  R_xlen_t *cidxs;
 
   // Set no NA as default.
   int hasna = FALSE;
@@ -202,16 +186,20 @@ SEXP validate(SEXP idxs, SEXP maxIdx, SEXP allowOutOfBound) {
 
   if (subsettedType == SUBSETTED_INTEGER) {
     ans = PROTECT(allocVector(INTSXP, ansNidxs));
-    if (cidxs && ansNidxs > 0) {
-      memcpy(INTEGER(ans), cidxs, ansNidxs*sizeof(int));
+    // Copy from cidxs to ans and coerce to int    
+    int *ans_ptr = INTEGER(ans);
+    for(R_xlen_t i = 0; i < cmaxIdx; i++) {
+      ans_ptr[i] = cidxs[i] == NA_R_XLEN_T ? NA_INTEGER : (int) cidxs[i];
     }
     UNPROTECT(1);
     return ans;
   }
   // else: subsettedType == SUBSETTED_REAL
   ans = PROTECT(allocVector(REALSXP, ansNidxs));
-  if (cidxs && ansNidxs > 0) {
-    memcpy(REAL(ans), cidxs, ansNidxs*sizeof(double));
+  // Copy from cidxs to ans and coerce to double
+  double *ans_ptr = REAL(ans);
+  for(R_xlen_t i = 0; i < cmaxIdx; i++){
+    ans_ptr[i] = cidxs[i] == NA_R_XLEN_T ? NA_REAL : (double) cidxs[i];
   }
   UNPROTECT(1);
   return ans;

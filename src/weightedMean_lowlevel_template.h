@@ -1,9 +1,9 @@
 /***********************************************************************
  TEMPLATE:
-  double weightedMean_<int|dbl>[idxsType](ARGUMENTS_LIST)
+  double weightedMean_<int|dbl>(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  X_C_TYPE *x, R_xlen_t nx, double *w, void *idxs, R_xlen_t nidxs, int narm, int refine
+  X_C_TYPE *x, R_xlen_t nx, double *w, R_xlen_t *idxs, R_xlen_t nidxs, int narm, int refine
 
  Copyright: Henrik Bengtsson, 2014
  ***********************************************************************/
@@ -17,16 +17,16 @@
 #include <R_ext/Error.h>
 
 
-RETURN_TYPE METHOD_NAME_IDXS(ARGUMENTS_LIST) {
+RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   X_C_TYPE value;
   double weight;
   R_xlen_t i;
   LDOUBLE sum = 0, wtotal = 0;
   LDOUBLE avg = R_NaN;
 
-#ifdef IDXS_TYPE
+// #ifdef IDXS_TYPE
   IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-#endif
+// #endif
 
   for (i=0; i < nidxs; i++) {
     weight = R_INDEX_GET(w, IDX_INDEX(cidxs,i), NA_REAL);

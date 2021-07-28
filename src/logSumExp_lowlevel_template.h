@@ -1,9 +1,9 @@
 /***********************************************************************
  TEMPLATE:
-  double logSumExp_double[idxsType](ARGUMENTS_LIST)
+  double logSumExp_double(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  double *x, void *idxs, R_xlen_t nidxs, int narm, int hasna, int by, double *xx
+  double *x, R_xlen_t *idxs, R_xlen_t nidxs, int narm, int hasna, int by, double *xx
  ***********************************************************************/
 #include <Rdefines.h>
 #include <Rmath.h>
@@ -33,16 +33,16 @@
   the "contigous" 'xx' vector once.  This is more likely to create
   cache hits.
 */
-RETURN_TYPE METHOD_NAME_IDXS(ARGUMENTS_LIST) {
+RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t ii, iMax, idx;
   double xii, xMax;
   LDOUBLE sum;
   int hasna2 = FALSE; /* Indicates whether NAs where detected or not */
   int xMaxIsNA;
 
-#ifdef IDXS_TYPE
+// #ifdef IDXS_TYPE
   IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-#endif
+// #endif
 
   /* Quick return? */
   if (nidxs == 0) {

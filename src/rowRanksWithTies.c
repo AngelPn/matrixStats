@@ -50,8 +50,8 @@ SEXP rowRanksWithTies(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP tiesMethod, S
   /* Argument 'rows' and 'cols': */
   R_xlen_t nrows, ncols;
   int rowsType, colsType;
-  void *crows = validateIndices(rows, nrow, 0, &nrows, &rowsType);
-  void *ccols = validateIndices(cols, ncol, 0, &ncols, &colsType);
+  R_xlen_t *crows = validateIndices(rows, nrow, 0, &nrows, &rowsType);
+  R_xlen_t *ccols = validateIndices(cols, ncol, 0, &ncols, &colsType);
 
   /* Argument 'byRow': */
   byrow = asLogical(byRow);
@@ -62,39 +62,39 @@ SEXP rowRanksWithTies(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP tiesMethod, S
       switch (tiesmethod) {
         case 1:
           PROTECT(ans = allocMatrix(REALSXP, nrows, ncols));
-          rowRanksWithTies_Average_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, REAL(ans));
+          rowRanksWithTies_Average_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, REAL(ans));
           UNPROTECT(1);
           break;
         case 2:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          rowRanksWithTies_First_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          rowRanksWithTies_First_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 3:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          rowRanksWithTies_Last_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          rowRanksWithTies_Last_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 4:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
           GetRNGstate();
-          rowRanksWithTies_Random_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          rowRanksWithTies_Random_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           PutRNGstate();
           UNPROTECT(1);
           break;
         case 5:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          rowRanksWithTies_Max_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          rowRanksWithTies_Max_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 6:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          rowRanksWithTies_Min_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          rowRanksWithTies_Min_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 7:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          rowRanksWithTies_Dense_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          rowRanksWithTies_Dense_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
       } /* switch */
@@ -102,39 +102,39 @@ SEXP rowRanksWithTies(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP tiesMethod, S
       switch (tiesmethod) {
         case 1:
           PROTECT(ans = allocMatrix(REALSXP, nrows, ncols));
-          colRanksWithTies_Average_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, REAL(ans));
+          colRanksWithTies_Average_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, REAL(ans));
           UNPROTECT(1);
           break;
         case 2:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          colRanksWithTies_First_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          colRanksWithTies_First_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 3:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          colRanksWithTies_Last_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          colRanksWithTies_Last_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 4:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
           GetRNGstate();
-          colRanksWithTies_Random_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          colRanksWithTies_Random_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           PutRNGstate();
           UNPROTECT(1);
           break;
         case 5:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          colRanksWithTies_Max_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          colRanksWithTies_Max_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 6:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          colRanksWithTies_Min_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          colRanksWithTies_Min_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 7:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          colRanksWithTies_Dense_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          colRanksWithTies_Dense_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
       } /* switch */
@@ -144,39 +144,39 @@ SEXP rowRanksWithTies(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP tiesMethod, S
       switch (tiesmethod) {
         case 1:
           PROTECT(ans = allocMatrix(REALSXP, nrows, ncols));
-          rowRanksWithTies_Average_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, REAL(ans));
+          rowRanksWithTies_Average_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, REAL(ans));
           UNPROTECT(1);
           break;
         case 2:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          rowRanksWithTies_First_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          rowRanksWithTies_First_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 3:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          rowRanksWithTies_Last_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          rowRanksWithTies_Last_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 4:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
           GetRNGstate();
-          rowRanksWithTies_Random_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          rowRanksWithTies_Random_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           PutRNGstate();
           UNPROTECT(1);
           break;
         case 5:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          rowRanksWithTies_Max_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          rowRanksWithTies_Max_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 6:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          rowRanksWithTies_Min_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          rowRanksWithTies_Min_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 7:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          rowRanksWithTies_Dense_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          rowRanksWithTies_Dense_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
       } /* switch */
@@ -184,39 +184,39 @@ SEXP rowRanksWithTies(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP tiesMethod, S
       switch (tiesmethod) {
         case 1:
           PROTECT(ans = allocMatrix(REALSXP, nrows, ncols));
-          colRanksWithTies_Average_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, REAL(ans));
+          colRanksWithTies_Average_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, REAL(ans));
           UNPROTECT(1);
           break;
         case 2:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          colRanksWithTies_First_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          colRanksWithTies_First_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 3:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          colRanksWithTies_Last_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          colRanksWithTies_Last_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 4:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
           GetRNGstate();
-          colRanksWithTies_Random_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          colRanksWithTies_Random_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           PutRNGstate();
           UNPROTECT(1);
           break;
         case 5:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          colRanksWithTies_Max_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          colRanksWithTies_Max_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 6:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          colRanksWithTies_Min_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          colRanksWithTies_Min_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
         case 7:
           PROTECT(ans = allocMatrix(INTSXP, nrows, ncols));
-          colRanksWithTies_Dense_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
+          colRanksWithTies_Dense_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, INTEGER(ans));
           UNPROTECT(1);
           break;
       } /* switch */

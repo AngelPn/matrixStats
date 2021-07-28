@@ -3,7 +3,7 @@
 
 
 #if OP == '+'
-  #define FUN_no_NA CONCAT_MACROS(FUN_no_NA, METHOD_NAME_ROWS_COLS_IDXS)
+  #define FUN_no_NA CONCAT_MACROS(FUN_no_NA, METHOD_NAME)
   static R_INLINE double FUN_no_NA(X_C_TYPE x, Y_C_TYPE y) {
 #if X_TYPE == 'i'
     if (X_ISNAN(x)) return NA_REAL;
@@ -13,7 +13,7 @@
 #endif
     return (double)x + (double)y;
   }
-  #define FUN_narm CONCAT_MACROS(FUN, METHOD_NAME_ROWS_COLS_IDXS)
+  #define FUN_narm CONCAT_MACROS(FUN, METHOD_NAME)
   static R_INLINE double FUN_narm(X_C_TYPE x, Y_C_TYPE y) {
     if (X_ISNAN(x)) {
       return (double)y;
@@ -24,7 +24,7 @@
     }
   }
 #elif OP == '-'
-  #define FUN_no_NA CONCAT_MACROS(FUN_no_NA, METHOD_NAME_ROWS_COLS_IDXS)
+  #define FUN_no_NA CONCAT_MACROS(FUN_no_NA, METHOD_NAME)
   static R_INLINE double FUN_no_NA(X_C_TYPE x, Y_C_TYPE y) {
 #if X_TYPE == 'i'
     if (X_ISNAN(x)) return NA_REAL;
@@ -36,7 +36,7 @@
   }
   #define FUN_narm FUN_no_NA
 #elif OP == '*'
-  #define FUN_no_NA CONCAT_MACROS(FUN_no_NA, METHOD_NAME_ROWS_COLS_IDXS)
+  #define FUN_no_NA CONCAT_MACROS(FUN_no_NA, METHOD_NAME)
   static R_INLINE double FUN_no_NA(X_C_TYPE x, Y_C_TYPE y) {
 #if X_TYPE == 'i'
     if (X_ISNAN(x)) return NA_REAL;
@@ -46,7 +46,7 @@
 #endif
     return (double)x * (double)y;
   }
-  #define FUN_narm CONCAT_MACROS(FUN, METHOD_NAME_ROWS_COLS_IDXS)
+  #define FUN_narm CONCAT_MACROS(FUN, METHOD_NAME)
   static R_INLINE double FUN_narm(X_C_TYPE x, Y_C_TYPE y) {
     if (X_ISNAN(x)) {
       return (double)y;
@@ -57,7 +57,7 @@
     }
   }
 #elif OP == '/'
-  #define FUN_no_NA CONCAT_MACROS(FUN_no_NA, METHOD_NAME_ROWS_COLS_IDXS)
+  #define FUN_no_NA CONCAT_MACROS(FUN_no_NA, METHOD_NAME)
   static R_INLINE double FUN_no_NA(X_C_TYPE x, Y_C_TYPE y) {
 #if X_TYPE == 'i'
     if (X_ISNAN(x)) return NA_REAL;
@@ -73,7 +73,7 @@
 #endif
 
 
-RETURN_TYPE METHOD_NAME_ROWS_COLS_IDXS(ARGUMENTS_LIST) {
+RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t ii, jj, kk, idx, colBegin;
   R_xlen_t txi, yi;
   X_C_TYPE xvalue;
@@ -85,15 +85,15 @@ RETURN_TYPE METHOD_NAME_ROWS_COLS_IDXS(ARGUMENTS_LIST) {
          R_INT_MAX_d = (double)R_INT_MAX;
 #endif
 
-#ifdef ROWS_TYPE
+// #ifdef ROWS_TYPE
   ROWS_C_TYPE *cxrows = (ROWS_C_TYPE*) xrows;
-#endif
-#ifdef COLS_TYPE
+// #endif
+// #ifdef COLS_TYPE
   COLS_C_TYPE *cxcols = (COLS_C_TYPE*) xcols;
-#endif
-#ifdef IDXS_TYPE
+// #endif
+// #ifdef IDXS_TYPE
   IDXS_C_TYPE *cyidxs = (IDXS_C_TYPE*) yidxs;
-#endif
+// #endif
 
   yi = 0;
   kk = 0;

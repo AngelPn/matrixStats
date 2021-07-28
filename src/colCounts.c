@@ -40,8 +40,8 @@ SEXP colCounts(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP value, SEXP what, SE
   /* Argument 'rows' and 'cols': */
   R_xlen_t nrows, ncols;
   int rowsType, colsType;
-  void *crows = validateIndices(rows, nrow, 0, &nrows, &rowsType);
-  void *ccols = validateIndices(cols, ncol, 0, &ncols, &colsType);
+  R_xlen_t *crows = validateIndices(rows, nrow, 0, &nrows, &rowsType);
+  R_xlen_t *ccols = validateIndices(cols, ncol, 0, &ncols, &colsType);
 
   /* R allocate an integer vector of length 'ncol' */
   /* R allocate memory for vector 'count' of length 'ncols'.
@@ -49,11 +49,11 @@ SEXP colCounts(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP value, SEXP what, SE
   double *count = (double *) R_alloc(ncols, sizeof(double));
 
   if (isReal(x)) {
-    colCounts_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, asReal(value), what2, narm, hasna, count);
+    colCounts_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, asReal(value), what2, narm, hasna, count);
   } else if (isInteger(x)) {
-    colCounts_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, asInteger(value), what2, narm, hasna, count);
+    colCounts_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, asInteger(value), what2, narm, hasna, count);
   } else if (isLogical(x)) {
-    colCounts_lgl[rowsType][colsType](LOGICAL(x), nrow, ncol, crows, nrows, ccols, ncols, asLogical(value), what2, narm, hasna, count);
+    colCounts_lgl(LOGICAL(x), nrow, ncol, crows, nrows, ccols, ncols, asLogical(value), what2, narm, hasna, count);
   }
 
   /* Coerce counts from double to integer.  This is needed because
@@ -102,16 +102,21 @@ SEXP count(SEXP x, SEXP idxs, SEXP value, SEXP what, SEXP naRm, SEXP hasNA) {
 
   /* Argument 'idxs': */
   R_xlen_t nrows, ncols = 1;
-  int rowsType, colsType = SUBSETTED_ALL;
-  void *crows = validateIndices(idxs, nx, 1, &nrows, &rowsType);
-  void *ccols = NULL;
+  // int rowsType, colsType = SUBSETTED_ALL;
+  int rowsType;
+  R_xlen_t *crows = validateIndices(idxs, nx, 1, &nrows, &rowsType);
+  // R_xlen_t *ccols = NULL;
+  R_xlen_t *ccols = (R_xlen_t *) R_alloc(ncols, sizeof(R_xlen_t));
+  for (R_xlen_t ii = 0; ii < ncols; ++ ii) {
+    ccols[ii] = ii;
+  }
 
   if (isReal(x)) {
-    colCounts_dbl[rowsType][colsType](REAL(x), nx, 1, crows, nrows, ccols, ncols, asReal(value), what2, narm, hasna, &count);
+    colCounts_dbl(REAL(x), nx, 1, crows, nrows, ccols, ncols, asReal(value), what2, narm, hasna, &count);
   } else if (isInteger(x)) {
-    colCounts_int[rowsType][colsType](INTEGER(x), nx, 1, crows, nrows, ccols, ncols, asInteger(value), what2, narm, hasna, &count);
+    colCounts_int(INTEGER(x), nx, 1, crows, nrows, ccols, ncols, asInteger(value), what2, narm, hasna, &count);
   } else if (isLogical(x)) {
-    colCounts_lgl[rowsType][colsType](LOGICAL(x), nx, 1, crows, nrows, ccols, ncols, asLogical(value), what2, narm, hasna, &count);
+    colCounts_lgl(LOGICAL(x), nx, 1, crows, nrows, ccols, ncols, asLogical(value), what2, narm, hasna, &count);
   }
 
   /* R allocate a scalar */

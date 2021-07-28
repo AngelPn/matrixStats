@@ -1,9 +1,9 @@
 /***********************************************************************
  TEMPLATE:
-  double productExpSumLog_<int|dbl>[idxsType](ARGUMENTS_LIST)
+  double productExpSumLog_<int|dbl>(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  X_C_TYPE *x, R_xlen_t nx, void *idxs, R_xlen_t nidxs, int narm, int hasna
+  X_C_TYPE *x, R_xlen_t nx, R_xlen_t *idxs, R_xlen_t nidxs, int narm, int hasna
 
  Arguments:
    The following macros ("arguments") should be defined for the
@@ -23,15 +23,15 @@
 #include "000.templates-types.h"
 
 
-RETURN_TYPE METHOD_NAME_IDXS(ARGUMENTS_LIST) {
+RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   LDOUBLE y = 0.0, t;
   R_xlen_t ii;
   int isneg = 0;
   int hasZero = 0;
 
-#ifdef IDXS_TYPE
+// #ifdef IDXS_TYPE
   IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-#endif
+// #endif
 
   /* Calculate sum(log(abs(x))) */
   for (ii = 0 ; ii < nidxs; ii++) {

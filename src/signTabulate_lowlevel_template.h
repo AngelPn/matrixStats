@@ -1,9 +1,9 @@
 /***********************************************************************
  TEMPLATE:
-  void signTabulate_<int|dbl>[idxsType](ARGUMENTS_LIST)
+  void signTabulate_<int|dbl>(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  X_C_TYPE *x, R_xlen_t nx, void *idxs, R_xlen_t nidxs, double *ans
+  X_C_TYPE *x, R_xlen_t nx, R_xlen_t *idxs, R_xlen_t nidxs, double *ans
 
  Arguments:
    The following macros ("arguments") should be defined for the
@@ -22,7 +22,7 @@
 #include "000.templates-types.h"
 
 
-RETURN_TYPE METHOD_NAME_IDXS(ARGUMENTS_LIST) {
+RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   X_C_TYPE xi;
   R_xlen_t ii;
   R_xlen_t nNeg = 0, nZero = 0, nPos = 0, nNA=0;
@@ -30,9 +30,9 @@ RETURN_TYPE METHOD_NAME_IDXS(ARGUMENTS_LIST) {
   R_xlen_t nPosInf=0, nNegInf=0;
 #endif
 
-#ifdef IDXS_TYPE
+// #ifdef IDXS_TYPE
   IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-#endif
+// #endif
 
   for (ii = 0; ii < nidxs; ii++) {
     xi = R_INDEX_GET(x, IDX_INDEX(cidxs,ii), X_NA);

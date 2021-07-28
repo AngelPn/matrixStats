@@ -32,8 +32,8 @@ SEXP colOrderStats(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP which) {
   R_xlen_t nrows, ncols;
   int rowsType, colsType;
   int rowsHasna, colsHasna;
-  void *crows = validateIndicesCheckNA(rows, nrow, 0, &nrows, &rowsType, &rowsHasna);
-  void *ccols = validateIndicesCheckNA(cols, ncol, 0, &ncols, &colsType, &colsHasna);
+  R_xlen_t *crows = validateIndicesCheckNA(rows, nrow, 0, &nrows, &rowsType, &rowsHasna);
+  R_xlen_t *ccols = validateIndicesCheckNA(cols, ncol, 0, &ncols, &colsType, &colsHasna);
 
   // Check missing rows
   if (rowsHasna && ncols > 0) {
@@ -55,11 +55,11 @@ SEXP colOrderStats(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP which) {
   /* Double matrices are more common to use. */
   if (isReal(x)) {
     PROTECT(ans = allocVector(REALSXP, ncols));
-    colOrderStats_dbl[rowsType][colsType](REAL(x), nrow, ncol, crows, nrows, ccols, ncols, qq, REAL(ans));
+    colOrderStats_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, qq, REAL(ans));
     UNPROTECT(1);
   } else if (isInteger(x)) {
     PROTECT(ans = allocVector(INTSXP, ncols));
-    colOrderStats_int[rowsType][colsType](INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, qq, INTEGER(ans));
+    colOrderStats_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, qq, INTEGER(ans));
     UNPROTECT(1);
   }
 

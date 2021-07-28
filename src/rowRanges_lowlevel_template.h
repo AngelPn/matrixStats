@@ -1,9 +1,9 @@
 /***********************************************************************
  TEMPLATE:
-  void rowRanges_<int|dbl>[rowsType][colsType](ARGUMENTS_LIST)
+  void rowRanges_<int|dbl>(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, void *rows, R_xlen_t nrows, void *cols, R_xlen_t ncols, int what, int narm, int hasna, X_C_TYPE *ans, int *is_counted
+  X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, int what, int narm, int hasna, X_C_TYPE *ans, int *is_counted
 
  Arguments:
    The following macros ("arguments") should be defined for the
@@ -28,18 +28,18 @@
 #include "000.templates-types.h"
 
 
-RETURN_TYPE METHOD_NAME_ROWS_COLS(ARGUMENTS_LIST) {
+RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t ii, jj;
   R_xlen_t colBegin, idx;
   X_C_TYPE value, *mins = NULL, *maxs = NULL;
   int *skip = NULL;
 
-#ifdef ROWS_TYPE
+// #ifdef ROWS_TYPE
   ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
-#endif
-#ifdef COLS_TYPE
+// #endif
+// #ifdef COLS_TYPE
   COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
-#endif
+// #endif
 
   /* Rprintf("(nrow,ncol)=(%d,%d), what=%d\n", nrow, ncol, what); */
 

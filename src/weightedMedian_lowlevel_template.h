@@ -1,9 +1,9 @@
 /***********************************************************************
  TEMPLATE:
-  double weightedMedian_<int|dbl>[idxsType](ARGUMENTS_LIST)
+  double weightedMedian_<int|dbl>(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  X_C_TYPE *x, R_xlen_t nx, double *w, void *idxs, R_xlen_t nidxs, int narm, int interpolate, int ties
+  X_C_TYPE *x, R_xlen_t nx, double *w, R_xlen_t *idxs, R_xlen_t nidxs, int narm, int interpolate, int ties
 
  Copyright: Henrik Bengtsson, 2014
  ***********************************************************************/
@@ -17,7 +17,7 @@
 #include <R_ext/Error.h>
 
 
-RETURN_TYPE METHOD_NAME_IDXS(ARGUMENTS_LIST) {
+RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   X_C_TYPE value;
   X_C_TYPE *xtmp;
   double weight, res;
@@ -27,9 +27,9 @@ RETURN_TYPE METHOD_NAME_IDXS(ARGUMENTS_LIST) {
   int *idxs_int;
   int equalweights = 0;
 
-#ifdef IDXS_TYPE
+// #ifdef IDXS_TYPE
   IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-#endif
+// #endif
 
   /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
   /* Weights                                                             */

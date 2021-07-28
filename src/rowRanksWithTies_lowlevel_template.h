@@ -1,9 +1,9 @@
 /***********************************************************************
  TEMPLATE:
-  <col|row>Ranks_dbl_ties<Min|Max|Average>[rowsType][colsType](ARGUMENTS_LIST)
+  <col|row>Ranks_dbl_ties<Min|Max|Average>(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, void *rows, R_xlen_t nrows, void *cols, R_xlen_t ncols, ANS_C_TYPE *ans
+  X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, ANS_C_TYPE *ans
 
  Arguments:
    The following macros ("arguments") should be defined for the
@@ -60,7 +60,7 @@ void SHUFFLE_INT(int *array, size_t i, size_t j); /* prototype for use with "ran
 #endif
 
 
-void METHOD_NAME_ROWS_COLS(ARGUMENTS_LIST) {
+void METHOD_NAME(ARGUMENTS_LIST) {
   ANS_C_TYPE rank;
   X_C_TYPE *values, current, tmp;
   R_xlen_t *colOffset;
@@ -69,12 +69,12 @@ void METHOD_NAME_ROWS_COLS(ARGUMENTS_LIST) {
   int lastFinite, firstTie, aboveTie, dense_rank_adj;
   int nvalues, nVec;
 
-#ifdef ROWS_TYPE
+// #ifdef ROWS_TYPE
   ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
-#endif
-#ifdef COLS_TYPE
+// #endif
+// #ifdef COLS_TYPE
   COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
-#endif
+// #endif
 
 #if MARGIN == 'r'
   nvalues = ncols;

@@ -1,9 +1,9 @@
 /***********************************************************************
  TEMPLATE:
-  void rowCounts_<int|dbl|lgl>[ROWS_TYPE][COLS_TYPE](ARGUMENTS_LIST)
+  void rowCounts_<int|dbl|lgl>(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, void *rows, R_xlen_t nrows, void *cols, R_xlen_t ncols, X_C_TYPE value, int what, int narm, int hasna, int *ans
+  X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, X_C_TYPE value, int what, int narm, int hasna, int *ans
 
  Arguments:
    The following macros ("arguments") should be defined for the
@@ -22,18 +22,18 @@
 #include "000.templates-types.h"
 
 
-RETURN_TYPE METHOD_NAME_ROWS_COLS(ARGUMENTS_LIST) {
+RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t ii, jj;
   R_xlen_t colBegin, idx;
   int count;
   X_C_TYPE xvalue;
 
-#ifdef ROWS_TYPE
+// #ifdef ROWS_TYPE
   ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
-#endif
-#ifdef COLS_TYPE
+// #endif
+// #ifdef COLS_TYPE
   COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
-#endif
+// #endif
 
   if (what == 0) {  /* all */
     for (ii=0; ii < nrows; ii++) ans[ii] = 1;

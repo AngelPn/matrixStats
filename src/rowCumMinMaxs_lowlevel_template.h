@@ -1,9 +1,9 @@
 /***********************************************************************
  TEMPLATE:
-  void rowCummins_<int|dbl>[rowsType][colsType](ARGUMENTS_LIST)
+  void rowCummins_<int|dbl>(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, void *rows, R_xlen_t nrows, void *cols, R_xlen_t ncols, int byrow, ANS_C_TYPE *ans
+  X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, int byrow, ANS_C_TYPE *ans
 
  Arguments:
    The following macros ("arguments") should be defined for the
@@ -32,19 +32,19 @@
   #define OP >
 #endif
 
-RETURN_TYPE METHOD_NAME_ROWS_COLS(ARGUMENTS_LIST) {
+RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t ii, jj, kk, kk_prev, idx;
   R_xlen_t colBegin;
   ANS_C_TYPE value;
   int ok;
   int *oks = NULL;
 
-#ifdef ROWS_TYPE
+// #ifdef ROWS_TYPE
   ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
-#endif
-#ifdef COLS_TYPE
+// #endif
+// #ifdef COLS_TYPE
   COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
-#endif
+// #endif
 
   if (ncols == 0 || nrows == 0) return;
 

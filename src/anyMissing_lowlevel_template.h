@@ -1,9 +1,9 @@
 /***********************************************************************
  TEMPLATE:
-  double anyMissing[idxsType](ARGUMENTS_LIST)
+  int anyMissing_internal(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  SEXP x, void *idxs, R_xlen_t nidxs
+  SEXP x, R_xlen_t *idxs, R_xlen_t nidxs
  ***********************************************************************/
 #include <Rdefines.h>
 #include "000.types.h"
@@ -19,15 +19,15 @@
 #endif
 
 
-RETURN_TYPE METHOD_NAME_IDXS(ARGUMENTS_LIST) {
+RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t ii;
   double *xdp;
   int *xip, *xlp;
   Rcomplex *xcp;
 
-#ifdef IDXS_TYPE
+// #ifdef IDXS_TYPE
   IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-#endif
+// #endif
 
   switch (TYPEOF(x)) {
     case REALSXP:
