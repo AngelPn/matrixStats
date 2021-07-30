@@ -34,35 +34,30 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t offset;
   X_C_TYPE *values;
 
-// #ifdef ROWS_TYPE
-  ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
   // Check missing rows
   for (ii=0; ii < nrows; ++ii) {
-    if (ROW_INDEX(crows,ii) == NA_R_XLEN_T) break;
+    if (rows[ii] == NA_R_XLEN_T) break;
   }
   if (ii < nrows && ncols > 0) {
     error("Argument 'rows' must not contain missing value");
   }
-// #endif
-// #ifdef COLS_TYPE
-  COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
+
   // Check missing cols
   for (jj=0; jj < ncols; ++jj) {
-    if (COL_INDEX(ccols,jj) == NA_R_XLEN_T) break;
+    if (cols[jj] == NA_R_XLEN_T) break;
   }
   if (jj < ncols && nrows > 0) {
     error("Argument 'cols' must not contain missing value");
   }
-// #endif
 
   /* R allocate memory for the 'values'.  This will be
      taken care of by the R garbage collector later on. */
   values = (X_C_TYPE *) R_alloc(nrows, sizeof(X_C_TYPE));
 
   for (jj=0; jj < ncols; jj++) {
-    offset = COL_INDEX_NONA(ccols,jj) * nrow;
+    offset = cols[jj] * nrow;
     for (ii=0; ii < nrows; ii++)
-      values[ii] = x[ROW_INDEX_NONA(crows,ii) + offset];
+      values[ii] = x[rows[ii] + offset];
 
     /* Sort vector of length 'nrows' up to position 'qq'.
        "...partial sorting: they permute x so that x[qq] is in the

@@ -19,11 +19,6 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   double navalue;
   // double (*logsumexp)(double *x, R_xlen_t *idxs, R_xlen_t nidxs, int narm, int hasna, R_xlen_t by, double *xx);
 
-// #ifdef IDXS_TYPE
-  IDXS_C_TYPE *crows = (IDXS_C_TYPE*) rows;
-  IDXS_C_TYPE *ccols = (IDXS_C_TYPE*) cols;
-// #endif
-
   if (byrow) {
     /* R allocate memory for row-vector 'xx' of length 'ncol'.
        This will be taken care of by the R garbage collector later on. */
@@ -32,7 +27,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
     navalue = (narm || ncols == 0) ? R_NegInf : NA_REAL;
 
     for (ii=0; ii < nrows; ++ii) {
-      idx = IDX_INDEX(crows,ii);
+      idx = rows[ii];
       if (idx == NA_R_XLEN_T) {
         ans[ii] = navalue;
       } else {
@@ -43,7 +38,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
     navalue = (narm || nrows == 0) ? R_NegInf : NA_REAL;
 
     for (ii=0; ii < ncols; ++ii) {
-      idx = R_INDEX_OP(IDX_INDEX(ccols,ii), *, nrow);
+      idx = R_INDEX_OP(cols[ii], *, nrow);
       if (idx == NA_R_XLEN_T) {
         ans[ii] = navalue;
       } else {

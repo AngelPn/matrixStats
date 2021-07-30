@@ -39,21 +39,14 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   int ok;
   int *oks = NULL;
 
-// #ifdef ROWS_TYPE
-  ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
-// #endif
-// #ifdef COLS_TYPE
-  COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
-// #endif
-
   if (ncols == 0 || nrows == 0) return;
 
   if (byrow) {
     oks = (int *) R_alloc(nrows, sizeof(int));
 
-    colBegin = R_INDEX_OP(COL_INDEX(ccols,0), *, nrow);
+    colBegin = R_INDEX_OP(cols[0], *, nrow);
     for (kk=0; kk < nrows; kk++) {
-      idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,kk));
+      idx = R_INDEX_OP(colBegin, +, rows[kk]);
       value = (ANS_C_TYPE) R_INDEX_GET(x, idx, X_NA);
       if (ANS_ISNAN(value)) {
         oks[kk] = 0;
@@ -67,9 +60,9 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
 
     kk_prev = 0;
     for (jj=1; jj < ncols; jj++) {
-      colBegin = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+      colBegin = R_INDEX_OP(cols[jj], *, nrow);
       for (ii=0; ii < nrows; ii++) {
-        idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,ii));
+        idx = R_INDEX_OP(colBegin, +, rows[ii]);
         value = (ANS_C_TYPE) R_INDEX_GET(x, idx, X_NA);
         if (oks[ii]) {
           if (ANS_ISNAN(value)) {
@@ -94,8 +87,8 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   } else {
     kk = 0;
     for (jj=0; jj < ncols; jj++) {
-      colBegin = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
-      idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,0));
+      colBegin = R_INDEX_OP(cols[jj], *, nrow);
+      idx = R_INDEX_OP(colBegin, +, rows[0]);
       value = (ANS_C_TYPE) R_INDEX_GET(x, idx, X_NA);
       if (ANS_ISNAN(value)) {
         ok = 0;
@@ -109,7 +102,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       kk++;
 
       for (ii=1; ii < nrows; ii++) {
-        idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,ii));
+        idx = R_INDEX_OP(colBegin, +, rows[ii]);
         value = (ANS_C_TYPE) R_INDEX_GET(x, idx, X_NA);
         if (ok) {
           if (ANS_ISNAN(value)) {

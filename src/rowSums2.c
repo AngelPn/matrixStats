@@ -39,7 +39,7 @@ SEXP rowSums2(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEX
 
   if (!byrow) {
     SWAP(R_xlen_t, nrow, ncol);
-    SWAP(void*, crows, ccols);
+    SWAP(R_xlen_t*, crows, ccols);
     SWAP(R_xlen_t, nrows, ncols);
     SWAP(int, rowsType, colsType);
   }

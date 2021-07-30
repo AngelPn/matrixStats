@@ -28,12 +28,8 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t ii;
   LDOUBLE sum = 0;
 
-// #ifdef IDXS_TYPE
-  IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-// #endif
-
   for (ii=0; ii < nidxs; ++ii) {
-    value = R_INDEX_GET(x, IDX_INDEX(cidxs,ii), X_NA);
+    value = R_INDEX_GET(x, idxs[ii], X_NA);
 #if X_TYPE == 'i'
     if (!X_ISNAN(value)) {
       sum += (LDOUBLE)value;

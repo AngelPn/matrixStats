@@ -111,23 +111,16 @@ static R_INLINE void DIFF_X_MATRIX_TYPE(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t *ro
   R_xlen_t idx, colBegin1, colBegin2;
   X_C_TYPE xvalue1, xvalue2;
 
-// #ifdef ROWS_TYPE
-  ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
-// #endif
-// #ifdef COLS_TYPE
-  COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
-// #endif
-
   ss = 0;
   if (byrow) {
     for (jj=0; jj < ncol_ans; jj++) {
-      colBegin1 = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
-      colBegin2 = R_INDEX_OP(COL_INDEX(ccols,(jj+lag)), *, nrow);
+      colBegin1 = R_INDEX_OP(cols[jj], *, nrow);
+      colBegin2 = R_INDEX_OP(cols[jj+lag], *, nrow);
 
       for (ii=0; ii < nrow_ans; ii++) {
-        idx = R_INDEX_OP(colBegin1, +, ROW_INDEX(crows,ii));
+        idx = R_INDEX_OP(colBegin1, +, rows[ii]);
         xvalue1 = R_INDEX_GET(x, idx, X_NA);
-        idx = R_INDEX_OP(colBegin2, +, ROW_INDEX(crows,ii));
+        idx = R_INDEX_OP(colBegin2, +, rows[ii]);
         xvalue2 = R_INDEX_GET(x, idx, X_NA);
 
         ans[ss++] = X_DIFF(xvalue2, xvalue1);
@@ -135,12 +128,12 @@ static R_INLINE void DIFF_X_MATRIX_TYPE(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t *ro
     }
   } else {
     for (jj=0; jj < ncol_ans; jj++) {
-      colBegin1 = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+      colBegin1 = R_INDEX_OP(cols[jj], *, nrow);
 
       for (ii=0; ii < nrow_ans; ii++) {
-        idx = R_INDEX_OP(colBegin1, +, ROW_INDEX(crows,ii));
+        idx = R_INDEX_OP(colBegin1, +, rows[ii]);
         xvalue1 = R_INDEX_GET(x, idx, X_NA);
-        idx = R_INDEX_OP(colBegin1, +, ROW_INDEX(crows,ii+lag));
+        idx = R_INDEX_OP(colBegin1, +, rows[ii+lag]);
         xvalue2 = R_INDEX_GET(x, idx, X_NA);
 
         ans[ss++] = X_DIFF(xvalue2, xvalue1);

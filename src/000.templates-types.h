@@ -175,19 +175,19 @@
 /*
  Subsetted indexing: matrix
  */
-#undef ROW_INDEX_NONA
-#undef ROW_INDEX
-#undef ROWS_C_TYPE
+// #undef ROW_INDEX_NONA
+// #undef ROW_INDEX
+// #undef ROWS_C_TYPE
 // #undef METHOD_NAME_ROWS
 
-#undef COL_INDEX_NONA
-#undef COL_INDEX
-#undef COLS_C_TYPE
+// #undef COL_INDEX_NONA
+// #undef COL_INDEX
+// #undef COLS_C_TYPE
 // #undef METHOD_NAME_ROWS_COLS
 
-#define ROW_INDEX_NONA(rows, ii) ((R_xlen_t)rows[ii])
-#define ROW_INDEX(rows, ii) (rows[ii] == NA_R_XLEN_T ? NA_R_XLEN_T : (R_xlen_t)rows[ii])
-#define ROWS_C_TYPE R_xlen_t
+// #define ROW_INDEX_NONA(rows, ii) ((R_xlen_t)rows[ii])
+// #define ROW_INDEX(rows, ii) (rows[ii] == NA_R_XLEN_T ? NA_R_XLEN_T : (R_xlen_t)rows[ii])
+// #define ROWS_C_TYPE R_xlen_t
 
 // #ifdef ROWS_TYPE
 //   #define ROW_INDEX_NONA(rows, ii) ((R_xlen_t)rows[ii]-1)
@@ -209,9 +209,9 @@
 //   #define METHOD_NAME_ROWS CONCAT_MACROS(METHOD_NAME, arows)
 // #endif
 
-#define COL_INDEX_NONA(cols, jj) ((R_xlen_t)cols[jj])
-#define COL_INDEX(cols, jj) (cols[jj] == NA_R_XLEN_T ? NA_R_XLEN_T : (R_xlen_t)cols[jj])
-#define COLS_C_TYPE R_xlen_t
+// #define COL_INDEX_NONA(cols, jj) ((R_xlen_t)cols[jj])
+// #define COL_INDEX(cols, jj) (cols[jj] == NA_R_XLEN_T ? NA_R_XLEN_T : (R_xlen_t)cols[jj])
+// #define COLS_C_TYPE R_xlen_t
 
 // #ifdef COLS_TYPE
 //   #define COL_INDEX_NONA(cols, jj) ((R_xlen_t)cols[jj]-1)
@@ -263,14 +263,14 @@
 /*
  Subsetted indexing: vector
  */
-#undef IDX_INDEX_NONA
-#undef IDX_INDEX
-#undef IDXS_C_TYPE
+// #undef IDX_INDEX_NONA
+// #undef IDX_INDEX
+// #undef IDXS_C_TYPE
 // #undef METHOD_NAME_IDXS
 
-#define IDX_INDEX_NONA(idxs, ii) ((R_xlen_t)idxs[ii])
-#define IDX_INDEX(idxs, ii) (idxs[ii] == NA_R_XLEN_T ? NA_R_XLEN_T : (R_xlen_t)idxs[ii])
-#define IDXS_C_TYPE R_xlen_t
+// #define IDX_INDEX_NONA(idxs, ii) ((R_xlen_t)idxs[ii])
+// #define IDX_INDEX(idxs, ii) (idxs[ii] == NA_R_XLEN_T ? NA_R_XLEN_T : (R_xlen_t)idxs[ii])
+// #define IDXS_C_TYPE R_xlen_t
 
 // #ifdef IDXS_TYPE
 //   #define IDX_INDEX_NONA(idxs, ii) ((R_xlen_t)idxs[ii]-1)

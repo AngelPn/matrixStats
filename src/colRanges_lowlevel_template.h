@@ -33,13 +33,6 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t colBegin, idx;
   X_C_TYPE value, *mins = NULL, *maxs = NULL;
 
-// #ifdef ROWS_TYPE
-  ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
-// #endif
-// #ifdef COLS_TYPE
-  COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
-// #endif
-
   /* Rprintf("(nrow,ncol)=(%d,%d), what=%d\n", nrow, ncol, what); */
 
   /* If there are no missing values, don't try to remove them. */
@@ -55,10 +48,10 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       mins = ans;
 
       for (jj=0; jj < ncols; jj++) {
-        colBegin = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+        colBegin = R_INDEX_OP(cols[jj], *, nrow);
 
         for (ii=0; ii < nrows; ii++) {
-          idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,ii));
+          idx = R_INDEX_OP(colBegin, +, rows[ii]);
           value = R_INDEX_GET(x, idx, X_NA);
 
           if (X_ISNAN(value)) {
@@ -94,10 +87,10 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       maxs = ans;
 
       for (jj=0; jj < ncols; jj++) {
-        colBegin = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+        colBegin = R_INDEX_OP(cols[jj], *, nrow);
 
         for (ii=0; ii < nrows; ii++) {
-          idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,ii));
+          idx = R_INDEX_OP(colBegin, +, rows[ii]);
           value = R_INDEX_GET(x, idx, X_NA);
 
           if (X_ISNAN(value)) {
@@ -134,10 +127,10 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       maxs = &ans[ncols];
 
       for (jj=0; jj < ncols; jj++) {
-        colBegin = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+        colBegin = R_INDEX_OP(cols[jj], *, nrow);
 
         for (ii=0; ii < nrows; ii++) {
-          idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,ii));
+          idx = R_INDEX_OP(colBegin, +, rows[ii]);
           value = R_INDEX_GET(x, idx, X_NA);
 
           if (X_ISNAN(value)) {
@@ -186,9 +179,9 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       }
 
       for (jj=1; jj < ncols; jj++) {
-        colBegin = COL_INDEX_NONA(ccols,jj) * nrow;
+        colBegin = cols[jj] * nrow;
         for (ii=0; ii < nrows; ii++) {
-          value = x[ROW_INDEX_NONA(crows,ii)+colBegin];
+          value = x[rows[ii]+colBegin];
           if (value < mins[jj]) mins[jj] = value;
         }
       }
@@ -202,9 +195,9 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       }
 
       for (jj=1; jj < ncols; jj++) {
-        colBegin = COL_INDEX_NONA(ccols,jj) * nrow;
+        colBegin = cols[jj] * nrow;
         for (ii=0; ii < nrows; ii++) {
-          value = x[ROW_INDEX_NONA(crows,ii)+colBegin];
+          value = x[rows[ii]+colBegin];
           if (value > maxs[jj]) maxs[jj] = value;
         }
       }
@@ -220,9 +213,9 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       }
 
       for (jj=1; jj < ncols; jj++) {
-        colBegin = COL_INDEX_NONA(ccols,jj) * nrow;
+        colBegin = cols[jj] * nrow;
         for (ii=0; ii < nrows; ii++) {
-          value = x[ROW_INDEX_NONA(crows,ii)+colBegin];
+          value = x[rows[ii]+colBegin];
           if (value < mins[jj]) {
             mins[jj] = value;
           } else if (value > maxs[jj]) {

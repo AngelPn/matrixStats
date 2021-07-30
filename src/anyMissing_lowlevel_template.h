@@ -25,30 +25,26 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   int *xip, *xlp;
   Rcomplex *xcp;
 
-// #ifdef IDXS_TYPE
-  IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-// #endif
-
   switch (TYPEOF(x)) {
     case REALSXP:
       xdp = REAL(x);
-      CHECK_MISSING(ISNAN(R_INDEX_GET(xdp, IDX_INDEX(cidxs,ii), NA_REAL)));
+      CHECK_MISSING(ISNAN(R_INDEX_GET(xdp, idxs[ii], NA_REAL)));
       break;
 
     case INTSXP:
       xip = INTEGER(x);
-      CHECK_MISSING(R_INDEX_GET(xip, IDX_INDEX(cidxs,ii), NA_INTEGER) == NA_INTEGER);
+      CHECK_MISSING(R_INDEX_GET(xip, idxs[ii], NA_INTEGER) == NA_INTEGER);
       break;
 
     case LGLSXP:
       xlp = LOGICAL(x);
-      CHECK_MISSING(R_INDEX_GET(xlp, IDX_INDEX(cidxs,ii), NA_LOGICAL) == NA_LOGICAL);
+      CHECK_MISSING(R_INDEX_GET(xlp, idxs[ii], NA_LOGICAL) == NA_LOGICAL);
       break;
 
     case CPLXSXP:
       xcp = COMPLEX(x);
 #ifdef IDXS_TYPE
-      CHECK_MISSING(IDX_INDEX(cidxs,ii) == NA_R_XLEN_T || ISNAN(xcp[IDX_INDEX_NONA(cidxs,ii)].r) || ISNAN(xcp[IDX_INDEX_NONA(cidxs,ii)].i));
+      CHECK_MISSING(idxs[ii] == NA_R_XLEN_T || ISNAN(xcp[IDX_INDEX_NONA(cidxs,ii)].r) || ISNAN(xcp[IDX_INDEX_NONA(cidxs,ii)].i));
 #else
       CHECK_MISSING(ISNAN(xcp[ii].r) || ISNAN(xcp[ii].i));
 #endif
@@ -56,7 +52,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
 
     case STRSXP:
 #ifdef IDXS_TYPE
-      CHECK_MISSING(IDX_INDEX(cidxs,ii) == NA_R_XLEN_T || STRING_ELT(x, IDX_INDEX_NONA(cidxs,ii)) == NA_STRING);
+      CHECK_MISSING(idxs[ii] == NA_R_XLEN_T || STRING_ELT(x, IDX_INDEX_NONA(cidxs,ii)) == NA_STRING);
 #else
       CHECK_MISSING(STRING_ELT(x, ii) == NA_STRING);
 #endif

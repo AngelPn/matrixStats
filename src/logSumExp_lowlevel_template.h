@@ -40,10 +40,6 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   int hasna2 = FALSE; /* Indicates whether NAs where detected or not */
   int xMaxIsNA;
 
-// #ifdef IDXS_TYPE
-  IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-// #endif
-
   /* Quick return? */
   if (nidxs == 0) {
     return(R_NegInf);
@@ -52,10 +48,10 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   /* Find the maximum value */
   iMax = 0;
   if (by) {
-    idx = R_INDEX_OP(IDX_INDEX(cidxs,0), *, by);
+    idx = R_INDEX_OP(idxs[0], *, by);
     xMax = R_INDEX_GET(x, idx, NA_REAL);
   } else {
-    xMax = R_INDEX_GET(x, IDX_INDEX(cidxs,0), NA_REAL);
+    xMax = R_INDEX_GET(x, idxs[0], NA_REAL);
   }
   xMaxIsNA = ISNAN(xMax);
 
@@ -77,7 +73,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
     xx[0] = xMax;
     for (ii=1; ii < nidxs; ii++) {
       /* Get the ii:th value */
-      idx = R_INDEX_OP(IDX_INDEX(cidxs,ii), *, by);
+      idx = R_INDEX_OP(idxs[ii], *, by);
       xii = R_INDEX_GET(x, idx, NA_REAL);
 
       /* Copy */
@@ -103,7 +99,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   } else {
     for (ii=1; ii < nidxs; ii++) {
       /* Get the ii:th value */
-      xii = R_INDEX_GET(x, IDX_INDEX(cidxs,ii), NA_REAL);
+      xii = R_INDEX_GET(x, idxs[ii], NA_REAL);
 
       if (hasna && ISNAN(xii)) {
         if (narm) {
@@ -165,7 +161,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       }
 
       /* Get the ii:th value */
-      xii = R_INDEX_GET(x, IDX_INDEX(cidxs,ii), NA_REAL);
+      xii = R_INDEX_GET(x, idxs[ii], NA_REAL);
 
       if (!hasna2 || !ISNAN(xii)) {
         sum += exp(xii - xMax);

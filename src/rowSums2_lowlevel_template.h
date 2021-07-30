@@ -22,13 +22,6 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   /* NOTE: SIMD does not long doubles - in case we ever go there */
   LDOUBLE sum;
 
-// #ifdef ROWS_TYPE
-  ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
-// #endif
-// #ifdef COLS_TYPE
-  COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
-// #endif
-
   /* If there are no missing values, don't try to remove them. */
   if (hasna == FALSE)
     narm = FALSE;
@@ -38,14 +31,14 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
 
   if (byrow) {
     for (jj=0; jj < ncols; jj++)
-      colOffset[jj] = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+      colOffset[jj] = R_INDEX_OP(cols[jj], *, nrow);
   } else {
     for (jj=0; jj < ncols; jj++)
-      colOffset[jj] = COL_INDEX(ccols,jj);
+      colOffset[jj] = cols[jj];
   }
 
   for (ii=0; ii < nrows; ii++) {
-    R_xlen_t rowIdx = byrow ? ROW_INDEX(crows,ii) : R_INDEX_OP(ROW_INDEX(crows,ii), *, ncol);
+    R_xlen_t rowIdx = byrow ? rows[ii] : R_INDEX_OP(rows[ii], *, ncol);
 
     sum = 0.0;
 

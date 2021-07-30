@@ -27,10 +27,6 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   int *idxs_int;
   int equalweights = 0;
 
-// #ifdef IDXS_TYPE
-  IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-// #endif
-
   /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
   /* Weights                                                             */
   /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -43,7 +39,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
        that the signals is missing and should be dropped */
     wtmp[ii] = 0;
 
-    weight = R_INDEX_GET(w, IDX_INDEX(cidxs,ii), NA_REAL);
+    weight = R_INDEX_GET(w, idxs[ii], NA_REAL);
     if (ISNAN(weight)) {
       if (!narm) {
         Free(wtmp);
@@ -59,9 +55,9 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
         /* Assume non-infinite weight by default */
         wtmp[jj] = 0;
 
-        weight = R_INDEX_GET(w, IDX_INDEX(cidxs,jj), NA_REAL);
+        weight = R_INDEX_GET(w, idxs[jj], NA_REAL);
         if (isinf(weight)) {
-          value = R_INDEX_GET(x, IDX_INDEX(cidxs,jj), X_NA);
+          value = R_INDEX_GET(x, idxs[jj], X_NA);
           if (X_ISNAN(value)) {
             if (!narm) {
               Free(wtmp);
@@ -83,7 +79,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       break;
     } else {
       /* A data points with a finite positive weight */
-      value = R_INDEX_GET(x, IDX_INDEX(cidxs,ii), X_NA);
+      value = R_INDEX_GET(x, idxs[ii], X_NA);
       if (X_ISNAN(value)) {
         if (!narm) {
           Free(wtmp);
@@ -118,7 +114,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   for (ii=0; ii < nidxs; ii++) {
     if (wtmp[ii] > 0) {
       /*    printf("ii=%d, jj=%d, wtmp[%d]=%g\n", (int)ii, (int)jj, (int)ii, wtmp[ii]); */
-      xtmp[jj] = x[IDX_INDEX(cidxs,ii)]; // sure that xvalue is not NA
+      xtmp[jj] = x[idxs[ii]]; // sure that xvalue is not NA
       wtmp[jj] = wtmp[ii];
       wtotal += wtmp[jj];
       jj++;

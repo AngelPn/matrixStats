@@ -29,13 +29,9 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   int isneg = 0;
   int hasZero = 0;
 
-// #ifdef IDXS_TYPE
-  IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-// #endif
-
   /* Calculate sum(log(abs(x))) */
   for (ii = 0 ; ii < nidxs; ii++) {
-    t = R_INDEX_GET(x, IDX_INDEX(cidxs,ii), X_NA);
+    t = R_INDEX_GET(x, idxs[ii], X_NA);
     /* Missing values? */
     if (narm) {
       if (X_ISNAN(t)) continue;

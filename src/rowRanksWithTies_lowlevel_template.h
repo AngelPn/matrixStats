@@ -69,13 +69,6 @@ void METHOD_NAME(ARGUMENTS_LIST) {
   int lastFinite, firstTie, aboveTie, dense_rank_adj;
   int nvalues, nVec;
 
-// #ifdef ROWS_TYPE
-  ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
-// #endif
-// #ifdef COLS_TYPE
-  COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
-// #endif
-
 #if MARGIN == 'r'
   nvalues = ncols;
   nVec = nrows;
@@ -83,7 +76,7 @@ void METHOD_NAME(ARGUMENTS_LIST) {
   /* Pre-calculate the column offsets */
   colOffset = (R_xlen_t *) R_alloc(ncols, sizeof(R_xlen_t));
   for (jj=0; jj < ncols; jj++)
-    colOffset[jj] = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+    colOffset[jj] = R_INDEX_OP(cols[jj], *, nrow);
 
 #elif MARGIN == 'c'
   nvalues = nrows;
@@ -92,7 +85,7 @@ void METHOD_NAME(ARGUMENTS_LIST) {
   /* Pre-calculate the column offsets */
   colOffset = (R_xlen_t *) R_alloc(nrows, sizeof(R_xlen_t));
   for (jj=0; jj < nrows; jj++)
-    colOffset[jj] = ROW_INDEX(crows,jj);
+    colOffset[jj] = rows[jj];
 #endif
 
   values = (X_C_TYPE *) R_alloc(nvalues, sizeof(X_C_TYPE));
@@ -100,9 +93,9 @@ void METHOD_NAME(ARGUMENTS_LIST) {
 
   for (ii=0; ii < nVec; ii++) {
 #if MARGIN == 'r'
-    rowIdx = ROW_INDEX(crows,ii);
+    rowIdx = rows[ii];
 #elif MARGIN == 'c'
-    rowIdx = R_INDEX_OP(COL_INDEX(ccols,ii), *, nrow);
+    rowIdx = R_INDEX_OP(cols[ii], *, nrow);
 #endif
     lastFinite = nvalues-1;
 

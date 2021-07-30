@@ -34,13 +34,6 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t *colOffset;
   X_C_TYPE *values, value;
 
-// #ifdef ROWS_TYPE
-  ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
-// #endif
-// #ifdef COLS_TYPE
-  COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
-// #endif
-
   /* R allocate memory for the 'values'.  This will be
      taken care of by the R garbage collector later on. */
   values = (X_C_TYPE *) R_alloc(ncols, sizeof(X_C_TYPE));
@@ -66,16 +59,16 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   // HJ begin
   if (byrow) {
     for (jj=0; jj < ncols; jj++)
-      colOffset[jj] = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+      colOffset[jj] = R_INDEX_OP(cols[jj], *, nrow);
   } else {
     for (jj=0; jj < ncols; jj++)
-      colOffset[jj] = COL_INDEX(ccols,jj);
+      colOffset[jj] = cols[jj];
   }
   // HJ end
 
   if (hasna == TRUE) {
     for (ii=0; ii < nrows; ii++) {
-      R_xlen_t rowIdx = byrow ? ROW_INDEX(crows,ii) : R_INDEX_OP(ROW_INDEX(crows,ii), *, ncol); //HJ
+      R_xlen_t rowIdx = byrow ? rows[ii] : R_INDEX_OP(rows[ii], *, ncol); //HJ
 
       kk = 0;  /* The index of the last non-NA value detected */
       for (jj=0; jj < ncols; jj++) {
@@ -125,7 +118,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
     } /* for (ii ...) */
   } else {
     for (ii=0; ii < nrows; ii++) {
-      R_xlen_t rowIdx = byrow ? ROW_INDEX_NONA(crows,ii) : ROW_INDEX_NONA(crows,ii) * ncol; //HJ
+      R_xlen_t rowIdx = byrow ? rows[ii] : rows[ii] * ncol; //HJ
 
       for (jj=0; jj < ncols; jj++)
         values[jj] = x[rowIdx+colOffset[jj]]; //HJ

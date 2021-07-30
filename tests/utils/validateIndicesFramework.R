@@ -41,7 +41,7 @@ validateIndicesTestVector_w <- function(x, w, idxs, ftest, fsure,
 }
 
 validateIndicesTestMatrix <- function(x, rows, cols, ftest, fcoltest, fsure,
-                                      debug = FALSE, ...) {
+                                      debug = TRUE, ...) {
   if (debug) {
     cat(sprintf("rows=%s; type=%s\n", toString(rows), toString(typeof(rows))))
     cat(sprintf("cols=%s; type=%s\n", toString(cols), toString(typeof(cols))))

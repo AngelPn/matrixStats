@@ -30,12 +30,8 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t nPosInf=0, nNegInf=0;
 #endif
 
-// #ifdef IDXS_TYPE
-  IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-// #endif
-
   for (ii = 0; ii < nidxs; ii++) {
-    xi = R_INDEX_GET(x, IDX_INDEX(cidxs,ii), X_NA);
+    xi = R_INDEX_GET(x, idxs[ii], X_NA);
     if (X_ISNAN(xi)) {
       nNA++;
     } else if (xi > 0) {

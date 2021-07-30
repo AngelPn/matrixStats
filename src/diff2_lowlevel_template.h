@@ -43,18 +43,14 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   X_C_TYPE xvalue1, xvalue2;
   X_C_TYPE *tmp = NULL;
 
-// #ifdef IDXS_TYPE
-  IDXS_C_TYPE *cidxs = (IDXS_C_TYPE*) idxs;
-// #endif
-
   /* Nothing to do? */
   if (nans <= 0) return;
 
   /* Special case (difference == 1) */
   if (differences == 1) {
     for (ii=0; ii < nans; ii++) {
-      xvalue1 = R_INDEX_GET(x, IDX_INDEX(cidxs,ii), X_NA);
-      xvalue2 = R_INDEX_GET(x, IDX_INDEX(cidxs,ii+lag), X_NA);
+      xvalue1 = R_INDEX_GET(x, idxs[ii], X_NA);
+      xvalue2 = R_INDEX_GET(x, idxs[ii+lag], X_NA);
       ans[ii] = X_DIFF(xvalue2, xvalue1);
     }
   } else {
@@ -63,8 +59,8 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
 
     /* (a) First order of differences */
     for (ii=0; ii < nidxs-lag; ii++) {
-      xvalue1 = R_INDEX_GET(x, IDX_INDEX(cidxs,ii), X_NA);
-      xvalue2 = R_INDEX_GET(x, IDX_INDEX(cidxs,ii+lag), X_NA);
+      xvalue1 = R_INDEX_GET(x, idxs[ii], X_NA);
+      xvalue2 = R_INDEX_GET(x, idxs[ii+lag], X_NA);
       tmp[ii] = X_DIFF(xvalue2, xvalue1);
     }
     nidxs -= lag;

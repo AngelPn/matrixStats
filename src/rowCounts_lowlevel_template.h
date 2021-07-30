@@ -28,24 +28,17 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   int count;
   X_C_TYPE xvalue;
 
-// #ifdef ROWS_TYPE
-  ROWS_C_TYPE *crows = (ROWS_C_TYPE*) rows;
-// #endif
-// #ifdef COLS_TYPE
-  COLS_C_TYPE *ccols = (COLS_C_TYPE*) cols;
-// #endif
-
   if (what == 0) {  /* all */
     for (ii=0; ii < nrows; ii++) ans[ii] = 1;
 
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
       for (jj=0; jj < ncols; jj++) {
-        colBegin = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+        colBegin = R_INDEX_OP(cols[jj], *, nrow);
         for (ii=0; ii < nrows; ii++) {
           /* Skip? */
           if (ans[ii]) {
-            idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,ii));
+            idx = R_INDEX_OP(colBegin, +, rows[ii]);
             xvalue = R_INDEX_GET(x, idx, X_NA);
             if (!X_ISNAN(xvalue)) {
               ans[ii] = 0;
@@ -56,11 +49,11 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       }
     } else {
       for (jj=0; jj < ncols; jj++) {
-        colBegin = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+        colBegin = R_INDEX_OP(cols[jj], *, nrow);
         for (ii=0; ii < nrows; ii++) {
           /* Skip? */
           if (ans[ii]) {
-            idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,ii));
+            idx = R_INDEX_OP(colBegin, +, rows[ii]);
             xvalue = R_INDEX_GET(x, idx, X_NA);
             if (xvalue == value) {
             } else if (narm && X_ISNAN(xvalue)) {
@@ -86,11 +79,11 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
       for (jj=0; jj < ncols; jj++) {
-        colBegin = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+        colBegin = R_INDEX_OP(cols[jj], *, nrow);
         for (ii=0; ii < nrows; ii++) {
           /* Skip? */
           if (!ans[ii]) {
-            idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,ii));
+            idx = R_INDEX_OP(colBegin, +, rows[ii]);
             xvalue = R_INDEX_GET(x, idx, X_NA);
             if (X_ISNAN(xvalue)) {
               ans[ii] = 1;
@@ -101,11 +94,11 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       }
     } else {
       for (jj=0; jj < ncols; jj++) {
-        colBegin = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+        colBegin = R_INDEX_OP(cols[jj], *, nrow);
         for (ii=0; ii < nrows; ii++) {
           /* Skip? */
           if (ans[ii] == 0 || ans[ii] == NA_INTEGER) {
-            idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,ii));
+            idx = R_INDEX_OP(colBegin, +, rows[ii]);
             xvalue = R_INDEX_GET(x, idx, X_NA);
             if (xvalue == value) {
               /* Found value! Skip from now on */
@@ -130,22 +123,22 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
     /* Count missing values? [sic!] */
     if (X_ISNAN(value)) {
       for (jj=0; jj < ncols; jj++) {
-        colBegin = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+        colBegin = R_INDEX_OP(cols[jj], *, nrow);
         for (ii=0; ii < nrows; ii++) {
-          idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,ii));
+          idx = R_INDEX_OP(colBegin, +, rows[ii]);
           xvalue = R_INDEX_GET(x, idx, X_NA);
           if (X_ISNAN(xvalue)) ans[ii] = ans[ii] + 1;
         }
       }
     } else {
       for (jj=0; jj < ncols; jj++) {
-        colBegin = R_INDEX_OP(COL_INDEX(ccols,jj), *, nrow);
+        colBegin = R_INDEX_OP(cols[jj], *, nrow);
         for (ii=0; ii < nrows; ii++) {
           count = ans[ii];
           /* Nothing more to do on this row? */
           if (count == NA_INTEGER) continue;
 
-          idx = R_INDEX_OP(colBegin, +, ROW_INDEX(crows,ii));
+          idx = R_INDEX_OP(colBegin, +, rows[ii]);
           xvalue = R_INDEX_GET(x, idx, X_NA);
           if (xvalue == value) {
             ans[ii] = count + 1;

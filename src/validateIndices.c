@@ -187,9 +187,11 @@ SEXP validate(SEXP idxs, SEXP maxIdx, SEXP allowOutOfBound) {
   if (subsettedType == SUBSETTED_INTEGER) {
     ans = PROTECT(allocVector(INTSXP, ansNidxs));
     // Copy from cidxs to ans and coerce to int    
-    int *ans_ptr = INTEGER(ans);
-    for(R_xlen_t i = 0; i < cmaxIdx; i++) {
-      ans_ptr[i] = cidxs[i] == NA_R_XLEN_T ? NA_INTEGER : (int) cidxs[i];
+    if (cidxs && ansNidxs > 0) {
+      int *ans_ptr = INTEGER(ans);
+      for(R_xlen_t i = 0; i < cmaxIdx; i++) {
+        ans_ptr[i] = cidxs[i] == NA_R_XLEN_T ? NA_INTEGER : (int) cidxs[i] + 1;
+      }
     }
     UNPROTECT(1);
     return ans;
@@ -197,9 +199,11 @@ SEXP validate(SEXP idxs, SEXP maxIdx, SEXP allowOutOfBound) {
   // else: subsettedType == SUBSETTED_REAL
   ans = PROTECT(allocVector(REALSXP, ansNidxs));
   // Copy from cidxs to ans and coerce to double
-  double *ans_ptr = REAL(ans);
-  for(R_xlen_t i = 0; i < cmaxIdx; i++){
-    ans_ptr[i] = cidxs[i] == NA_R_XLEN_T ? NA_REAL : (double) cidxs[i];
+  if (cidxs && ansNidxs > 0) {
+    double *ans_ptr = REAL(ans);
+    for(R_xlen_t i = 0; i < cmaxIdx; i++){
+      ans_ptr[i] = cidxs[i] == NA_R_XLEN_T ? NA_REAL : (double) cidxs[i] + 1;
+    }    
   }
   UNPROTECT(1);
   return ans;
