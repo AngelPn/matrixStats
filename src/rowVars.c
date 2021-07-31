@@ -30,9 +30,8 @@ SEXP rowVars(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP
 
   /* Argument 'rows' and 'cols': */
   R_xlen_t nrows, ncols;
-  int rowsType, colsType;
-  R_xlen_t *crows = validateIndices(rows, nrow, 0, &nrows, &rowsType);
-  R_xlen_t *ccols = validateIndices(cols, ncol, 0, &ncols, &colsType);
+  R_xlen_t *crows = validateIndices(rows, nrow, 0, &nrows);
+  R_xlen_t *ccols = validateIndices(cols, ncol, 0, &ncols);
 
   /* Argument 'byRow': */
   byrow = asLogical(byRow);
@@ -41,7 +40,6 @@ SEXP rowVars(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP
     SWAP(R_xlen_t, nrow, ncol);
     SWAP(R_xlen_t*, crows, ccols);
     SWAP(R_xlen_t, nrows, ncols);
-    SWAP(int, rowsType, colsType);
   }
 
   /* R allocate a double vector of length 'nrow'

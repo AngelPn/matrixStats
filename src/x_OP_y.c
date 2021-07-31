@@ -31,10 +31,9 @@ SEXP x_OP_y(SEXP x, SEXP y, SEXP dim, SEXP operator, SEXP xrows, SEXP xcols, SEX
 
   /* Argument 'xrows', 'xcols' and 'yidxs': */
   R_xlen_t nxrows, nxcols, nyidxs;
-  int xrowsType, xcolsType, yidxsType;
-  R_xlen_t *cxrows = validateIndices(xrows, nrow, 0, &nxrows, &xrowsType);
-  R_xlen_t *cxcols = validateIndices(xcols, ncol, 0, &nxcols, &xcolsType);
-  R_xlen_t *cyidxs = validateIndices(yidxs, ny, 1, &nyidxs, &yidxsType);
+  R_xlen_t *cxrows = validateIndices(xrows, nrow, 0, &nxrows);
+  R_xlen_t *cxcols = validateIndices(xcols, ncol, 0, &nxcols);
+  R_xlen_t *cyidxs = validateIndices(yidxs, ny, 1, &nyidxs);
 
   /* Argument 'operator': */
   op = asInteger(operator);

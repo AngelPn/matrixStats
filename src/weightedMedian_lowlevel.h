@@ -15,15 +15,7 @@ double weightedMedian_dbl(double *x, R_xlen_t nx, double *w, R_xlen_t *idxs, R_x
 #define ARGUMENTS_LIST X_C_TYPE *x, R_xlen_t nx, double *w, R_xlen_t *idxs, R_xlen_t nidxs, int narm, int interpolate, int ties
 
 #define X_TYPE 'i'
-// #include "000.templates-gen-vector.h"
-#include "000.macros.h"
-#include METHOD_TEMPLATE_H
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST);
-#include "000.templates-types_undef.h"
+#include "000.templates-gen-vector.h"
 
 #define X_TYPE 'r'
-// #include "000.templates-gen-vector.h"
-#include "000.macros.h"
-#include METHOD_TEMPLATE_H
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST);
-#include "000.templates-types_undef.h"
+#include "000.templates-gen-vector.h"

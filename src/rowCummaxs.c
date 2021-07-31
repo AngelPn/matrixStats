@@ -24,9 +24,8 @@ SEXP rowCummaxs(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP byRow) {
 
   /* Argument 'rows' and 'cols': */
   R_xlen_t nrows, ncols;
-  int rowsType, colsType;
-  R_xlen_t *crows = validateIndices(rows, nrow, 0, &nrows, &rowsType);
-  R_xlen_t *ccols = validateIndices(cols, ncol, 0, &ncols, &colsType);
+  R_xlen_t *crows = validateIndices(rows, nrow, 0, &nrows);
+  R_xlen_t *ccols = validateIndices(cols, ncol, 0, &ncols);
 
   /* Argument 'byRow': */
   byrow = asLogical(byRow);

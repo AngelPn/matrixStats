@@ -30,10 +30,9 @@ SEXP colOrderStats(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP which) {
 
   /* Argument 'rows' and 'cols': */
   R_xlen_t nrows, ncols;
-  int rowsType, colsType;
   int rowsHasna, colsHasna;
-  R_xlen_t *crows = validateIndicesCheckNA(rows, nrow, 0, &nrows, &rowsType, &rowsHasna);
-  R_xlen_t *ccols = validateIndicesCheckNA(cols, ncol, 0, &ncols, &colsType, &colsHasna);
+  R_xlen_t *crows = validateIndicesCheckNA(rows, nrow, 0, &nrows, &rowsHasna);
+  R_xlen_t *ccols = validateIndicesCheckNA(cols, ncol, 0, &ncols, &colsHasna);
 
   // Check missing rows
   if (rowsHasna && ncols > 0) {

@@ -34,8 +34,7 @@ SEXP weightedMedian(SEXP x, SEXP w, SEXP idxs, SEXP naRm, SEXP interpolate, SEXP
 
   /* Argument 'idxs': */
   R_xlen_t nidxs;
-  int idxsType;
-  R_xlen_t *cidxs = validateIndices(idxs, nx, 1, &nidxs, &idxsType);
+  R_xlen_t *cidxs = validateIndices(idxs, nx, 1, &nidxs);
 
   /* Argument 'ties': */
   ties2 = asInteger(ties);

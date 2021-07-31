@@ -23,8 +23,7 @@ SEXP anyMissing(SEXP x, SEXP idxs) {
 
   /* Argument 'idxs': */
   R_xlen_t nidxs;
-  int idxsType;
-  R_xlen_t *cidxs = validateIndices(idxs, nx, 1, &nidxs, &idxsType);
+  R_xlen_t *cidxs = validateIndices(idxs, nx, 1, &nidxs);
   
   if (nidxs == 0) return(ScalarLogical(FALSE));
   

@@ -39,9 +39,8 @@ SEXP colCounts(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP value, SEXP what, SE
 
   /* Argument 'rows' and 'cols': */
   R_xlen_t nrows, ncols;
-  int rowsType, colsType;
-  R_xlen_t *crows = validateIndices(rows, nrow, 0, &nrows, &rowsType);
-  R_xlen_t *ccols = validateIndices(cols, ncol, 0, &ncols, &colsType);
+  R_xlen_t *crows = validateIndices(rows, nrow, 0, &nrows);
+  R_xlen_t *ccols = validateIndices(cols, ncol, 0, &ncols);
 
   /* R allocate an integer vector of length 'ncol' */
   /* R allocate memory for vector 'count' of length 'ncols'.
@@ -102,9 +101,7 @@ SEXP count(SEXP x, SEXP idxs, SEXP value, SEXP what, SEXP naRm, SEXP hasNA) {
 
   /* Argument 'idxs': */
   R_xlen_t nrows, ncols = 1;
-  // int rowsType, colsType = SUBSETTED_ALL;
-  int rowsType;
-  R_xlen_t *crows = validateIndices(idxs, nx, 1, &nrows, &rowsType);
+  R_xlen_t *crows = validateIndices(idxs, nx, 1, &nrows);
   // R_xlen_t *ccols = NULL;
   R_xlen_t *ccols = (R_xlen_t *) R_alloc(ncols, sizeof(R_xlen_t));
   for (R_xlen_t ii = 0; ii < ncols; ++ ii) {

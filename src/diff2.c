@@ -31,8 +31,7 @@ SEXP diff2(SEXP x, SEXP idxs, SEXP lag, SEXP differences) {
 
   /* Argument 'idxs': */
   R_xlen_t nidxs;
-  int idxsType;
-  R_xlen_t *cidxs = validateIndices(idxs, nx, 1, &nidxs, &idxsType);
+  R_xlen_t *cidxs = validateIndices(idxs, nx, 1, &nidxs);
 
   /* Length of result vector */
   nans = (R_xlen_t)((double)nidxs - ((double)diff*(double)lagg));

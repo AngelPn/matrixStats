@@ -41,9 +41,8 @@ SEXP rowRanges(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP what, SEXP naRm, SEX
 
   /* Argument 'rows' and 'cols': */
   R_xlen_t nrows, ncols;
-  int rowsType, colsType;
-  R_xlen_t *crows = validateIndices(rows, nrow, 0, &nrows, &rowsType);
-  R_xlen_t *ccols = validateIndices(cols, ncol, 0, &ncols, &colsType);
+  R_xlen_t *crows = validateIndices(rows, nrow, 0, &nrows);
+  R_xlen_t *ccols = validateIndices(cols, ncol, 0, &ncols);
 
   is_counted = (int *) R_alloc(nrows, sizeof(int));
 

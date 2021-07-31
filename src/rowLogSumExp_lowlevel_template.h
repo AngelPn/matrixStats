@@ -3,7 +3,7 @@
   double rowLogSumExp_double(ARGUMENTS_LIST)
 
  ARGUMENTS_LIST:
-  double *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t nrows, int rowsType, R_xlen_t *cols, R_xlen_t ncols, int colsType, int narm, int hasna, R_xlen_t byrow, double *ans
+  double *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, int narm, int hasna, R_xlen_t byrow, double *ans
  ***********************************************************************/
 #include "000.types.h"
 

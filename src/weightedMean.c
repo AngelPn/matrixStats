@@ -34,8 +34,7 @@ SEXP weightedMean(SEXP x, SEXP w, SEXP idxs, SEXP naRm, SEXP refine) {
 
   /* Argument 'idxs': */
   R_xlen_t nidxs;
-  int idxsType;
-  R_xlen_t *cidxs = validateIndices(idxs, nx, 1, &nidxs, &idxsType);
+  R_xlen_t *cidxs = validateIndices(idxs, nx, 1, &nidxs);
 
   /* Double matrices are more common to use. */
   if (isReal(x)) {
