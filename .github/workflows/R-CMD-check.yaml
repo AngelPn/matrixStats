@@ -95,7 +95,7 @@ jobs:
           path: check
 
       - name: Test coverage - Install dependencies
-        if: matrix.config.os == 'ubuntu-20.04' && matrix.config.r == 'release'
+        if: runner.os == 'Linux' && matrix.config.r == 'release'
         run: |
             sudo apt-get install --yes libcurl4-openssl-dev
             ## Workaround: 'curl' from RSPM fails to load; install from CRAN

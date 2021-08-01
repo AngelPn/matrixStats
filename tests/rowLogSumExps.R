@@ -217,4 +217,3 @@ for (setDimnames in c(TRUE, FALSE)) {
     stopifnot(all.equal(y2, y0))
   }
 }
-
