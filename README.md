@@ -1,7 +1,10 @@
 
 # matrixStats: Functions that Apply to Rows and Columns of Matrices (and to Vectors)
 
-## Google Summer of Code (GSoC) 2021
+<div id="badges"><!-- pkgdown markup -->
+<a href="https://CRAN.R-project.org/web/checks/check_results_matrixStats.html"><img border="0" src="https://www.r-pkg.org/badges/version/matrixStats" alt="CRAN check status"/></a> <a href="https://github.com/HenrikBengtsson/matrixStats/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/matrixStats/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"/></a>  <a href="https://ci.appveyor.com/project/HenrikBengtsson/matrixstats"><img border="0" src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/matrixStats?svg=true" alt="Build status"/></a> <a href="https://codecov.io/gh/HenrikBengtsson/matrixStats"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/matrixStats/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> <a href="https://github.com/rstats-gsoc/gsoc2015/wiki/table-of-proposed-coding-projects"><img border="0" src="https://img.shields.io/badge/GSoC-2015-blue" alt="A Google Summer of Code 2015 project"/></a>
+<a href="https://github.com/rstats-gsoc/gsoc2021/wiki/table-of-proposed-coding-projects"><img border="0" src="https://img.shields.io/badge/GSoC-2021-blue" alt="A Google Summer of Code 2021 project"/></a>
+</div>
 
 Google Summer of Code is an initiative to support students to learn about and contribute to open-source software projects, while getting payed. The R community proposed a project on the matrixStats package and, as a student, I am interested in working on this project.
 
@@ -94,13 +97,4 @@ This will install the package from source.  Because of this and because this pac
 ## Contributing
 
 To contribute to this package, please see [CONTRIBUTING.md](CONTRIBUTING.md).
- 
-
-## Software status
-
-| Resource      | CRAN        | GitHub Actions      | Travis CI       | AppVeyor CI      |
-| ------------- | ------------------- | ------------------- | --------------- | ---------------- |
-| _Platforms:_  | _Multiple_          | _Multiple_          | _Linux & macOS_ | _Windows_        |
-| R CMD check   | <a href="https://cran.r-project.org/web/checks/check_results_matrixStats.html"><img border="0" src="http://www.r-pkg.org/badges/version/matrixStats" alt="CRAN version"></a> | <a href="https://github.com/HenrikBengtsson/matrixStats/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/HenrikBengtsson/matrixStats/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a>       | <a href="https://travis-ci.org/HenrikBengtsson/matrixStats"><img src="https://travis-ci.org/HenrikBengtsson/matrixStats.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/matrixstats"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/matrixStats?svg=true" alt="Build status"></a> |
-| Test coverage |                     |                     | <a href="https://codecov.io/gh/HenrikBengtsson/matrixStats"><img src="https://codecov.io/gh/HenrikBengtsson/matrixStats/branch/develop/graph/badge.svg" alt="Coverage Status"/></a>     |                  |
 
