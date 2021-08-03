@@ -12,9 +12,11 @@ SEXP rowCounts(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP value, SEXP what, SE
   SEXP ans;
   int narm, hasna, what2;
   R_xlen_t nrow, ncol;
+  
+  /* Coercion moved down to C */
+  PROTECT(dim = coerceVector(dim, INTSXP));
 
   /* Argument 'x' & 'dim': */
-  PROTECT(dim = coerceVector(dim, INTSXP));
   assertArgMatrix(x, dim, (R_TYPE_LGL | R_TYPE_INT | R_TYPE_REAL), "x");
   nrow = asR_xlen_t(dim, 0);
   ncol = asR_xlen_t(dim, 1);

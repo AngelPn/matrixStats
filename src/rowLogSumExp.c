@@ -16,9 +16,11 @@ SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasN
   int narm, hasna, byrow;
   R_xlen_t nrow, ncol;
   
-  /* Argument 'lx' and 'dim': */
+  /* Coercion moved down to C */
   PROTECT(lx = coerceVector(lx, REALSXP));
   PROTECT(dim = coerceVector(dim, INTSXP));
+  
+  /* Argument 'lx' and 'dim': */
   assertArgMatrix(lx, dim, (R_TYPE_REAL), "lx");
   nrow = asR_xlen_t(dim, 0);
   ncol = asR_xlen_t(dim, 1);

@@ -84,6 +84,7 @@ R_xlen_t* METHOD_NAME(X_C_TYPE *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int allow
   if (state >= 0) *ansNidxs = count;
   if (!needReAlloc) { // must have: state >= 0
     // return idxs;
+    RETURN_VALIDATED_ANS(R_xlen_t, nidxs, idxs[ii], R_xlen_t_from_idx_TYPE(idxs[ii],maxIdx),);
   }
 
   // fill positive idxs into ans

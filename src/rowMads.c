@@ -15,9 +15,11 @@ SEXP rowMads(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP constant, SEXP naRm, S
   SEXP ans;
   R_xlen_t nrow, ncol;
   double scale;
+  
+  /* Coercion moved down to C */
+  PROTECT(dim = coerceVector(dim, INTSXP));
 
   /* Argument 'x' and 'dim': */
-  PROTECT(dim = coerceVector(dim, INTSXP));
   assertArgMatrix(x, dim, (R_TYPE_INT | R_TYPE_REAL), "x");
   nrow = asR_xlen_t(dim, 0);
   ncol = asR_xlen_t(dim, 1);

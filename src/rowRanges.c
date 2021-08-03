@@ -17,9 +17,11 @@ SEXP rowRanges(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP what, SEXP naRm, SEX
   int *is_counted, all_counted = 0;
   int what2, narm, hasna;
   R_xlen_t nrow, ncol, ii;
+  
+  /* Coercion moved down to C */
+  PROTECT(dim = coerceVector(dim, INTSXP));
 
   /* Argument 'x' and 'dim': */
-  PROTECT(dim = coerceVector(dim, INTSXP));
   assertArgMatrix(x, dim, (R_TYPE_INT | R_TYPE_REAL), "x");
   nrow = asR_xlen_t(dim, 0);
   ncol = asR_xlen_t(dim, 1);

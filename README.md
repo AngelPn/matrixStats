@@ -6,6 +6,8 @@
 <a href="https://github.com/rstats-gsoc/gsoc2021/wiki/table-of-proposed-coding-projects"><img border="0" src="https://img.shields.io/badge/GSoC-2021-blue" alt="A Google Summer of Code 2021 project"/></a>
 </div>
 
+## Google Summer of Code 2021
+
 Google Summer of Code is an initiative to support students to learn about and contribute to open-source software projects, while getting payed. The R community proposed a project on the matrixStats package and, as a student, I am interested in working on this project.
 
 ### Skill Tests
@@ -21,12 +23,8 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
-- Moved coercion down to C:
-  * `dim. <- as.integer(dim.)` in R-code replaced with `PROTECT(dim = coerceVector(dim, INTSXP));` in C-code.
-  * Removed `na.rm <- as.logical(na.rm)` because this statement is not necessary at all with low-level C-code as the statement `na.rm = asLogicalNoNA(naRm, "na.rm");` works.
-  * `rowLogSumExps()/colLogSumExps()` were the only functions where `as.numeric()` is used to coerce the data at R level (example: https://github.com/HenrikBengtsson/matrixStats/blob/3b55d4ebcedc2f127d70b6148b8589be525d78ca/R/rowLogSumExps.R#L42). However, this removes attributes of the matrix and hence the dimnames which are needed for naming. This is solved by replacing the call to as.numeric by `PROTECT(lx = coerceVector(lx, REALSXP));` in C-code.
-  * `rowDiffs()/colDiffs()`: In C-code, [`asInteger()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowDiffs.c#L26-L32) is used to turn length one R vectors (`lag` and `differences`) into C scalars, so `as.integer(lag)` and `as.integer(differences)` (https://github.com/HenrikBengtsson/matrixStats/blob/develop/R/rowDiffs.R#L22) probably are not needed.
-  * `rowOrderStats()/colOrderStats()`: Same as above, [`asInteger()`](https://github.com/AngelPn/matrixStats/blob/develop/src/rowOrderStats.c#L48) is used for `which` making [`which <- as.integer(which)`](https://github.com/HenrikBengtsson/matrixStats/blob/develop/R/rowOrderStats.R#L40) probably unnecessary.
+- R_xlen_t* as a return type of validateIndices():
+  * Current handle of special cases `rows = NULL` and `cols = NULL`: `validateIndices()` allocates and returns an array with its indices as its items, if [`idxs == NULL`](https://github.com/AngelPn/matrixStats/blob/develop/src/validateIndices.c#L136-L139) and if [`all(idxs == TRUE)`](https://github.com/AngelPn/matrixStats/blob/develop/src/validateIndices.c#L82-L84).
 
 - The package passes `R CMD check` with all OKs.
 

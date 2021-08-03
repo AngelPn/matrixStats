@@ -14,9 +14,11 @@ SEXP rowMedians(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, S
   int narm, hasna, byrow;
   SEXP ans;
   R_xlen_t nrow, ncol;
+  
+  /* Coercion moved down to C */
+  PROTECT(dim = coerceVector(dim, INTSXP));
 
   /* Argument 'x' and 'dim': */
-  PROTECT(dim = coerceVector(dim, INTSXP));
   assertArgMatrix(x, dim, (R_TYPE_INT | R_TYPE_REAL), "x");
   /* Get dimensions of 'x'. */
   nrow = asR_xlen_t(dim, 0);
