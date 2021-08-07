@@ -75,8 +75,13 @@ void METHOD_NAME(ARGUMENTS_LIST) {
 
   /* Pre-calculate the column offsets */
   colOffset = (R_xlen_t *) R_alloc(ncols, sizeof(R_xlen_t));
-  for (jj=0; jj < ncols; jj++)
-    colOffset[jj] = R_INDEX_OP(cols[jj], *, nrow);
+  if (cols == NULL) {
+    for (jj=0; jj < ncols; jj++)
+      colOffset[jj] = R_INDEX_OP(jj, *, nrow);
+  } else {
+    for (jj=0; jj < ncols; jj++)
+      colOffset[jj] = R_INDEX_OP(cols[jj], *, nrow);
+  }
 
 #elif MARGIN == 'c'
   nvalues = nrows;
@@ -84,8 +89,13 @@ void METHOD_NAME(ARGUMENTS_LIST) {
 
   /* Pre-calculate the column offsets */
   colOffset = (R_xlen_t *) R_alloc(nrows, sizeof(R_xlen_t));
-  for (jj=0; jj < nrows; jj++)
-    colOffset[jj] = rows[jj];
+  if (rows == NULL) {
+    for (jj=0; jj < nrows; jj++)
+      colOffset[jj] = jj;
+  } else {
+    for (jj=0; jj < nrows; jj++)
+      colOffset[jj] = rows[jj];
+  }
 #endif
 
   values = (X_C_TYPE *) R_alloc(nvalues, sizeof(X_C_TYPE));
@@ -93,9 +103,9 @@ void METHOD_NAME(ARGUMENTS_LIST) {
 
   for (ii=0; ii < nVec; ii++) {
 #if MARGIN == 'r'
-    rowIdx = rows[ii];
+    rowIdx = ((rows == NULL) ? (ii) : rows[ii]);
 #elif MARGIN == 'c'
-    rowIdx = R_INDEX_OP(cols[ii], *, nrow);
+    rowIdx = R_INDEX_OP(((cols == NULL) ? (ii) : cols[ii]), *, nrow);
 #endif
     lastFinite = nvalues-1;
 

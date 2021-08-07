@@ -104,11 +104,7 @@ SEXP count(SEXP x, SEXP idxs, SEXP value, SEXP what, SEXP naRm, SEXP hasNA) {
   /* Argument 'idxs': */
   R_xlen_t nrows, ncols = 1;
   R_xlen_t *crows = validateIndices(idxs, nx, 1, &nrows);
-  // R_xlen_t *ccols = NULL;
-  R_xlen_t *ccols = (R_xlen_t *) R_alloc(ncols, sizeof(R_xlen_t));
-  for (R_xlen_t ii = 0; ii < ncols; ++ ii) {
-    ccols[ii] = ii;
-  }
+  R_xlen_t *ccols = NULL;
 
   if (isReal(x)) {
     colCounts_dbl(REAL(x), nx, 1, crows, nrows, ccols, ncols, asReal(value), what2, narm, hasna, &count);

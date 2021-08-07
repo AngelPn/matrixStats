@@ -34,7 +34,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   R_xlen_t count = 0;
 
   for (ii=0; ii < nidxs; ++ii) {
-    value = R_INDEX_GET(x, idxs[ii], X_NA);
+    value = R_INDEX_GET(x, ((idxs == NULL) ? (ii) : idxs[ii]), X_NA);
 #if X_TYPE == 'i'
     if (!X_ISNAN(value)) {
       sum += (LDOUBLE)value;
@@ -67,7 +67,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
 #if X_TYPE == 'r'
     if (refine && R_FINITE(avg)) {
       for (ii=0; ii < nidxs; ++ii) {
-        value = R_INDEX_GET(x, idxs[ii], X_NA);
+        value = R_INDEX_GET(x, ((idxs == NULL) ? (ii) : idxs[ii]), X_NA);
         if (!narm || !ISNAN(value)) {
           rsum += (LDOUBLE)(value - avg);
         }

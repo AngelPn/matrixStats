@@ -29,7 +29,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   LDOUBLE sum = 0;
 
   for (ii=0; ii < nidxs; ++ii) {
-    value = R_INDEX_GET(x, idxs[ii], X_NA);
+    value = R_INDEX_GET(x, ((idxs == NULL) ? (ii) : idxs[ii]), X_NA);
 #if X_TYPE == 'i'
     if (!X_ISNAN(value)) {
       sum += (LDOUBLE)value;

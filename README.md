@@ -24,7 +24,7 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 ### Work on the project
 
 - R_xlen_t* as a return type of validateIndices():
-  * Current handle of special cases `rows = NULL` and `cols = NULL`: `validateIndices()` allocates and returns an array with its indices as its items, if [`idxs == NULL`](https://github.com/AngelPn/matrixStats/blob/develop/src/validateIndices.c#L136-L139) and if [`all(idxs == TRUE)`](https://github.com/AngelPn/matrixStats/blob/develop/src/validateIndices.c#L82-L84).
+  * Handle of special cases `rows = NULL` and `cols = NULL`: [Issue#42](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/42).
 
 - The package passes `R CMD check` with all OKs.
 

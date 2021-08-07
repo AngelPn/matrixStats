@@ -25,14 +25,14 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   LDOUBLE avg = R_NaN;
 
   for (i=0; i < nidxs; i++) {
-    weight = R_INDEX_GET(w, idxs[i], NA_REAL);
+    weight = R_INDEX_GET(w, ((idxs == NULL) ? (i) : idxs[i]), NA_REAL);
 
     /* Skip or early stopping? */
     if (weight == 0) {
       continue;
     }
 
-    value = R_INDEX_GET(x, idxs[i], X_NA);
+    value = R_INDEX_GET(x, ((idxs == NULL) ? (i) : idxs[i]), X_NA);
 #if X_TYPE == 'i'
     if (X_ISNAN(value)) {
       /* Skip or early stopping? */
@@ -73,13 +73,13 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
     if (refine && R_FINITE(avg)) {
       sum = 0;
       for (i=0; i < nidxs; i++) {
-        weight = R_INDEX_GET(w, idxs[i], NA_REAL);
+        weight = R_INDEX_GET(w, ((idxs == NULL) ? (i) : idxs[i]), NA_REAL);
         /* Skip? */
         if (weight == 0) {
           continue;
         }
 
-        value = R_INDEX_GET(x, idxs[i], X_NA);
+        value = R_INDEX_GET(x, ((idxs == NULL) ? (i) : idxs[i]), X_NA);
         if (!narm) {
           sum += (LDOUBLE)weight * (value - avg);
           /* Early stopping? Special for long LDOUBLE vectors */

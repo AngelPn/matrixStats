@@ -27,7 +27,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
     navalue = (narm || ncols == 0) ? R_NegInf : NA_REAL;
 
     for (ii=0; ii < nrows; ++ii) {
-      idx = rows[ii];
+      idx = ((rows == NULL) ? (ii) : rows[ii]);
       if (idx == NA_R_XLEN_T) {
         ans[ii] = navalue;
       } else {
@@ -38,7 +38,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
     navalue = (narm || nrows == 0) ? R_NegInf : NA_REAL;
 
     for (ii=0; ii < ncols; ++ii) {
-      idx = R_INDEX_OP(cols[ii], *, nrow);
+      idx = R_INDEX_OP(((cols == NULL) ? (ii) : cols[ii]), *, nrow);
       if (idx == NA_R_XLEN_T) {
         ans[ii] = navalue;
       } else {

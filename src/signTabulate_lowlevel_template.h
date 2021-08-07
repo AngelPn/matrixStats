@@ -31,7 +31,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
 #endif
 
   for (ii = 0; ii < nidxs; ii++) {
-    xi = R_INDEX_GET(x, idxs[ii], X_NA);
+    xi = R_INDEX_GET(x, ((idxs == NULL) ? (ii) : idxs[ii]), X_NA);
     if (X_ISNAN(xi)) {
       nNA++;
     } else if (xi > 0) {

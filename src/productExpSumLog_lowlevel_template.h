@@ -31,7 +31,7 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
 
   /* Calculate sum(log(abs(x))) */
   for (ii = 0 ; ii < nidxs; ii++) {
-    t = R_INDEX_GET(x, idxs[ii], X_NA);
+    t = R_INDEX_GET(x, ((idxs == NULL) ? (ii) : idxs[ii]), X_NA);
     /* Missing values? */
     if (narm) {
       if (X_ISNAN(t)) continue;

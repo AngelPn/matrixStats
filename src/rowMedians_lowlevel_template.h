@@ -54,25 +54,40 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   value = 0;
 
   /* Pre-calculate the column offsets */
-  colOffset = (R_xlen_t *) R_alloc(ncols, sizeof(R_xlen_t));
-
-  // HJ begin
-  if (byrow) {
-    for (jj=0; jj < ncols; jj++)
-      colOffset[jj] = R_INDEX_OP(cols[jj], *, nrow);
-  } else {
-    for (jj=0; jj < ncols; jj++)
-      colOffset[jj] = cols[jj];
+  if (cols == NULL) {
+    colOffset = NULL;
   }
-  // HJ end
+  else {
+    colOffset = (R_xlen_t *) R_alloc(ncols, sizeof(R_xlen_t));
+    // HJ begin
+    if (byrow) {
+      for (jj=0; jj < ncols; jj++)
+        colOffset[jj] = R_INDEX_OP(cols[jj], *, nrow);
+    } else {
+      for (jj=0; jj < ncols; jj++)
+        colOffset[jj] = cols[jj];
+    }
+    // HJ end
+  }
 
   if (hasna == TRUE) {
     for (ii=0; ii < nrows; ii++) {
-      R_xlen_t rowIdx = byrow ? rows[ii] : R_INDEX_OP(rows[ii], *, ncol); //HJ
+      //HJ
+      R_xlen_t rowIdx;
+      if (rows == NULL) {
+        rowIdx = byrow ? ii : R_INDEX_OP(ii, *, ncol);
+      } else {
+        rowIdx = byrow ? rows[ii] : R_INDEX_OP(rows[ii], *, ncol);
+      }
 
       kk = 0;  /* The index of the last non-NA value detected */
       for (jj=0; jj < ncols; jj++) {
-        idx = R_INDEX_OP(rowIdx, +, colOffset[jj]);
+        if (colOffset == NULL) {
+          if (byrow) idx = R_INDEX_OP(rowIdx, +, jj*nrow);
+          else idx = R_INDEX_OP(rowIdx, +, jj);
+        } else {
+          idx = R_INDEX_OP(rowIdx, +, colOffset[jj]);
+        }
         value = R_INDEX_GET(x, idx, X_NA); //HJ
 
         if (X_ISNAN(value)) {
@@ -118,11 +133,24 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
     } /* for (ii ...) */
   } else {
     for (ii=0; ii < nrows; ii++) {
-      R_xlen_t rowIdx = byrow ? rows[ii] : rows[ii] * ncol; //HJ
+      //HJ
+      R_xlen_t rowIdx;
+      if (rows == NULL) {
+        rowIdx = byrow ? ii : ii*ncol;
+      }
+      else {
+        rowIdx = byrow ? rows[ii] : rows[ii]*ncol;
+      }
 
-      for (jj=0; jj < ncols; jj++)
-        values[jj] = x[rowIdx+colOffset[jj]]; //HJ
-
+      for (jj=0; jj < ncols; jj++) {
+        if (colOffset == NULL) {
+          if (byrow) values[jj] = x[rowIdx+(jj)*nrow];
+          else values[jj] = x[rowIdx+(jj)];
+        } else {
+          values[jj] = x[rowIdx+colOffset[jj]];
+        }
+      } //HJ
+      
       /* Permute x[0:ncols-1] so that x[qq] is in the correct
          place with smaller values to the left, ... */
       X_PSORT(values, ncols, qq+1);

@@ -35,19 +35,23 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   X_C_TYPE *values;
 
   // Check missing rows
-  for (ii=0; ii < nrows; ++ii) {
-    if (rows[ii] == NA_R_XLEN_T) break;
-  }
-  if (ii < nrows && ncols > 0) {
-    error("Argument 'rows' must not contain missing value");
+  if (rows != NULL) {
+    for (ii=0; ii < nrows; ++ii) {
+      if (rows[ii] == NA_R_XLEN_T) break;
+    }    
+    if (ii < nrows && ncols > 0) {
+      error("Argument 'rows' must not contain missing value");
+    }    
   }
 
   // Check missing cols
-  for (jj=0; jj < ncols; ++jj) {
-    if (cols[jj] == NA_R_XLEN_T) break;
-  }
-  if (jj < ncols && nrows > 0) {
-    error("Argument 'cols' must not contain missing value");
+  if (cols != NULL) {
+    for (jj=0; jj < ncols; ++jj) {
+      if (cols[jj] == NA_R_XLEN_T) break;
+    }
+    if (jj < ncols && nrows > 0) {
+      error("Argument 'cols' must not contain missing value");
+    }    
   }
 
   /* R allocate memory for the 'values'.  This will be
@@ -55,9 +59,9 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
   values = (X_C_TYPE *) R_alloc(nrows, sizeof(X_C_TYPE));
 
   for (jj=0; jj < ncols; jj++) {
-    offset = cols[jj] * nrow;
+    offset = ((cols == NULL) ? (jj) : cols[jj]) * nrow;
     for (ii=0; ii < nrows; ii++)
-      values[ii] = x[rows[ii] + offset];
+      values[ii] = x[((rows == NULL) ? (ii) : rows[ii]) + offset];
 
     /* Sort vector of length 'nrows' up to position 'qq'.
        "...partial sorting: they permute x so that x[qq] is in the

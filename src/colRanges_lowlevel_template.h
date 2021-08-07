@@ -48,10 +48,10 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       mins = ans;
 
       for (jj=0; jj < ncols; jj++) {
-        colBegin = R_INDEX_OP(cols[jj], *, nrow);
+        colBegin = R_INDEX_OP(((cols == NULL) ? (jj) : cols[jj]), *, nrow);
 
         for (ii=0; ii < nrows; ii++) {
-          idx = R_INDEX_OP(colBegin, +, rows[ii]);
+          idx = R_INDEX_OP(colBegin, +, ((rows == NULL) ? (ii) : rows[ii]));
           value = R_INDEX_GET(x, idx, X_NA);
 
           if (X_ISNAN(value)) {
@@ -87,10 +87,10 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       maxs = ans;
 
       for (jj=0; jj < ncols; jj++) {
-        colBegin = R_INDEX_OP(cols[jj], *, nrow);
+        colBegin = R_INDEX_OP(((cols == NULL) ? (jj) : cols[jj]), *, nrow);
 
         for (ii=0; ii < nrows; ii++) {
-          idx = R_INDEX_OP(colBegin, +, rows[ii]);
+          idx = R_INDEX_OP(colBegin, +, ((rows == NULL) ? (ii) : rows[ii]));
           value = R_INDEX_GET(x, idx, X_NA);
 
           if (X_ISNAN(value)) {
@@ -127,10 +127,10 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       maxs = &ans[ncols];
 
       for (jj=0; jj < ncols; jj++) {
-        colBegin = R_INDEX_OP(cols[jj], *, nrow);
+        colBegin = R_INDEX_OP(((cols == NULL) ? (jj) : cols[jj]), *, nrow);
 
         for (ii=0; ii < nrows; ii++) {
-          idx = R_INDEX_OP(colBegin, +, rows[ii]);
+          idx = R_INDEX_OP(colBegin, +, ((rows == NULL) ? (ii) : rows[ii]));
           value = R_INDEX_GET(x, idx, X_NA);
 
           if (X_ISNAN(value)) {
@@ -179,9 +179,9 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       }
 
       for (jj=1; jj < ncols; jj++) {
-        colBegin = cols[jj] * nrow;
+        colBegin = ((cols == NULL) ? (jj) : cols[jj]) * nrow;
         for (ii=0; ii < nrows; ii++) {
-          value = x[rows[ii]+colBegin];
+          value = x[((rows == NULL) ? (ii) : rows[ii])+colBegin];
           if (value < mins[jj]) mins[jj] = value;
         }
       }
@@ -195,9 +195,9 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       }
 
       for (jj=1; jj < ncols; jj++) {
-        colBegin = cols[jj] * nrow;
+        colBegin = ((cols == NULL) ? (jj) : cols[jj]) * nrow;
         for (ii=0; ii < nrows; ii++) {
-          value = x[rows[ii]+colBegin];
+          value = x[((rows == NULL) ? (ii) : rows[ii])+colBegin];
           if (value > maxs[jj]) maxs[jj] = value;
         }
       }
@@ -213,9 +213,9 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
       }
 
       for (jj=1; jj < ncols; jj++) {
-        colBegin = cols[jj] * nrow;
+        colBegin = ((cols == NULL) ? (jj) : cols[jj]) * nrow;
         for (ii=0; ii < nrows; ii++) {
-          value = x[rows[ii]+colBegin];
+          value = x[((rows == NULL) ? (ii) : rows[ii])+colBegin];
           if (value < mins[jj]) {
             mins[jj] = value;
           } else if (value > maxs[jj]) {

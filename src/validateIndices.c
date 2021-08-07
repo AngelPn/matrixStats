@@ -66,10 +66,7 @@ R_xlen_t* validateIndices_lgl(int *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int al
 
   if (naCount == 0 && count == nidxs) { // All True
     *ansNidxs = maxIdx;
-    // return NULL;
-    R_xlen_t *ans = (R_xlen_t *) R_alloc(maxIdx, sizeof(R_xlen_t));
-    FILL_VALIDATED_ANS(maxIdx, 1, ii);
-    return ans;
+    return NULL;
   }
   if (naCount) *hasna = TRUE;
 
@@ -119,12 +116,7 @@ R_xlen_t *validateIndicesCheckNA(SEXP idxs, R_xlen_t maxIdx, int allowOutOfBound
       return validateIndices_lgl(LOGICAL(idxs), nidxs, maxIdx, allowOutOfBound, ansNidxs, hasna);
     case NILSXP:
       *ansNidxs = maxIdx;
-      //return NULL;
-      R_xlen_t *ans = (R_xlen_t *) R_alloc(maxIdx, sizeof(R_xlen_t));
-      for (R_xlen_t ii = 0; ii < maxIdx; ii++) {
-        ans[ii] = ii;
-      }
-      return ans;
+      return NULL;
     default:
       error("idxs can only be integer, numeric, or logical.");
   }
@@ -175,8 +167,25 @@ SEXP validate(SEXP idxs, SEXP maxIdx, SEXP allowOutOfBound) {
         break;
       }
     }
+  } else { 
+    if (Rf_length(idxs) > 0) { // "Pick all indices" case, if all(idxs > 0)
+      switch (mode) {
+        case INTSXP:
+          if (INTEGER(idxs)[0] > 0) return R_NilValue;
+          break;
+        case REALSXP:
+          if (REAL(idxs)[0] > 0) return R_NilValue;
+          break;
+        case LGLSXP:
+          if (LOGICAL(idxs)[0] == TRUE) return R_NilValue;
+          break;
+        case NILSXP:
+          return R_NilValue;
+      }
+      // else, "Pick an empty subset of indices"
+    }
   }
-  
+
   if (!need_double) {
     ans = PROTECT(allocVector(INTSXP, ansNidxs));
     // Copy from cidxs to ans and coerce to int    

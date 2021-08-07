@@ -26,24 +26,40 @@ RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
     narm = FALSE;
 
   /* Pre-calculate the column offsets */
-  colOffset = (R_xlen_t *) R_alloc(ncols, sizeof(R_xlen_t));
-
-  if (byrow) {
-    for (jj=0; jj < ncols; jj++)
-      colOffset[jj] = R_INDEX_OP(cols[jj], *, nrow);
-  } else {
-    for (jj=0; jj < ncols; jj++)
-      colOffset[jj] = cols[jj];
+  if (cols == NULL) {
+    colOffset = NULL;
+  }
+  else {
+    colOffset = (R_xlen_t *) R_alloc(ncols, sizeof(R_xlen_t));
+    if (byrow) {
+      for (jj=0; jj < ncols; jj++)
+        colOffset[jj] = R_INDEX_OP(cols[jj], *, nrow);
+    } else {
+      for (jj=0; jj < ncols; jj++)
+        colOffset[jj] = cols[jj];
+    }    
   }
 
   for (ii=0; ii < nrows; ii++) {
-    R_xlen_t rowIdx = byrow ? rows[ii] : R_INDEX_OP(rows[ii], *, ncol);
+    R_xlen_t rowIdx;
+    if (rows == NULL) {
+      rowIdx = byrow ? ii : R_INDEX_OP(ii, *, ncol);
+    }
+    else {
+      rowIdx = byrow ? rows[ii] : R_INDEX_OP(rows[ii], *, ncol);
+    }
 
     sum = 0.0;
     count = 0;
 
     for (jj=0; jj < ncols; jj++) {
-      idx = R_INDEX_OP(rowIdx, +, colOffset[jj]);
+      if (colOffset == NULL) {
+        if (byrow) idx = R_INDEX_OP(rowIdx, +, jj*nrow);
+        else idx = R_INDEX_OP(rowIdx, +, jj);
+      }
+      else {
+        idx = R_INDEX_OP(rowIdx, +, colOffset[jj]);
+      }
       value = R_INDEX_GET(x, idx, X_NA);
 #if X_TYPE == 'i'
       if (!X_ISNAN(value)) {
