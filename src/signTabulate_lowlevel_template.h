@@ -17,12 +17,12 @@
 #include "000.types.h"
 
 /* Expand arguments:
-    X_TYPE => (X_C_TYPE, X_IN_C, [METHOD_NAME])
+    X_TYPE => (X_C_TYPE, X_IN_C)
  */
 #include "000.templates-types.h"
 
 
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+void CONCAT_MACROS(signTabulate, X_C_SIGNATURE)(X_C_TYPE *x, R_xlen_t nx, R_xlen_t *idxs, R_xlen_t nidxs, double *ans) {
   X_C_TYPE xi;
   R_xlen_t ii;
   R_xlen_t nNeg = 0, nZero = 0, nPos = 0, nNA=0;

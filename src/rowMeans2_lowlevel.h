@@ -1,6 +1,7 @@
 #include <Rdefines.h>
 #include "000.types.h"
 #include "000.utils.h"
+#include "000.macros.h"
 
 /*
 Native API (dynamically generated via macros):
@@ -9,14 +10,10 @@ void rowMeans2_int(int *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_
 void rowMeans2_dbl(double *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t Rf_nrows, R_xlen_t *cols, R_xlen_t Rf_ncols, int narm, int hasna, int byrow, double *ans)
 */
 
-#define METHOD rowMeans2
-#define RETURN_TYPE void
-#define ARGUMENTS_LIST X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, int narm, int hasna, int byrow, double *ans
-
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowMeans2_lowlevel_template.h"
+#include "000.templates-types_undef.h"
 
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
-
-#undef METHOD
+#include "rowMeans2_lowlevel_template.h"
+#include "000.templates-types_undef.h"

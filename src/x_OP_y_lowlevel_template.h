@@ -1,6 +1,9 @@
 #include "000.types.h"
 #include "000.templates-types.h"
 
+#define X_C_Y_C_SIGNATURE CONCAT_MACROS(X_C_SIGNATURE, Y_C_SIGNATURE)
+#define METHOD_NAME CONCAT_MACROS(METHOD, X_C_Y_C_SIGNATURE)
+
 
 #if OP == '+'
   #define FUN_no_NA CONCAT_MACROS(FUN_no_NA, METHOD_NAME)
@@ -72,8 +75,14 @@
   #error "INTERNAL ERROR: Failed to set C inline function FUN(x, y): Unknown OP"
 #endif
 
-
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+  
+void METHOD_NAME(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol,
+                        Y_C_TYPE *y, R_xlen_t ny,
+                        R_xlen_t *xrows, R_xlen_t nxrows, R_xlen_t *xcols, R_xlen_t nxcols,
+                        R_xlen_t *yidxs, R_xlen_t nyidxs,
+                        int byrow, int commute,
+                        int narm, int hasna,
+                        ANS_C_TYPE *ans, R_xlen_t n) {
   R_xlen_t ii, jj, kk, idx, colBegin;
   R_xlen_t txi, yi;
   X_C_TYPE xvalue;

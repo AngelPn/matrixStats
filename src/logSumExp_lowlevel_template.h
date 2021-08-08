@@ -33,7 +33,7 @@
   the "contigous" 'xx' vector once.  This is more likely to create
   cache hits.
 */
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+double logSumExp_double(double *x, R_xlen_t *idxs, R_xlen_t nidxs, int narm, int hasna, R_xlen_t by, double *xx) {
   R_xlen_t ii, iMax, idx;
   double xii, xMax;
   LDOUBLE sum;

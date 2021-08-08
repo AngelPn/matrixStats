@@ -17,7 +17,7 @@
 #include "000.types.h"
 
 /* Expand arguments:
-    X_TYPE => (X_C_TYPE, X_IN_C, [METHOD_NAME])
+    X_TYPE => (X_C_TYPE, X_IN_C)
  */
 #include "000.templates-types.h"
 #include <R_ext/Error.h>
@@ -75,29 +75,6 @@
 #endif
 
 
-// #undef DIFF_X_MATRIX_ROWS
-// #ifdef ROWS_TYPE
-//   #if ROWS_TYPE == 'i'
-//     #define DIFF_X_MATRIX_ROWS CONCAT_MACROS(DIFF_X_MATRIX, irows)
-//   #elif ROWS_TYPE == 'r'
-//     #define DIFF_X_MATRIX_ROWS CONCAT_MACROS(DIFF_X_MATRIX, drows)
-//   #endif
-// #else
-//   #define DIFF_X_MATRIX_ROWS CONCAT_MACROS(DIFF_X_MATRIX, arows)
-// #endif
-// 
-// 
-// #undef DIFF_X_MATRIX_ROWS_COLS
-// #ifdef COLS_TYPE
-//   #if COLS_TYPE == 'i'
-//     #define DIFF_X_MATRIX_ROWS_COLS CONCAT_MACROS(DIFF_X_MATRIX_ROWS, icols)
-//   #elif COLS_TYPE == 'r'
-//     #define DIFF_X_MATRIX_ROWS_COLS CONCAT_MACROS(DIFF_X_MATRIX_ROWS, dcols)
-//   #endif
-// #else
-//   #define DIFF_X_MATRIX_ROWS_COLS CONCAT_MACROS(DIFF_X_MATRIX_ROWS, acols)
-// #endif
-
 #undef DIFF_X_MATRIX_TYPE
 #if X_TYPE == 'i'
   #define DIFF_X_MATRIX_TYPE CONCAT_MACROS(DIFF_X_MATRIX_TYPE, int)
@@ -143,7 +120,9 @@ static R_INLINE void DIFF_X_MATRIX_TYPE(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t *ro
 }
 
 
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+void CONCAT_MACROS(rowDiffs, X_C_SIGNATURE)(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, 
+                        R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, 
+                        int byrow, R_xlen_t lag, R_xlen_t differences, X_C_TYPE *ans, R_xlen_t nrow_ans, R_xlen_t ncol_ans) {
   R_xlen_t nrow_tmp, ncol_tmp;
   X_C_TYPE *tmp = NULL;
 

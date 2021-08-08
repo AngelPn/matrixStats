@@ -3,6 +3,7 @@
 
 
 #undef X_C_TYPE
+#undef X_C_SIGNATURE
 #undef X_IN_C
 #undef X_ISNAN
 #undef X_ISNA
@@ -12,6 +13,7 @@
 #undef X_NA
 
 #undef Y_C_TYPE
+#undef Y_C_SIGNATURE
 #undef Y_IN_C
 #undef Y_ISNAN
 #undef Y_ISNA
@@ -19,6 +21,8 @@
 #undef Y_PSORT
 #undef Y_QSORT_I
 #undef Y_NA
+
+#undef X_C_Y_C_SIGNATURE
 
 #undef ANS_SXP
 #undef ANS_NA
@@ -34,6 +38,7 @@
 #ifdef X_TYPE
   #if X_TYPE == 'i'
     #define X_C_TYPE int
+    #define X_C_SIGNATURE int
     #define X_IN_C INTEGER
     #define X_ISNAN(x) (x == NA_INTEGER)
     #define X_ISNA(x) (x == NA_INTEGER)
@@ -43,6 +48,7 @@
     #define X_NA NA_INTEGER
   #elif X_TYPE == 'r'
     #define X_C_TYPE double
+    #define X_C_SIGNATURE dbl
     #define X_IN_C REAL
     #define X_ISNAN(x) ISNAN(x) /* True for R's NA and IEEE NaN */
     #define X_ISNA(x) ISNA(x)   /* True for R's NA */
@@ -52,6 +58,7 @@
     #define X_NA NA_REAL
   #elif X_TYPE == 'l'
     #define X_C_TYPE int
+    #define X_C_SIGNATURE lgl
     #define X_IN_C LOGICAL
     #define X_ISNAN(x) (x == NA_LOGICAL)
     #define X_NA NA_LOGICAL
@@ -67,6 +74,7 @@
 #ifdef Y_TYPE
   #if Y_TYPE == 'i'
     #define Y_C_TYPE int
+    #define Y_C_SIGNATURE int
     #define Y_IN_C INTEGER
     #define Y_ISNAN(x) (x == NA_INTEGER)
     #define Y_ISNA(x) (x == NA_INTEGER)
@@ -76,6 +84,7 @@
     #define Y_NA NA_INTEGER
   #elif Y_TYPE == 'r'
     #define Y_C_TYPE double
+    #define Y_C_SIGNATURE dbl
     #define Y_IN_C REAL
     #define Y_ISNAN(x) ISNAN(x) /* NA or NaN */
     #define Y_ISNA(x) ISNA(x) /* NA only */
@@ -85,6 +94,7 @@
     #define Y_NA NA_REAL
   #elif Y_TYPE == 'l'
     #define Y_C_TYPE int
+    #define Y_C_SIGNATURE lgl
     #define Y_IN_C LOGICAL
     #define Y_ISNAN(x) (x == NA_LOGICAL)
     #define Y_NA NA_LOGICAL
@@ -128,46 +138,6 @@
     #define ANS_IN_C LOGICAL
   #else
     #error "INTERNAL ERROR: Failed to set C macro ANS_C_TYPE: Unknown ANS_TYPE"
-  #endif
-#endif
-
-
-/*
- Method name based on 'x' (and 'y') types
- */
-#ifndef METHOD_NAME
-  #if X_TYPE == 'i'
-    #if Y_TYPE == 'i'
-      #define METHOD_NAME CONCAT_MACROS(METHOD, int_int)
-    #elif Y_TYPE == 'r'
-      #define METHOD_NAME CONCAT_MACROS(METHOD, int_dbl)
-    #elif Y_TYPE == 'l'
-      #define METHOD_NAME CONCAT_MACROS(METHOD, int_lgl)
-    #else
-      #define METHOD_NAME CONCAT_MACROS(METHOD, int)
-    #endif
-  #elif X_TYPE == 'r'
-    #if Y_TYPE == 'i'
-      #define METHOD_NAME CONCAT_MACROS(METHOD, dbl_int)
-    #elif Y_TYPE == 'r'
-      #define METHOD_NAME CONCAT_MACROS(METHOD, dbl_dbl)
-    #elif Y_TYPE == 'l'
-      #define METHOD_NAME CONCAT_MACROS(METHOD, dbl_lgl)
-    #else
-      #define METHOD_NAME CONCAT_MACROS(METHOD, dbl)
-    #endif
-  #elif X_TYPE == 'l'
-    #if Y_TYPE == 'i'
-      #define METHOD_NAME CONCAT_MACROS(METHOD, lgl_int)
-    #elif Y_TYPE == 'r'
-      #define METHOD_NAME CONCAT_MACROS(METHOD, lgl_dbl)
-    #elif Y_TYPE == 'l'
-      #define METHOD_NAME CONCAT_MACROS(METHOD, lgl_lgl)
-    #else
-      #define METHOD_NAME CONCAT_MACROS(METHOD, lgl)
-    #endif
-  #else
-    #error "INTERNAL ERROR: Failed to set C macro METHOD_NAME: Unknown X_TYPE"
   #endif
 #endif
 

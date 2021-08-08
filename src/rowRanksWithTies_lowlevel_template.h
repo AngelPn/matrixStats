@@ -39,7 +39,7 @@
 #endif
 
 /* Expand arguments:
-    X_TYPE => (X_C_TYPE, X_IN_C, X_ISNAN, [METHOD_NAME])
+    X_TYPE => (X_C_TYPE, X_IN_C, X_ISNAN)
     ANS_TYPE => (ANS_SXP, ANS_NA, ANS_C_TYPE, ANS_IN_C)
  */
 #include "000.templates-types.h"
@@ -60,7 +60,8 @@ void SHUFFLE_INT(int *array, size_t i, size_t j); /* prototype for use with "ran
 #endif
 
 
-void METHOD_NAME(ARGUMENTS_LIST) {
+void CONCAT_MACROS(METHOD, X_C_SIGNATURE)(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, 
+                 R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, ANS_C_TYPE *ans) {
   ANS_C_TYPE rank;
   X_C_TYPE *values, current, tmp;
   R_xlen_t *colOffset;

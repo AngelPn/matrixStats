@@ -14,7 +14,9 @@
 extern double logSumExp_double(double *x, R_xlen_t *idxs, R_xlen_t nidxs, int narm, int hasna, R_xlen_t by, double *xx);
 
 
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+void rowLogSumExps_double(double *x, R_xlen_t nrow, R_xlen_t ncol, 
+                        R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, 
+                        int narm, int hasna, R_xlen_t byrow, double *ans) {
   R_xlen_t ii, idx;
   double navalue;
   // double (*logsumexp)(double *x, R_xlen_t *idxs, R_xlen_t nidxs, int narm, int hasna, R_xlen_t by, double *xx);

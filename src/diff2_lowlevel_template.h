@@ -17,7 +17,7 @@
 #include "000.types.h"
 
 /* Expand arguments:
-    X_TYPE => (X_C_TYPE, X_IN_C, [METHOD_NAME])
+    X_TYPE => (X_C_TYPE, X_IN_C)
  */
 #include "000.templates-types.h"
 #include <R_ext/Error.h>
@@ -38,7 +38,8 @@
 #endif
 
 
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+void CONCAT_MACROS(diff2, X_C_SIGNATURE)(X_C_TYPE *x, R_xlen_t nx, R_xlen_t *idxs, R_xlen_t nidxs,
+                        R_xlen_t lag, R_xlen_t differences, X_C_TYPE *ans, R_xlen_t nans) {
   R_xlen_t ii, tt, uu;
   X_C_TYPE xvalue1, xvalue2;
   X_C_TYPE *tmp = NULL;

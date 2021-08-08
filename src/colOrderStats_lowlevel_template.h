@@ -23,13 +23,15 @@
 #include "000.types.h"
 
 /* Expand arguments:
-    X_TYPE => (X_C_TYPE, X_IN_C, [METHOD_NAME])
+    X_TYPE => (X_C_TYPE, X_IN_C)
     ANS_TYPE => (ANS_SXP, ANS_NA, ANS_C_TYPE, ANS_IN_C)
  */
 #include "000.templates-types.h"
 
 
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+void CONCAT_MACROS(colOrderStats, X_C_SIGNATURE)(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, 
+                        R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, 
+                        R_xlen_t ncols, R_xlen_t qq, X_C_TYPE *ans) {
   R_xlen_t ii, jj;
   R_xlen_t offset;
   X_C_TYPE *values;

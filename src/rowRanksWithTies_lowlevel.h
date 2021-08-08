@@ -1,5 +1,6 @@
 #include <Rdefines.h>
 #include "000.utils.h"
+#include "000.macros.h"
 
 /*
 Native API (dynamically generated via macros):
@@ -12,10 +13,6 @@ void rowRanksWithTies_Average_int(int *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t
 void rowRanksWithTies_Average_int(int *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t Rf_nrows, R_xlen_t *cols, R_xlen_t Rf_ncols, int *ans)
 */
 
-#define METHOD_TEMPLATE_H "rowRanksWithTies_lowlevel_template.h"
-#define RETURN_TYPE void
-#define ARGUMENTS_LIST X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, ANS_C_TYPE *ans
-
 /*****************************************************************
  * ties.method = "average"
  *****************************************************************/
@@ -23,21 +20,25 @@ void rowRanksWithTies_Average_int(int *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t
 #define METHOD rowRanksWithTies_Average
 #define MARGIN 'r'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h"
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'r'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h"
+#include "000.templates-types_undef.h"
 #undef METHOD
 
 #define METHOD colRanksWithTies_Average
 #define MARGIN 'c'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h"
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'c'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 #undef METHOD
 #undef TIESMETHOD
 
@@ -49,21 +50,25 @@ void rowRanksWithTies_Average_int(int *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t
 #define METHOD rowRanksWithTies_First
 #define MARGIN 'r'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'r'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 #undef METHOD
 
 #define METHOD colRanksWithTies_First
 #define MARGIN 'c'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'c'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 #undef METHOD
 #undef TIESMETHOD
 
@@ -75,21 +80,25 @@ void rowRanksWithTies_Average_int(int *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t
 #define METHOD rowRanksWithTies_Last
 #define MARGIN 'r'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'r'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h"
+#include "000.templates-types_undef.h"
 #undef METHOD
 
 #define METHOD colRanksWithTies_Last
 #define MARGIN 'c'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'c'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 #undef METHOD
 #undef TIESMETHOD
 
@@ -101,21 +110,25 @@ void rowRanksWithTies_Average_int(int *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t
 #define METHOD rowRanksWithTies_Random
 #define MARGIN 'r'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'r'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 #undef METHOD
 
 #define METHOD colRanksWithTies_Random
 #define MARGIN 'c'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'c'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 #undef METHOD
 #undef TIESMETHOD
 
@@ -127,21 +140,25 @@ void rowRanksWithTies_Average_int(int *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t
 #define METHOD rowRanksWithTies_Min
 #define MARGIN 'r'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'r'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 #undef METHOD
 
 #define METHOD colRanksWithTies_Min
 #define MARGIN 'c'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'c'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 #undef METHOD
 #undef TIESMETHOD
 
@@ -153,21 +170,25 @@ void rowRanksWithTies_Average_int(int *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t
 #define METHOD rowRanksWithTies_Max
 #define MARGIN 'r'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'r'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 #undef METHOD
 
 #define METHOD colRanksWithTies_Max
 #define MARGIN 'c'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'c'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 #undef METHOD
 #undef TIESMETHOD
 
@@ -179,20 +200,24 @@ void rowRanksWithTies_Average_int(int *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t
 #define METHOD rowRanksWithTies_Dense
 #define MARGIN 'r'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'r'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 #undef METHOD
 
 #define METHOD colRanksWithTies_Dense
 #define MARGIN 'c'
 #define X_TYPE 'r'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 
 #define MARGIN 'c'
 #define X_TYPE 'i'
-#include "000.templates-gen-matrix.h"
+#include "rowRanksWithTies_lowlevel_template.h" 
+#include "000.templates-types_undef.h"
 #undef METHOD
 #undef TIESMETHOD

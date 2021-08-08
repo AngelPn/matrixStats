@@ -8,9 +8,4 @@ Native API (dynamically generated via macros):
 void rowLogSumExps_double(double *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t Rf_nrows, R_xlen_t *cols, R_xlen_t Rf_ncols, int narm, int hasna, R_xlen_t byrow, double *ans)
 */
 
-#define METHOD rowLogSumExp
-#define METHOD_NAME rowLogSumExps_double
-#define RETURN_TYPE void
-#define ARGUMENTS_LIST double *x, R_xlen_t nrow, R_xlen_t ncol, R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, int narm, int hasna, R_xlen_t byrow, double *ans
-
-#include "000.templates-gen-vector.h"
+#include "rowLogSumExp_lowlevel_template.h"

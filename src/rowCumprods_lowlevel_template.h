@@ -22,12 +22,14 @@
 #include "000.types.h"
 
 /* Expand arguments:
-    X_TYPE => (X_C_TYPE, X_IN_C, X_ISNAN, [METHOD_NAME])
+    X_TYPE => (X_C_TYPE, X_IN_C, X_ISNAN)
  */
 #include "000.templates-types.h"
 
 
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+void CONCAT_MACROS(rowCumprods, X_C_SIGNATURE)(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, 
+                        R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, 
+                        R_xlen_t ncols, int byrow, ANS_C_TYPE *ans) {
   R_xlen_t ii, jj, kk, kk_prev, idx;
   R_xlen_t colBegin;
   X_C_TYPE xvalue;

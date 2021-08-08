@@ -35,7 +35,7 @@ static R_INLINE R_xlen_t R_xlen_t_from_idx_TYPE(X_C_TYPE x, R_xlen_t maxIdx) {
 }
 
 /** idxs must not be NULL, which should be checked before calling this function. **/
-R_xlen_t* METHOD_NAME(X_C_TYPE *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int allowOutOfBound, R_xlen_t *ansNidxs, int *hasna) {
+R_xlen_t* CONCAT_MACROS(validateIndices, X_C_SIGNATURE)(X_C_TYPE *idxs, R_xlen_t nidxs, R_xlen_t maxIdx, int allowOutOfBound, R_xlen_t *ansNidxs, int *hasna) {
   // set default as no NA.
   *hasna = FALSE;
 

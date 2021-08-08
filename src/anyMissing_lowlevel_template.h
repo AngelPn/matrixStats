@@ -19,7 +19,7 @@
 #endif
 
 
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+int anyMissing_internal(SEXP x, R_xlen_t *idxs, R_xlen_t nidxs) {
   R_xlen_t ii;
   double *xdp;
   int *xip, *xlp;

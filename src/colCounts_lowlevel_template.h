@@ -17,12 +17,14 @@
 #include "000.types.h"
 
 /* Expand arguments:
-    X_TYPE => (X_C_TYPE, X_IN_C, [METHOD_NAME])
+    X_TYPE => (X_C_TYPE, X_IN_C)
  */
 #include "000.templates-types.h"
 
 
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+void CONCAT_MACROS(colCounts, X_C_SIGNATURE)(X_C_TYPE *x, R_xlen_t nrow, R_xlen_t ncol, 
+                        R_xlen_t *rows, R_xlen_t nrows, R_xlen_t *cols, R_xlen_t ncols, 
+                        X_C_TYPE value, int what, int narm, int hasna, double *ans) {
   R_xlen_t ii, jj;
   R_xlen_t colBegin, idx;
   R_xlen_t count;

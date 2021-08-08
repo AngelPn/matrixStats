@@ -11,13 +11,13 @@
 #include "000.types.h"
 
 /* Expand arguments:
-    X_TYPE => (X_C_TYPE, X_IN_C, [METHOD_NAME])
+    X_TYPE => (X_C_TYPE, X_IN_C)
  */
 #include "000.templates-types.h"
 #include <R_ext/Error.h>
 
 
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+double CONCAT_MACROS(weightedMedian, X_C_SIGNATURE)(X_C_TYPE *x, R_xlen_t nx, double *w, R_xlen_t *idxs, R_xlen_t nidxs, int narm, int interpolate, int ties) {
   X_C_TYPE value;
   X_C_TYPE *xtmp;
   double weight, res;

@@ -17,13 +17,13 @@
 #include "000.types.h"
 
 /* Expand arguments:
-    X_TYPE => (X_C_TYPE, X_IN_C, [METHOD_NAME])
+    X_TYPE => (X_C_TYPE, X_IN_C)
  */
 #include "000.templates-types.h"
 #include <R_ext/Error.h>
 
 
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+double CONCAT_MACROS(sum2, X_C_SIGNATURE)(X_C_TYPE *x, R_xlen_t nx, R_xlen_t *idxs, R_xlen_t nidxs, int narm) {
   X_C_TYPE value;
   R_xlen_t ii;
   LDOUBLE sum = 0;

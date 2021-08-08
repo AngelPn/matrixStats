@@ -18,12 +18,12 @@
 #include "000.types.h"
 
 /* Expand arguments:
-    X_TYPE => (X_C_TYPE, X_IN_C, [METHOD_NAME])
+    X_TYPE => (X_C_TYPE, X_IN_C)
  */
 #include "000.templates-types.h"
 
 
-RETURN_TYPE METHOD_NAME(ARGUMENTS_LIST) {
+double CONCAT_MACROS(productExpSumLog, X_C_SIGNATURE)(X_C_TYPE *x, R_xlen_t nx, R_xlen_t *idxs, R_xlen_t nidxs, int narm, int hasna) {
   LDOUBLE y = 0.0, t;
   R_xlen_t ii;
   int isneg = 0;

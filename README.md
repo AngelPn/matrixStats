@@ -25,6 +25,7 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 - R_xlen_t* as a return type of validateIndices():
   * Handle of special cases `rows = NULL` and `cols = NULL`: [Issue#42](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/42).
+  * Removed macro definitions to go into the templates: [Issue#43](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/43).
 
 - The package passes `R CMD check` with all OKs.
 
