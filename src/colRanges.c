@@ -9,14 +9,18 @@
 #include <Rdefines.h>
 #include "000.types.h"
 #include "colRanges_lowlevel.h"
+#include "naming.h"
 
-SEXP colRanges(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP what, SEXP naRm, SEXP hasNA) {
+SEXP colRanges(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP what, SEXP naRm, SEXP hasNA, SEXP useNames) {
   SEXP ans = NILSXP, ans2 = NILSXP;
   int *mins, *maxs;
   double *mins2, *maxs2;
   int *is_counted, all_counted = 0;
-  int what2, narm, hasna;
+  int what2, narm, hasna, usenames;
   R_xlen_t nrow, ncol, jj;
+  
+  /* Coercion moved down to C */
+  PROTECT(dim = coerceVector(dim, INTSXP));
 
   /* Argument 'x' and 'dim': */
   assertArgMatrix(x, dim, (R_TYPE_INT | R_TYPE_REAL), "x");
@@ -119,6 +123,23 @@ SEXP colRanges(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP what, SEXP naRm, SEX
     }
 
     UNPROTECT(1); /* ans */
+  }
+  
+  /* Argument 'useNames': */ 
+  usenames = asLogical(useNames);
+  
+  if (usenames != NA_LOGICAL && usenames){
+    SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
+    if (dimnames != R_NilValue) {
+      if (what2 == 2) {
+        
+      } else{
+        SEXP namesVec = VECTOR_ELT(dimnames, 1);
+        if (namesVec != R_NilValue) {
+          setNames(ans, namesVec, ncols, ccols);
+        }        
+      }
+    }
   }
 
   return(ans);

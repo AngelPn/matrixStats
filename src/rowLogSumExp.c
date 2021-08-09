@@ -11,9 +11,9 @@
 #include "rowLogSumExp_lowlevel.h"
 #include "naming.h"
 
-SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow) {
+SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames) {
   SEXP ans;
-  int narm, hasna, byrow;
+  int narm, hasna, byrow, usenames;
   R_xlen_t nrow, ncol;
   
   /* Coercion moved down to C */
@@ -45,6 +45,26 @@ SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasN
   } else {
     ans = PROTECT(allocVector(REALSXP, ncols));
     rowLogSumExps_double(REAL(lx), nrow, ncol, crows, nrows, ccols, ncols, narm, hasna, 0, REAL(ans)); 
+  }
+  
+  /* Argument 'useNames': */ 
+  usenames = asLogical(useNames);
+  
+  if (usenames == NA_LOGICAL || usenames){
+    SEXP dimnames = getAttrib(lx, R_DimNamesSymbol);
+    if (dimnames != R_NilValue) {
+      if (byrow) {
+        SEXP namesVec = VECTOR_ELT(dimnames, 0);
+        if (namesVec != R_NilValue) {
+          setNames(ans, namesVec, nrows, crows);
+        }
+      } else {
+        SEXP namesVec = VECTOR_ELT(dimnames, 1);
+        if (namesVec != R_NilValue) {
+          setNames(ans, namesVec, ncols, ccols);
+        }
+      }
+    }
   }
 
   UNPROTECT(3); /* ans = PROTECT(...), PROTECT(lx = ...), PROTECT(dim = ...) */

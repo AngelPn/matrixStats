@@ -36,26 +36,7 @@ rowOrderStats <- function(x, rows = NULL, cols = NULL, which,
     stop(sprintf("Argument '%s' must not contain missing values", "x"))
   }
 
-  res <- .Call(C_rowOrderStats, x, dim., rows, cols, which)
-  
-  # Update names attribute?
-  if (!is.na(useNames)) {
-    if (useNames) {
-      names <- rownames(x)
-      if (!is.null(names)) {
-        if (!is.null(rows)) {
-          names <- names[rows]
-          # Zero-length attribute? Keep behavior same as base R function
-          if (length(names) == 0L) names <- NULL
-        }
-        names(res) <- names
-      }
-    } else {
-      names(res) <- NULL
-    }
-  }
-  
-  res
+  .Call(C_rowOrderStats, x, dim., rows, cols, which, useNames)
 }
 
 
@@ -69,24 +50,5 @@ colOrderStats <- function(x, rows = NULL, cols = NULL, which,
     stop(sprintf("Argument '%s' must not contain missing values", "x"))
   }
 
-  res <- .Call(C_colOrderStats, x, dim., rows, cols, which)
-  
-  # Update names attribute?
-  if (!is.na(useNames)) {
-    if (useNames) {
-      names <- colnames(x)
-      if (!is.null(names)) {
-        if (!is.null(cols)) {
-          names <- names[cols]
-          # Zero-length attribute? Keep behavior same as base R function
-          if (length(names) == 0L) names <- NULL         
-        }
-        names(res) <- names
-      }
-    } else {
-      names(res) <- NULL
-    }
-  }
-  
-  res
+  .Call(C_colOrderStats, x, dim., rows, cols, which, useNames)
 }

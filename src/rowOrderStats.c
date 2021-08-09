@@ -1,6 +1,6 @@
 /***************************************************************************
  Public methods:
- SEXP rowOrderStats(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP which)
+ SEXP rowOrderStats(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP which, SEXP useNames)
 
  Authors: Henrik Bengtsson. Adopted from rowQ() by R. Gentleman.
 
@@ -11,8 +11,9 @@
 #include <Rdefines.h>
 #include "000.types.h"
 #include "rowOrderStats_lowlevel.h"
+#include "naming.h"
 
-SEXP rowOrderStats(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP which) {
+SEXP rowOrderStats(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP which, SEXP useNames) {
   SEXP ans = NILSXP;
   R_xlen_t nrow, ncol, qq;
   
@@ -64,6 +65,20 @@ SEXP rowOrderStats(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP which) {
     rowOrderStats_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, qq, INTEGER(ans));
     UNPROTECT(1);
   }
+  
+  /* Argument 'useNames': */ 
+  int usenames = asLogical(useNames);
+  
+  if (usenames != NA_LOGICAL && usenames){
+    SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
+    if (dimnames != R_NilValue) {
+      SEXP namesVec = VECTOR_ELT(dimnames, 0);
+      if (namesVec != R_NilValue) {
+        setNames(ans, namesVec, nrows, crows);
+      }
+    }
+  }
+  
   UNPROTECT(1); /* PROTECT(dim = ...) */
 
   return(ans);

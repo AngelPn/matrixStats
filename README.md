@@ -23,9 +23,9 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
-- R_xlen_t* as a return type of validateIndices():
-  * Handle of special cases `rows = NULL` and `cols = NULL`: [Issue#42](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/42).
-  * Removed macro definitions to go into the templates: [Issue#43](https://github.com/HenrikBengtsson/GSOC-2021-matrixStats/issues/43).
+- Removed [`000.templates-gen-matrix.h`](https://github.com/AngelPn/matrixStats/blob/a240418f120b9cdaa2872691b8871bbb19b41988/src/000.templates-gen-matrix.h), [`000.templates-gen-vector.h`](https://github.com/AngelPn/matrixStats/blob/a240418f120b9cdaa2872691b8871bbb19b41988/src/000.templates-gen-vector.h), [`000.templates-gen-matrix-vector.h`](https://github.com/AngelPn/matrixStats/blob/a240418f120b9cdaa2872691b8871bbb19b41988/src/000.templates-gen-matrix-vector.h)
+
+- Move naming support down to C-code: functions that return a vector.
 
 - The package passes `R CMD check` with all OKs.
 

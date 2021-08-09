@@ -48,7 +48,7 @@ rowCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
     names <- rownames(x)
     
     has_nas <- TRUE
-    counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 2L, na.rm, has_nas)
+    counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 2L, na.rm, has_nas, FALSE)
   } else {
     # Preserve rownames
     names <- rownames(x)
@@ -121,7 +121,7 @@ colCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
     names <- colnames(x)
     
     has_nas <- TRUE
-    counts <- .Call(C_colCounts, x, dim., rows, cols, value, 2L, na.rm, has_nas)
+    counts <- .Call(C_colCounts, x, dim., rows, cols, value, 2L, na.rm, has_nas, FALSE)
   } else {
     # Preserve colnames
     names <- colnames(x)

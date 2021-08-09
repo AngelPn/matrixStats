@@ -9,9 +9,10 @@
 #include <Rdefines.h>
 #include "000.types.h"
 #include "rowMads_lowlevel.h"
+#include "naming.h"
 
-SEXP rowMads(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP constant, SEXP naRm, SEXP hasNA, SEXP byRow) {
-  int narm, hasna, byrow;
+SEXP rowMads(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP constant, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames) {
+  int narm, hasna, byrow, usenames;
   SEXP ans;
   R_xlen_t nrow, ncol;
   double scale;
@@ -58,6 +59,26 @@ SEXP rowMads(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP constant, SEXP naRm, S
     rowMads_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, scale, narm, hasna, byrow, REAL(ans));
   } else if (isInteger(x)) {
     rowMads_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, scale, narm, hasna, byrow, REAL(ans));
+  }
+  
+  /* Argument 'useNames': */ 
+  usenames = asLogical(useNames);
+  
+  if (usenames != NA_LOGICAL && usenames){
+    SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
+    if (dimnames != R_NilValue) {
+      if (byrow) {
+        SEXP namesVec = VECTOR_ELT(dimnames, 0);
+        if (namesVec != R_NilValue) {
+          setNames(ans, namesVec, nrows, crows);
+        }
+      } else {
+        SEXP namesVec = VECTOR_ELT(dimnames, 1);
+        if (namesVec != R_NilValue) {
+          setNames(ans, namesVec, nrows, crows);
+        }
+      }
+    }
   }
 
   UNPROTECT(2);

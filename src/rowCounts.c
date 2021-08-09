@@ -7,10 +7,11 @@
 #include <Rdefines.h>
 #include "000.types.h"
 #include "rowCounts_lowlevel.h"
+#include "naming.h"
 
-SEXP rowCounts(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP value, SEXP what, SEXP naRm, SEXP hasNA) {
+SEXP rowCounts(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP value, SEXP what, SEXP naRm, SEXP hasNA, SEXP useNames) {
   SEXP ans;
-  int narm, hasna, what2;
+  int narm, hasna, what2, usenames;
   R_xlen_t nrow, ncol;
   
   /* Coercion moved down to C */
@@ -54,6 +55,19 @@ SEXP rowCounts(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP value, SEXP what, SE
     rowCounts_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, asInteger(value), what2, narm, hasna, INTEGER(ans));
   } else if (isLogical(x)) {
     rowCounts_lgl(LOGICAL(x), nrow, ncol, crows, nrows, ccols, ncols, asLogical(value), what2, narm, hasna, INTEGER(ans));
+  }
+  
+  /* Argument 'useNames': */ 
+  usenames = asLogical(useNames);
+  
+  if (usenames != NA_LOGICAL && usenames){
+    SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
+    if (dimnames != R_NilValue) {
+      SEXP namesVec = VECTOR_ELT(dimnames, 0);
+      if (namesVec != R_NilValue) {
+        setNames(ans, namesVec, nrows, crows);
+      }
+    }
   }
 
   UNPROTECT(2);

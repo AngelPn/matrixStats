@@ -10,9 +10,10 @@
 #include <Rdefines.h>
 #include "000.types.h"
 #include "rowMeans2_lowlevel.h"
+#include "naming.h"
 
-SEXP rowMeans2(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow) {
-  int narm, hasna, byrow;
+SEXP rowMeans2(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames) {
+  int narm, hasna, byrow, usenames;
   SEXP ans;
   R_xlen_t nrow, ncol;
   
@@ -53,6 +54,26 @@ SEXP rowMeans2(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SE
     rowMeans2_dbl(REAL(x), nrow, ncol, crows, nrows, ccols, ncols, narm, hasna, byrow, REAL(ans));
   } else if (isInteger(x) || isLogical(x)) {
     rowMeans2_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, narm, hasna, byrow, REAL(ans));
+  }
+  
+  /* Argument 'useNames': */ 
+  usenames = asLogical(useNames);
+  
+  if (usenames != NA_LOGICAL && usenames){
+    SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
+    if (dimnames != R_NilValue) {
+      if (byrow) {
+        SEXP namesVec = VECTOR_ELT(dimnames, 0);
+        if (namesVec != R_NilValue) {
+          setNames(ans, namesVec, nrows, crows);
+        }
+      } else {
+        SEXP namesVec = VECTOR_ELT(dimnames, 1);
+        if (namesVec != R_NilValue) {
+          setNames(ans, namesVec, nrows, crows);
+        }
+      }
+    }
   }
 
   UNPROTECT(2);

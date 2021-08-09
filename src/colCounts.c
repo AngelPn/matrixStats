@@ -7,10 +7,11 @@
 #include <Rdefines.h>
 #include "000.types.h"
 #include "colCounts_lowlevel.h"
+#include "naming.h"
 
-SEXP colCounts(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP value, SEXP what, SEXP naRm, SEXP hasNA) {
+SEXP colCounts(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP value, SEXP what, SEXP naRm, SEXP hasNA, SEXP useNames) {
   SEXP ans;
-  int narm, hasna, what2;
+  int narm, hasna, what2, usenames;
   R_xlen_t ii, nrow, ncol;
   
   /* Coercion moved down to C */
@@ -69,6 +70,20 @@ SEXP colCounts(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP value, SEXP what, SE
       ans_ptr[ii] = (int)count[ii];
     }
   }
+  
+  /* Argument 'useNames': */ 
+  usenames = asLogical(useNames);
+  
+  if (usenames != NA_LOGICAL && usenames){
+    SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
+    if (dimnames != R_NilValue) {
+      SEXP namesVec = VECTOR_ELT(dimnames, 1);
+      if (namesVec != R_NilValue) {
+        setNames(ans, namesVec, ncols, ccols);
+      }
+    }
+  }
+  
   UNPROTECT(2);
 
   return(ans);

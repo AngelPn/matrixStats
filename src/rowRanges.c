@@ -9,13 +9,14 @@
 #include <Rdefines.h>
 #include "000.types.h"
 #include "rowRanges_lowlevel.h"
+#include "naming.h"
 
-SEXP rowRanges(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP what, SEXP naRm, SEXP hasNA) {
+SEXP rowRanges(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP what, SEXP naRm, SEXP hasNA, SEXP useNames) {
   SEXP ans = NILSXP, ans2 = NILSXP;
   int *mins, *maxs;
   double *mins2, *maxs2;
   int *is_counted, all_counted = 0;
-  int what2, narm, hasna;
+  int what2, narm, hasna, usenames;
   R_xlen_t nrow, ncol, ii;
   
   /* Coercion moved down to C */
@@ -123,6 +124,24 @@ SEXP rowRanges(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP what, SEXP naRm, SEX
 
     UNPROTECT(1); /* ans */
   }
+  
+  /* Argument 'useNames': */ 
+  usenames = asLogical(useNames);
+  
+  if (usenames != NA_LOGICAL && usenames){
+    SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
+    if (dimnames != R_NilValue) {
+      if (what2 == 2) {
+        
+      } else{
+        SEXP namesVec = VECTOR_ELT(dimnames, 0);
+        if (namesVec != R_NilValue) {
+          setNames(ans, namesVec, nrows, crows);
+        }        
+      }
+    }
+  }
+  
   UNPROTECT(1); /* PROTECT(dim = ...) */
 
   return(ans);

@@ -60,16 +60,33 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
     has_nas <- TRUE
     if (isTRUE(value)) {
-      counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas)
+      counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas, useNames)
       res <- (counts == 0L)
     } else {
-      counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas)
+      counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas, useNames)
       res <- (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
     has_nas <- TRUE
-    counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 0L, na.rm, has_nas)
+    counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 0L, na.rm, has_nas, FALSE)
     res <- as.logical(counts)
+    
+    # Update names attribute?
+    if (!is.na(useNames)) {
+      if (useNames) {
+        names <- rownames(x)
+        if (!is.null(names)) {
+          if (!is.null(rows)) {
+            names <- names[rows]
+            # Zero-length attribute? Keep behavior same as base R function
+            if (length(names) == 0L) names <- NULL
+          }
+          names(res) <- names
+        }
+      } else {
+        names(res) <- NULL
+      }
+    }
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
@@ -90,23 +107,6 @@ rowAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
       return(rowAlls(z, na.rm = na.rm, dim. = dim., ..., useNames = useNames))
     }
   }
-
-  # Update names attribute?
-  if (!is.na(useNames)) {
-    if (useNames) {
-      names <- rownames(x)
-      if (!is.null(names)) {
-        if (!is.null(rows)) {
-          names <- names[rows]
-          # Zero-length attribute? Keep behavior same as base R function
-          if (length(names) == 0L) names <- NULL
-        }
-        names(res) <- names
-      }
-    } else {
-      names(res) <- NULL
-    }
-  }
   
   res 
 }
@@ -119,16 +119,33 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
     has_nas <- TRUE
     if (isTRUE(value)) {
-      counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas)
+      counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas, useNames)
       res <- (counts == 0L)
     } else {
-      counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas)
+      counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas, useNames)
       res <- (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
     has_nas <- TRUE
-    counts <- .Call(C_colCounts, x, dim., rows, cols, value, 0L, na.rm, has_nas)
+    counts <- .Call(C_colCounts, x, dim., rows, cols, value, 0L, na.rm, has_nas, FALSE)
     res <- as.logical(counts)
+    
+    # Update names attribute?
+    if (!is.na(useNames)) {
+      if (useNames) {
+        names <- colnames(x)
+        if (!is.null(names)) {
+          if (!is.null(cols)) {
+            names <- names[cols]
+            # Zero-length attribute? Keep behavior same as base R function
+            if (length(names) == 0L) names <- NULL       
+          }
+          names(res) <- names
+        }
+      } else {
+        names(res) <- NULL
+      }
+    }    
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
@@ -147,23 +164,6 @@ colAlls <- function(x, rows = NULL, cols = NULL, value = TRUE,
       if (!identical(dim(z), as.integer(dim))) dim(z) <- dim
       if (isTRUE(useNames)) dimnames(z) <- dimnames(x)
       return(colAlls(z, na.rm = na.rm, dim. = dim., ..., useNames = useNames))
-    }
-  }
-  
-  # Update names attribute?
-  if (!is.na(useNames)) {
-    if (useNames) {
-      names <- colnames(x)
-      if (!is.null(names)) {
-        if (!is.null(cols)) {
-          names <- names[cols]
-          # Zero-length attribute? Keep behavior same as base R function
-          if (length(names) == 0L) names <- NULL       
-        }
-        names(res) <- names
-      }
-    } else {
-      names(res) <- NULL
     }
   }
   
@@ -207,16 +207,33 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
     has_nas <- TRUE
     if (isTRUE(value)) {
-      counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas)
+      counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas, useNames)
       res <- (counts == 0L)
     } else {
-      counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas)
+      counts <- .Call(C_rowCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas, useNames)
       res <- (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
     has_nas <- TRUE
-    counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas)
+    counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas, FALSE)
     res <- as.logical(counts)
+    
+    # Update names attribute?
+    if (!is.na(useNames)) {
+      if (useNames) {
+        names <- rownames(x)
+        if (!is.null(names)) {
+          if (!is.null(rows)) {
+            names <- names[rows]
+            # Zero-length attribute? Keep behavior same as base R function
+            if (length(names) == 0L) names <- NULL
+          }
+          names(res) <- names
+        }
+      } else {
+        names(res) <- NULL
+      }
+    }    
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
@@ -238,23 +255,6 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     }
   }
   
-  # Update names attribute?
-  if (!is.na(useNames)) {
-    if (useNames) {
-      names <- rownames(x)
-      if (!is.null(names)) {
-        if (!is.null(rows)) {
-          names <- names[rows]
-          # Zero-length attribute? Keep behavior same as base R function
-          if (length(names) == 0L) names <- NULL
-        }
-        names(res) <- names
-      }
-    } else {
-      names(res) <- NULL
-    }
-  }
-  
   res
 }
 
@@ -266,16 +266,33 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
   if (is.numeric(x) && is.logical(value) && !is.na(value)) {
     has_nas <- TRUE
     if (isTRUE(value)) {
-      counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas)
+      counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 0L, na.rm, has_nas, useNames)
       res <- (counts == 0L)
     } else {
-      counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas)
+      counts <- .Call(C_colCounts, x, dim., rows, cols, FALSE, 1L, na.rm, has_nas, useNames)
       res <- (counts == 1L)
     }
   } else if (is.numeric(x) || is.logical(x)) {
     has_nas <- TRUE
-    counts <- .Call(C_colCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas)
+    counts <- .Call(C_colCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas, FALSE)
     res <- as.logical(counts)
+    
+    # Update names attribute?
+    if (!is.na(useNames)) {
+      if (useNames) {
+        names <- colnames(x)
+        if (!is.null(names)) {
+          if (!is.null(cols)) {
+            names <- names[cols]
+            # Zero-length attribute? Keep behavior same as base R function
+            if (length(names) == 0L) names <- NULL       
+          }
+          names(res) <- names
+        }
+      } else {
+        names(res) <- NULL
+      }
+    }    
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
@@ -294,23 +311,6 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
       if (!identical(dim(z), as.integer(dim))) dim(z) <- dim
       if (isTRUE(useNames)) dimnames(z) <- dimnames(x)
       return(colAnys(z, na.rm = na.rm, dim. = dim., ..., useNames = useNames))
-    }
-  }
-  
-  # Update names attribute?
-  if (!is.na(useNames)) {
-    if (useNames) {
-      names <- colnames(x)
-      if (!is.null(names)) {
-        if (!is.null(cols)) {
-          names <- names[cols]
-          # Zero-length attribute? Keep behavior same as base R function
-          if (length(names) == 0L) names <- NULL       
-        }
-        names(res) <- names
-      }
-    } else {
-      names(res) <- NULL
     }
   }
   
