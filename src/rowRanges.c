@@ -132,7 +132,12 @@ SEXP rowRanges(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP what, SEXP naRm, SEX
     SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
     if (dimnames != R_NilValue) {
       if (what2 == 2) {
-        
+        if (nrows != 0) {
+          SEXP rownames = VECTOR_ELT(dimnames, 0);
+          SEXP colnames = VECTOR_ELT(dimnames, 1);
+          setDimnames(ans, rownames, colnames, nrows, crows, 0, ccols);
+        }
+        /* (else) Zero-length rownames attribute? Keep behavior same as base R function */
       } else{
         SEXP namesVec = VECTOR_ELT(dimnames, 0);
         if (namesVec != R_NilValue) {

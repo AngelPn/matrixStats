@@ -36,8 +36,6 @@ rowDiffs <- function(x, rows = NULL, cols = NULL,
           if (ncols <= 0) colnames <- NULL
           else colnames <- colnames[(len - ncols + 1):len]
         }
-        print(rownames)
-        print(colnames)
         # Zero-length attributes? Keep behavior same as base R function
         if (length(rownames) == 0L && length(colnames) == 0L) dimnames(res) <- NULL
         else dimnames(res) <- list(rownames, colnames)

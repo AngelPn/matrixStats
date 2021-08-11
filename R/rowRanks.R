@@ -99,24 +99,7 @@ rowRanks <- function(x, rows = NULL, cols = NULL,
   }
 
   # byrow = TRUE
-  y <- .Call(C_rowRanksWithTies, x, dim., rows, cols, ties_method, TRUE)
-  
-  # Update dimnames attribute?
-  if (!is.na(useNames)) {
-    if (useNames) {
-      if (!is.null(dimnames(x))) {
-        rownames <- rownames(x)
-        if (!is.null(rows)) rownames <- rownames[rows]
-        colnames <- colnames(x)
-        if (!is.null(cols)) colnames <- colnames[cols]
-        dimnames(y) <- list(rownames, colnames)
-      }
-    } else {
-      dimnames(y) <- NULL
-    }
-  }
-  
-  y
+  .Call(C_rowRanksWithTies, x, dim., rows, cols, ties_method, TRUE, useNames)
 }
 
 
@@ -140,23 +123,8 @@ colRanks <- function(x, rows = NULL, cols = NULL,
   }
 
   # byrow = FALSE
-  y <- .Call(C_rowRanksWithTies, x, dim., rows, cols, ties_method, FALSE)
-  
-  # Update dimnames attribute?
-  if (!is.na(useNames)) {
-    if (useNames) {
-      if (!is.null(dimnames(x))) {
-        rownames <- rownames(x)
-        if (!is.null(rows)) rownames <- rownames[rows]        
-        colnames <- colnames(x)
-        if (!is.null(cols)) colnames <- colnames[cols]
-        dimnames(y) <- list(rownames, colnames)
-      }
-    } else {
-      dimnames(y) <- NULL
-    }
-  } 
-  
+  y <- .Call(C_rowRanksWithTies, x, dim., rows, cols, ties_method, FALSE, useNames)
+
   if (!preserveShape) y <- t(y)
   y
 }

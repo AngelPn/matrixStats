@@ -23,9 +23,7 @@ I completed all the tasks proposed on [Skill Tests](https://github.com/rstats-gs
 
 ### Work on the project
 
-- Removed [`000.templates-gen-matrix.h`](https://github.com/AngelPn/matrixStats/blob/a240418f120b9cdaa2872691b8871bbb19b41988/src/000.templates-gen-matrix.h), [`000.templates-gen-vector.h`](https://github.com/AngelPn/matrixStats/blob/a240418f120b9cdaa2872691b8871bbb19b41988/src/000.templates-gen-vector.h), [`000.templates-gen-matrix-vector.h`](https://github.com/AngelPn/matrixStats/blob/a240418f120b9cdaa2872691b8871bbb19b41988/src/000.templates-gen-matrix-vector.h)
-
-- Move naming support down to C-code: functions that return a vector.
+- Move naming support down to C-code: functions that return a matrix: [AngelPn/matrixStats](https://github.com/AngelPn/matrixStats).
 
 - The package passes `R CMD check` with all OKs.
 

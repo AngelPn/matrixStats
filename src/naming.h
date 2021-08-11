@@ -6,5 +6,6 @@
 #include "000.types.h"
 
 void setNames(SEXP vec/* Answer vector*/, SEXP namesVec, R_xlen_t length, R_xlen_t *subscripts);
+void setDimnames(SEXP mat/*Answer matrix*/, SEXP rownames, SEXP colnames, R_xlen_t nrows, R_xlen_t *crows, R_xlen_t ncols, R_xlen_t *ccols);
 
 #endif /* NAMING_H */

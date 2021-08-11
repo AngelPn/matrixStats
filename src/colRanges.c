@@ -132,7 +132,13 @@ SEXP colRanges(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP what, SEXP naRm, SEX
     SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
     if (dimnames != R_NilValue) {
       if (what2 == 2) {
-        
+        if (ncols != 0) {
+          SEXP rownames = VECTOR_ELT(dimnames, 0);
+          SEXP colnames = VECTOR_ELT(dimnames, 1);
+          /* colRanges() returns a numeric Kx2 matrix, reverse dimnames */
+          setDimnames(ans, colnames, rownames, ncols, ccols, 0, crows);
+        }
+        /* (else) Zero-length colnames attribute? Keep behavior same as base R function */
       } else{
         SEXP namesVec = VECTOR_ELT(dimnames, 1);
         if (namesVec != R_NilValue) {
@@ -141,6 +147,8 @@ SEXP colRanges(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP what, SEXP naRm, SEX
       }
     }
   }
+  
+  UNPROTECT(1); /* PROTECT(dim = ...) */
 
   return(ans);
 } // colRanges()

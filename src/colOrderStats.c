@@ -78,6 +78,8 @@ SEXP colOrderStats(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP which, SEXP useN
       }
     }
   }
+  
+  UNPROTECT(1); /* PROTECT(dim = ...) */
 
   return(ans);
 } // colOrderStats()

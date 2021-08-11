@@ -8,6 +8,7 @@
  **************************************************************************/
 #include <Rdefines.h>
 #include "rowRanksWithTies_lowlevel.h"
+#include "naming.h"
 
 /* Peter Langfelder's modifications:
  * byrow: 0 => rank columns, !0 => rank rows
@@ -31,8 +32,8 @@
      }
  }
 
-SEXP rowRanksWithTies(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP tiesMethod, SEXP byRow) {
-  int tiesmethod, byrow;
+SEXP rowRanksWithTies(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP tiesMethod, SEXP byRow, SEXP useNames) {
+  int tiesmethod, byrow, usenames;
   SEXP ans = NILSXP;
   R_xlen_t nrow, ncol;
   
@@ -223,6 +224,19 @@ SEXP rowRanksWithTies(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP tiesMethod, S
       } /* switch */
     }
   }
+  
+  /* Argument 'useNames': */ 
+  usenames = asLogical(useNames);
+  
+  if (usenames != NA_LOGICAL && usenames){
+    SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
+    if (dimnames != R_NilValue) {
+      SEXP rownames = VECTOR_ELT(dimnames, 0);
+      SEXP colnames = VECTOR_ELT(dimnames, 1);
+      setDimnames(ans, rownames, colnames, nrows, crows, ncols, ccols);
+    }
+  }
+  
   UNPROTECT(1); /* PROTECT(dim = ...) */
 
   return(ans);
