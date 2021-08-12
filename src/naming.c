@@ -27,8 +27,14 @@ void setNames(SEXP vec/*Answer vector*/, SEXP namesVec, R_xlen_t length, R_xlen_
 }
 
 
-void setDimnames(SEXP mat/*Answer matrix*/, SEXP rownames, SEXP colnames, R_xlen_t nrows, R_xlen_t *crows, R_xlen_t ncols, R_xlen_t *ccols) {
-
+void setDimnames(SEXP mat/*Answer matrix*/, SEXP dimnames, R_xlen_t nrows,
+                 R_xlen_t *crows, R_xlen_t ncols, R_xlen_t *ccols, Rboolean reverseDimnames) {
+  if (crows == NULL && ccols == NULL && crows > 0 && ccols > 0){
+    dimnamesgets(mat, dimnames);
+    return;
+  }
+  SEXP rownames = VECTOR_ELT(dimnames,  reverseDimnames ? 1 : 0);
+  SEXP colnames = VECTOR_ELT(dimnames,  reverseDimnames ? 0 : 1);
   SEXP ansDimnames = PROTECT(allocVector(VECSXP, 2));
   
   if (nrows == 0 || rownames == R_NilValue) {
@@ -143,6 +149,7 @@ void set_rowDiffs_Dimnames(SEXP mat/*Answer matrix*/, SEXP dimnames, R_xlen_t nr
   dimnamesgets(mat, ansDimnames);
   UNPROTECT(1); 
 }
+
 
 void set_colDiffs_Dimnames(SEXP mat/*Answer matrix*/, SEXP dimnames, R_xlen_t nrows, R_xlen_t nrow_ans,
                       R_xlen_t *crows, R_xlen_t ncols, R_xlen_t *ccols) {

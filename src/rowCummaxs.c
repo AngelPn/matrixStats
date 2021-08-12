@@ -50,9 +50,7 @@ SEXP rowCummaxs(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP byRow, SEXP useName
   if (usenames != NA_LOGICAL && usenames){
     SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
     if (dimnames != R_NilValue) {
-      SEXP rownames = VECTOR_ELT(dimnames, 0);
-      SEXP colnames = VECTOR_ELT(dimnames, 1);
-      setDimnames(ans, rownames, colnames, nrows, crows, ncols, ccols);
+      setDimnames(ans, dimnames, nrows, crows, ncols, ccols, FALSE);
     }
   }
   
