@@ -48,7 +48,11 @@ rowCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
     names <- rownames(x)
     
     has_nas <- TRUE
-    counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 2L, na.rm, has_nas, FALSE)
+    counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 2L, na.rm, has_nas, useNames)
+    # Preserve names attribute
+    names <- names(counts)
+    counts <- as.integer(counts)
+    names(counts) <- names
   } else {
     # Preserve rownames
     names <- rownames(x)
@@ -71,25 +75,25 @@ rowCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
         sum(x == value, na.rm = na.rm)
       })
     }
-  }
-  counts <- as.integer(counts)
-  
-  # Update names attribute?
-  if (!is.na(useNames)) {
-    if (useNames) {
-      if (!is.null(names)) {
-        if (!is.null(rows)) {
-          names <- names[rows]
-          # Zero-length attribute? Keep behavior same as base R function
-          if (length(names) == 0L) names <- NULL
+    
+    counts <- as.integer(counts)
+    
+    # Update names attribute?
+    if (!is.na(useNames)) {
+      if (useNames) {
+        if (!is.null(names)) {
+          if (!is.null(rows)) {
+            names <- names[rows]
+            # Zero-length attribute? Keep behavior same as base R function
+            if (length(names) == 0L) names <- NULL
+          }
+          names(counts) <- names
         }
-        names(counts) <- names
+      } else {
+        names(counts) <- NULL
       }
-    } else {
-      names(counts) <- NULL
-    }
+    }    
   }
-  
   counts
 }
 
@@ -121,7 +125,11 @@ colCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
     names <- colnames(x)
     
     has_nas <- TRUE
-    counts <- .Call(C_colCounts, x, dim., rows, cols, value, 2L, na.rm, has_nas, FALSE)
+    counts <- .Call(C_colCounts, x, dim., rows, cols, value, 2L, na.rm, has_nas, useNames)
+    # Preserve names attribute
+    names <- names(counts)
+    counts <- as.integer(counts)
+    names(counts) <- names
   } else {
     # Preserve colnames
     names <- colnames(x)
@@ -144,25 +152,25 @@ colCounts <- function(x, rows = NULL, cols = NULL, value = TRUE,
         sum(x == value, na.rm = na.rm)
       })
     }
-  }
-  counts <- as.integer(counts)
-  
-  # Update names attribute?
-  if (!is.na(useNames)) {
-    if (useNames) {
-      if (!is.null(names)) {
-        if (!is.null(cols)) {
-          names <- names[cols]
-          # Zero-length attribute? Keep behavior same as base R function
-          if (length(names) == 0L) names <- NULL        
+    
+    counts <- as.integer(counts)
+    
+    # Update names attribute?
+    if (!is.na(useNames)) {
+      if (useNames) {
+        if (!is.null(names)) {
+          if (!is.null(cols)) {
+            names <- names[cols]
+            # Zero-length attribute? Keep behavior same as base R function
+            if (length(names) == 0L) names <- NULL        
+          }
+          names(counts) <- names
         }
-        names(counts) <- names
+      } else {
+        names(counts) <- NULL
       }
-    } else {
-      names(counts) <- NULL
-    }
+    }    
   }
-
   counts
 }
 

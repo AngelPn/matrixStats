@@ -215,25 +215,12 @@ rowAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     }
   } else if (is.numeric(x) || is.logical(x)) {
     has_nas <- TRUE
-    counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas, FALSE)
+    counts <- .Call(C_rowCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas, useNames)
     res <- as.logical(counts)
-    
-    # Update names attribute?
-    if (!is.na(useNames)) {
-      if (useNames) {
-        names <- rownames(x)
-        if (!is.null(names)) {
-          if (!is.null(rows)) {
-            names <- names[rows]
-            # Zero-length attribute? Keep behavior same as base R function
-            if (length(names) == 0L) names <- NULL
-          }
-          names(res) <- names
-        }
-      } else {
-        names(res) <- NULL
-      }
-    }    
+    # Preserve names attribute
+    names <- names(counts)
+    res <- as.logical(counts)
+    names(res) <- names  
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
@@ -274,25 +261,11 @@ colAnys <- function(x, rows = NULL, cols = NULL, value = TRUE,
     }
   } else if (is.numeric(x) || is.logical(x)) {
     has_nas <- TRUE
-    counts <- .Call(C_colCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas, FALSE)
+    counts <- .Call(C_colCounts, x, dim., rows, cols, value, 1L, na.rm, has_nas, useNames)
+    # Preserve names attribute
+    names <- names(counts)
     res <- as.logical(counts)
-    
-    # Update names attribute?
-    if (!is.na(useNames)) {
-      if (useNames) {
-        names <- colnames(x)
-        if (!is.null(names)) {
-          if (!is.null(cols)) {
-            names <- names[cols]
-            # Zero-length attribute? Keep behavior same as base R function
-            if (length(names) == 0L) names <- NULL       
-          }
-          names(res) <- names
-        }
-      } else {
-        names(res) <- NULL
-      }
-    }    
+    names(res) <- names  
   } else {
     if (!identical(dim(x), dim.)) dim(x) <- dim.
     if (!is.matrix(x)) defunctShouldBeMatrixOrDim(x)
