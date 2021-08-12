@@ -9,9 +9,10 @@
 #include <Rdefines.h>
 #include "000.types.h"
 #include "rowDiffs_lowlevel.h"
+#include "naming.h"
 
-SEXP rowDiffs(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP lag, SEXP differences, SEXP byRow) {
-  int byrow;
+SEXP rowDiffs(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP lag, SEXP differences, SEXP byRow, SEXP useNames) {
+  int byrow, usenames;
   SEXP ans = NILSXP;
   R_xlen_t lagg, diff;
   R_xlen_t nrow, ncol;
@@ -65,6 +66,21 @@ SEXP rowDiffs(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP lag, SEXP differences
     rowDiffs_int(INTEGER(x), nrow, ncol, crows, nrows, ccols, ncols, byrow, lagg, diff, INTEGER(ans), nrow_ans, ncol_ans);
     UNPROTECT(1);
   }
+  
+  /* Argument 'useNames': */ 
+  usenames = asLogical(useNames);
+  
+  if (usenames != NA_LOGICAL && usenames){
+    SEXP dimnames = getAttrib(x, R_DimNamesSymbol);
+    if (dimnames != R_NilValue) {
+      if (byrow) {
+        set_rowDiffs_Dimnames(ans, dimnames, nrows, crows, ncols, ncol_ans, ccols);
+      } else {
+        set_colDiffs_Dimnames(ans, dimnames, nrows, nrow_ans, crows, ncols, ccols);
+      }
+    }
+  }
+  
   UNPROTECT(1); /* PROTECT(dim = ...) */
 
   return(ans);

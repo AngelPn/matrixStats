@@ -20,7 +20,7 @@ SEXP rowCummaxs(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP byRow, SEXP useName
 SEXP rowCummins(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP byRow, SEXP useNames);
 SEXP rowCumprods(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP byRow, SEXP useNames);
 SEXP rowCumsums(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP byRow, SEXP useNames);
-SEXP rowDiffs(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP lag, SEXP differences, SEXP byRow);
+SEXP rowDiffs(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP lag, SEXP differences, SEXP byRow, SEXP useNames);
 SEXP rowLogSumExps(SEXP lx, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames);
 SEXP rowMads(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP constant, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames);
 SEXP rowMeans2(SEXP x, SEXP dim, SEXP rows, SEXP cols, SEXP naRm, SEXP hasNA, SEXP byRow, SEXP useNames);
