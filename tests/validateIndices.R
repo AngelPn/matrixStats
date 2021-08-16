@@ -14,8 +14,6 @@ for (idxs in index_cases) {
   }
 }
 
-ftest <- function(x, idxs) validateIndices(idxs, length(x))
-
 for (idxs in index_error_cases) {
   validateIndicesTestVector(x, idxs, ftest = ftest, fsure = identity)
 }
